@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.9)
 project(cmpe126s18_labs)
 
-#add_definitions(-std=c++11)
 if(WIN32)
     if (CYGWIN)
         add_definitions(-std=gnu++0x)
@@ -18,10 +17,10 @@ set(SOURCE_FILES main.cpp)
 
 add_executable(labs_main ${SOURCE_FILES})
 
-include_directories(lib/lab01/inc)
+include_directories(lib/lab01/inc lib/lab02/inc)
 
-add_subdirectory(lib/lab01 lab1_lib)
+add_subdirectory(lib/lab01 lib/lab02)
 
 add_subdirectory(test)
 
-target_link_libraries(labs_main lab1_lib)
+target_link_libraries(labs_main lab1_lib lab2_lib)

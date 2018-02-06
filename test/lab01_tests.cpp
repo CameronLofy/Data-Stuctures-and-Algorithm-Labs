@@ -2,7 +2,7 @@
 #include "expressionstream.h"
 
 class Lab01Fixture : public ::testing::Test {
-protected:
+
 protected:
     virtual void TearDown() {
         delete stream1;
@@ -127,3 +127,9 @@ TEST_F(Lab01Fixture, NEW){
 //step 3: type "Lab01Fixture" in the red box and press tab to go to next auto fill box
 //step 4: type name of your test
 //step 5: inside the function create your test, use previous test as examples
+
+TEST_F(Lab01Fixture, testTest) {
+    expressionstream stream4("1+2*4");
+
+    EXPECT_EQ("1",stream4.get_next_int());
+}

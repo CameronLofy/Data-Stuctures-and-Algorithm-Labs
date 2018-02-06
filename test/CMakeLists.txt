@@ -4,7 +4,7 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 add_executable(runBasicTests
         lab01_tests.cpp
-        )
+        lab02_tests.cpp)
 
 add_subdirectory(gtest-1.7.0)
 

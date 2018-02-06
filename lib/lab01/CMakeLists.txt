@@ -6,5 +6,3 @@ set(SOURCE_FILES
         src/expressionstream.cpp)
 include_directories(inc)
 add_library(lab1_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})
-
-#target_include_directories(lab4_lib PUBLIC "${CMAKE_CURRENT_LIST_DIR}/include")

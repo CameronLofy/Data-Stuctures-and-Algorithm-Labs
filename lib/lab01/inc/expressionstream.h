@@ -30,7 +30,6 @@ public:
 
     std::string get_next_int();
     std::string get_next_op();
-
 };
 
 
