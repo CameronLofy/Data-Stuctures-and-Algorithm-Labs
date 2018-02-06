@@ -120,6 +120,7 @@ TEST_F(Lab01Fixture, NEW){
     EXPECT_EQ("/", stream5.get_next_op());
 
 }
+
 //todo: create a new test
 //step 1: press alt+insert (or right click and select generate)
 //step 2: choose test to generate a new test where the cursor is
