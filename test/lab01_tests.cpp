@@ -67,6 +67,59 @@ TEST_F(Lab01Fixture, isNext) {
 }
 
 
+TEST_F(Lab01Fixture, More_Testing) {
+    expressionstream stream4("1+2*9");
+
+    EXPECT_EQ("+", stream4.get_next_op());
+    EXPECT_EQ("*", stream4.get_next_op());
+    EXPECT_EQ("1", stream4.get_next_int());
+    EXPECT_EQ("2", stream4.get_next_int());
+    EXPECT_EQ("9", stream4.get_next_int());
+
+
+}
+
+TEST_F(Lab01Fixture, Not_Equal){
+
+    EXPECT_NE("2", stream2->get_next_int());
+    EXPECT_NE("1", stream2->get_next_int());
+    EXPECT_NE("0", stream2->get_next_int());
+    EXPECT_NE("-", stream2->get_next_op());
+    EXPECT_NE("+", stream2->get_next_op());
+
+
+}
+
+TEST_F(Lab01Fixture, IDK){
+    EXPECT_FALSE(stream1->expression_complete());
+    stream1->get_next_int();
+    stream1->get_next_int();
+    stream1->get_next_int();
+    EXPECT_FALSE(stream1->expression_complete());
+    stream1->get_next_op();
+    stream1->get_next_op();
+    EXPECT_TRUE(stream1->expression_complete());
+}
+
+TEST_F(Lab01Fixture, Mix){
+    EXPECT_EQ("+", stream3->get_next_op());
+    EXPECT_NE("1", stream3->get_next_int());
+    EXPECT_NE("2", stream3->get_next_int());
+    EXPECT_TRUE(stream3->expression_complete());
+
+
+}
+
+TEST_F(Lab01Fixture, NEW){
+    expressionstream stream5("1+4/9");
+
+    EXPECT_EQ("1", stream5.get_next_int());
+    EXPECT_EQ("4", stream5.get_next_int());
+    EXPECT_EQ("9", stream5.get_next_int());
+    EXPECT_EQ("+", stream5.get_next_op());
+    EXPECT_EQ("/", stream5.get_next_op());
+
+}
 //todo: create a new test
 //step 1: press alt+insert (or right click and select generate)
 //step 2: choose test to generate a new test where the cursor is
