@@ -1,4 +1,4 @@
-#include "stringVector.h"
+#include "../inc/stringVector.h"
 
 stringVector::stringVector() {
 
