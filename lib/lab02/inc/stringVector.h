@@ -14,10 +14,10 @@ public:
     stringVector();
     virtual ~stringVector();
 
-    unsigned size();
-    unsigned capacity();
+    unsigned size()const;
+    unsigned capacity()const;
     void reserve(unsigned new_size);
-    bool empty();
+    bool empty()const;
     void append(std::string new_data);
     void swap(unsigned pos1, unsigned pos2);
     stringVector &operator = (stringVector const &rhs);
