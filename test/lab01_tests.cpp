@@ -10,22 +10,22 @@ protected:
     }
 
     virtual void SetUp() {
-        stream1=new expressionstream("1+2+3");
-        stream2=new expressionstream("1   + 2 *4+(2*3)");
-        stream3=new expressionstream("-1 +-2");
+        stream1=new lab1::expressionstream("1+2+3");
+        stream2=new lab1::expressionstream("1   + 2 *4+(2*3)");
+        stream3=new lab1::expressionstream("-1 +-2");
     }
 
 
 public:
-    expressionstream *stream1;
-    expressionstream *stream2;
-    expressionstream *stream3;
+    lab1::expressionstream *stream1;
+    lab1::expressionstream *stream2;
+    lab1::expressionstream *stream3;
 };
 
 
 TEST(crashTest , constructorTest) {
-    expressionstream stream1 ("1+2+3");
-    expressionstream stream2 ("1   + 2 *4+(2*3)");
+    lab1::expressionstream stream1 ("1+2+3");
+    lab1::expressionstream stream2 ("1   + 2 *4+(2*3)");
 }
 
 
@@ -129,7 +129,7 @@ TEST_F(Lab01Fixture, NEW){
 //step 5: inside the function create your test, use previous test as examples
 
 TEST_F(Lab01Fixture, testTest) {
-    expressionstream stream4("1+2*4");
-
-    EXPECT_EQ("1",stream4.get_next_int());
+    lab1::expressionstream stream4("1+2*4");
+    EXPECT_NE("2",stream3->get_next_int());
+    EXPECT_NE("0",stream3->get_next_int());
 }

@@ -1,4 +1,3 @@
-#project(lab01)
 set(HEADER_FILES
         inc/stringVector.h)
 
