@@ -68,7 +68,7 @@ TEST_F(Lab01Fixture, isNext) {
 
 
 TEST_F(Lab01Fixture, More_Testing) {
-    expressionstream stream4("1+2*9");
+    lab1::expressionstream stream4("1+2*9");
 
     EXPECT_EQ("+", stream4.get_next_op());
     EXPECT_EQ("*", stream4.get_next_op());
@@ -111,7 +111,7 @@ TEST_F(Lab01Fixture, Mix){
 }
 
 TEST_F(Lab01Fixture, NEW){
-    expressionstream stream5("1+4/9");
+    lab1::expressionstream stream5("1+4/9");
 
     EXPECT_EQ("1", stream5.get_next_int());
     EXPECT_EQ("4", stream5.get_next_int());

@@ -5,15 +5,16 @@ class Lab02Fixture : public ::testing::Test {
 
 };
 
+
 TEST(stringVector,constructorTest) {
-    stringVector hw0;
+    lab2::stringVector hw0;
     EXPECT_TRUE(hw0.empty());
     EXPECT_EQ(0,hw0.size());
     EXPECT_EQ(0,hw0.capacity());
 }
 
 TEST(stringVector,overloadBracket){
-    stringVector hw1;
+    lab2::stringVector hw1;
     hw1.append("Hello");
     EXPECT_EQ("Hello",hw1[0]);
     hw1.append("Entry Number 2");
@@ -23,7 +24,7 @@ TEST(stringVector,overloadBracket){
 }
 
 TEST(stringVector,variableAllocation){
-    stringVector hw2;
+    lab2::stringVector hw2;
     hw2.append("Test 1");
     hw2.append("Test 2");
     EXPECT_EQ(2,hw2.size());
@@ -36,34 +37,40 @@ TEST(stringVector,variableAllocation){
 }
 
 TEST(stringVector,pointerTest) {
-    stringVector* hw3 = new stringVector;
+    lab2::stringVector* hw3 = new lab2::stringVector;
     EXPECT_TRUE(hw3->empty());
     delete hw3;
 }
 
 TEST(stringVector,reserveTruncation){
-    stringVector* hw4 = new stringVector;
-    for (int i=0;i<10;i++){
-        hw4->append(std::to_string(i));
-    }
-    EXPECT_EQ(10,hw4->size());
-    EXPECT_EQ(16,hw4->capacity());
-    EXPECT_EQ("9",(*hw4)[9]);
+    lab2::stringVector* hw4 = new lab2::stringVector;
 
-    hw4->reserve(5);
-    EXPECT_EQ(5,hw4->size());
-    EXPECT_EQ(5,hw4->capacity());
-    EXPECT_EQ("4",(*hw4)[4]);
+    hw4->append("line 1");
+    hw4->append("line 2");
+    hw4->append("line 3");
+    hw4->append("line 4");
+    hw4->append("line 5");
+    hw4->append("line 6");
 
-    hw4->reserve(6);
-    EXPECT_EQ(5,hw4->size());
-    EXPECT_EQ(6,hw4->capacity());
-    EXPECT_EQ("",(*hw4)[5]);
+    hw4->reserve(8);
+    EXPECT_EQ(8, hw4->capacity());
+    EXPECT_EQ(6, hw4->size());
+
+    hw4->reserve(4);
+    EXPECT_EQ(4, hw4->size());
+    EXPECT_EQ(4, hw4->capacity());
+
+    hw4->reserve(2);
+    EXPECT_EQ(2, hw4->size());
+    EXPECT_EQ(2, hw4->capacity());
+
+
+
     delete hw4;
 }
 
 TEST(stringVector, reserve){
-    stringVector hw9;
+    lab2::stringVector hw9;
     EXPECT_EQ(0, hw9.size());
     EXPECT_EQ(0, hw9.capacity());
     hw9.reserve(3);
@@ -74,7 +81,7 @@ TEST(stringVector, reserve){
 }
 
 TEST(stringVector, append){
-    stringVector hw10;
+    lab2::stringVector hw10;
     hw10.append("hello");
     hw10.append("sir");
     EXPECT_EQ("hello", hw10[0]);
@@ -82,12 +89,12 @@ TEST(stringVector, append){
 }
 
 TEST(stringVector,expectionTesting){
-    stringVector hw5;
+    lab2::stringVector hw5;
     hw5.reserve(2);
     hw5.append("Test String");
     EXPECT_EQ("Test String",hw5[0]);
     EXPECT_EQ("",hw5[1]);
-    EXPECT_THROW(hw5[3],int);
+    EXPECT_THROW(hw5[3],std::string);
 
     EXPECT_NO_THROW(hw5.swap(0,1));
     EXPECT_EQ("",hw5[0]);
@@ -96,16 +103,16 @@ TEST(stringVector,expectionTesting){
 }
 
 TEST(stringVector, throwExecption) {
-    stringVector hw5;
+    lab2::stringVector hw5;
     hw5.reserve(2);
     hw5.append("Test String");
     EXPECT_EQ("Test String", hw5[0]);
     EXPECT_EQ("", hw5[1]);
-    EXPECT_THROW(hw5[2], int);
+    EXPECT_THROW(hw5[2], std::string);
 }
 
 TEST(stringVector,overloadAssignment){
-    stringVector hw6;
+    lab2::stringVector hw6;
     for (int i=0;i<6;i++){
         hw6.append(std::to_string(i));
     }
@@ -113,7 +120,7 @@ TEST(stringVector,overloadAssignment){
     EXPECT_EQ(8,hw6.capacity());
     EXPECT_EQ("5",hw6[5]);
 
-    stringVector* hw7 = new stringVector;
+    lab2::stringVector* hw7 = new lab2::stringVector;
     *hw7 = hw6;
     EXPECT_EQ(6,hw7->size());
     EXPECT_EQ(8,hw7->capacity());
@@ -121,7 +128,7 @@ TEST(stringVector,overloadAssignment){
 }
 
 TEST(stringVector,sorting) {
-    stringVector hw8;
+    lab2::stringVector hw8;
     hw8.append("Part 3");
     hw8.append("Part 1");
     hw8.append("Part 4");
