@@ -63,9 +63,12 @@ void stringVector::append(std::string new_data) {       //Passed Testing
 
 
 void stringVector::swap(unsigned pos1, unsigned pos2) {
-    temp = pos1;
-    pos1 = pos2;
-    pos2 = temp;
+    if(pos1>length || pos2>length){
+        throw(std::string("EXCEPTION THROWN"));
+    }
+    std::string temp = data[pos1];
+    data[pos1] = data[pos2];
+    data[pos2] = temp;
 
 }
 

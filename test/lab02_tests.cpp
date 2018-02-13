@@ -92,7 +92,7 @@ TEST(stringVector,expectionTesting){
     EXPECT_NO_THROW(hw5.swap(0,1));
     EXPECT_EQ("",hw5[0]);
     EXPECT_EQ("Test String",hw5[1]);
-    EXPECT_THROW(hw5.swap(0,2),int);
+    EXPECT_THROW(hw5.swap(0,2),std::string);
 }
 
 TEST(stringVector, throwExecption) {
