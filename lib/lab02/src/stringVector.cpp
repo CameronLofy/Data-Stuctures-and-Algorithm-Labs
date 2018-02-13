@@ -1,26 +1,27 @@
+#include <stdexcept>
 #include "../inc/stringVector.h"
 
-stringVector::stringVector() {          //Passed test
+stringVector::stringVector() {          //Passed testing
     data=nullptr;
     length=0;
     allocated_length=0;
 }
 
-stringVector::~stringVector() {         //Passed test
+stringVector::~stringVector() {         //Passed testing
     delete[] data;
 }
 
-unsigned stringVector::size() {         //Passed test
+unsigned stringVector::size()const {         //Passed testing
     return length;
     //return ;
 }
 
-unsigned stringVector::capacity() {     //Passed test
+unsigned stringVector::capacity()const {     //Passed testing
     return allocated_length;
     //return ;
 }
 
-void stringVector::reserve(unsigned new_size) {     //Passed Test
+void stringVector::reserve(unsigned new_size) {     //Passed Testing
     auto* temp= new std::string[new_size];
 
     //Copies data to temp, stops when reached new size or length
@@ -29,41 +30,19 @@ void stringVector::reserve(unsigned new_size) {     //Passed Test
     }
 
     allocated_length = new_size;
-    delete data;
+    delete[] data;
     data = temp;
 
 }
 
-bool stringVector::empty() {        //Passed test
+bool stringVector::empty()const {        //Passed testing
     if(length==0)
         return true;
     return false;
     //return ;
 }
 
-void stringVector::append(std::string new_data) {
-    /*
-    std::string*temp=nullptr;
-    if(length==allocated_length){
-        if(allocated_length==0){
-            data=new std::string[1];
-            allocated_length=1;
-        }
-        else{
-            temp=new std::string[2*allocated_length];
-            for(int i=0;i<length;i++){
-                temp[i]=data[i];
-            }
-            allocated_length=2*allocated_length;
-            if(data!=nullptr){
-                delete[]data;
-                data=temp;}
-        }
-    }
-    data[length]=new_data;
-    length++;
-    */
-
+void stringVector::append(std::string new_data) {       //Passed Testing
     //If empty string, reserve space for 1 then append
     if (allocated_length == 0) {
         this->reserve(1);
@@ -78,42 +57,38 @@ void stringVector::append(std::string new_data) {
     else {
         data[length] = new_data;
         length++;
-        return;
     }
+    return;
 }
-
-
-
-
-
-    /*
-    int k = 0;
-    while (new_data[k] < allocated_length) {
-        data[length + 1] = new_data[k];
-        length++;
-        k++;
-        if (length == allocated_length) {
-            allocated_length = allocated_length * 2;
-            data = new std::string[allocated_length];
-        }
-    }
-}
-*/
-
 
 
 void stringVector::swap(unsigned pos1, unsigned pos2) {
-    unsigned temp = pos1;
+    temp = pos1;
     pos1 = pos2;
     pos2 = temp;
 
 }
 
 stringVector &stringVector::operator=(stringVector const &rhs) {
+    if(&rhs == this){
+        return(*this);
+    }
+    else{
+        delete[] data;
+        length = rhs.length;
+        allocated_length = rhs.allocated_length;
+        this->data = new std::string[allocated_length];
+        for(int i=0; i<length; i++){
+            this->data[i] = rhs.data[i];
+        }
+    }
     //return ;
 }
 
-std::string &stringVector::operator[](unsigned position) {
+std::string &stringVector::operator[](unsigned position) {      //Testing passed
+    if(position >= allocated_length)
+        throw 42;
+    return data[position];
     //return ;
 }
 

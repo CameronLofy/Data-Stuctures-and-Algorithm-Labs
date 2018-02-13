@@ -2,7 +2,7 @@
 #include <stringVector.h>
 
 int main() {
-//Provided by Bryan as a simple test, thank you.
+    //Provided by Bryan as a simple test, thank you.
     stringVector sample;//sample contains [] nothing
     sample.append(std::string("Example string"));//sample contains ["Example string"] 1 item
     std::cout << sample[0] << std::endl;

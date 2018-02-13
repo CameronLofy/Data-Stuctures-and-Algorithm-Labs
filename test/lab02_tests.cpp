@@ -71,9 +71,14 @@ TEST(stringVector, reserve){
     EXPECT_EQ(3, hw9.capacity());
     hw9.append("Test String");
     EXPECT_EQ("Test String",hw9[0]);
+}
 
-
-
+TEST(stringVector, append){
+    stringVector hw10;
+    hw10.append("hello");
+    hw10.append("sir");
+    EXPECT_EQ("hello", hw10[0]);
+    EXPECT_EQ("sir", hw10[1]);
 }
 
 TEST(stringVector,expectionTesting){
@@ -82,12 +87,21 @@ TEST(stringVector,expectionTesting){
     hw5.append("Test String");
     EXPECT_EQ("Test String",hw5[0]);
     EXPECT_EQ("",hw5[1]);
-    EXPECT_THROW(hw5[2],int);
+    EXPECT_THROW(hw5[3],int);
 
     EXPECT_NO_THROW(hw5.swap(0,1));
     EXPECT_EQ("",hw5[0]);
     EXPECT_EQ("Test String",hw5[1]);
     EXPECT_THROW(hw5.swap(0,2),int);
+}
+
+TEST(stringVector, throwExecption) {
+    stringVector hw5;
+    hw5.reserve(2);
+    hw5.append("Test String");
+    EXPECT_EQ("Test String", hw5[0]);
+    EXPECT_EQ("", hw5[1]);
+    EXPECT_THROW(hw5[2], int);
 }
 
 TEST(stringVector,overloadAssignment){
