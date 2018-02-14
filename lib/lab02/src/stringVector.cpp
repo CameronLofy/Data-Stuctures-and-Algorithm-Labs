@@ -23,6 +23,9 @@ namespace lab2 {
     }
 
     void stringVector::reserve(unsigned new_size) {     //Passed Testing
+        if(new_size==allocated_length){
+            return;
+        }
         auto *temp= new std::string[new_size];
 
         //Copies data to temp, stops when reached new size or length
@@ -99,13 +102,12 @@ namespace lab2 {
     }
 
     void stringVector::sort() {             //passed testing
-        //Starting at end of array
+
         for(int i = (length -1); i>0; i--){
-            //starting at beginning of array
             for (int j=0; j<i; j++){
                 if (data [j].compare(data[j+1])>0){
                     //if compare returns positive 1
-                    swap(unsigned (j), unsigned (j+1));
+                    swap(j, j+1);
                 }
             }
         }

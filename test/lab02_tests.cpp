@@ -64,6 +64,10 @@ TEST(stringVector,reserveTruncation){
     EXPECT_EQ(2, hw4->size());
     EXPECT_EQ(2, hw4->capacity());
 
+    hw4->append("line 3");
+    EXPECT_EQ(3, hw4->size());
+    EXPECT_EQ(4, hw4->capacity());
+
 
 
     delete hw4;
