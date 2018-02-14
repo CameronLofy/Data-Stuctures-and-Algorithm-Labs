@@ -88,6 +88,7 @@ namespace lab2 {
                 this->data[i] = rhs.data[i];
             }
         }
+        return *this;
     }
 
     std::string &stringVector::operator[](unsigned position) {      //Testing passed
