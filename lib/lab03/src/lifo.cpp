@@ -2,7 +2,7 @@
 
 namespace lab3{
     lifo::lifo() {
-
+    //Reserve 100 spaces in lifo_storage
     }
 
     lifo::lifo(std::string input_string) {

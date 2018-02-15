@@ -7,7 +7,7 @@ namespace lab3 {
         lab2::stringVector lifo_storage;
         unsigned index;
     public:
-        lifo();                                          //Default constructor
+        lifo();                                          //Default constructor. Reserve 100 spaces in lifo_storage
         explicit lifo(std::string input_string);        //Create new lifo from string input
         lifo(const lifo &original);                     //Copy constructor
         virtual ~lifo();                                //Destructor

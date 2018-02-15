@@ -9,7 +9,7 @@ namespace lab3 {
         unsigned back_index;
 
     public:
-        fifo();                                          //Default constructor
+        fifo();                                          //Default constructor. Reserve 100 spaces in lifo_storage
         explicit fifo(std::string input_string);        //Create new fifo from string input
         fifo(const fifo &original);                     //Copy constructor
         virtual ~fifo();                                //Destructor
