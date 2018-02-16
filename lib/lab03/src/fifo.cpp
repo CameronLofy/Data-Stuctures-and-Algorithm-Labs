@@ -2,18 +2,31 @@
 
 namespace lab3{
     fifo::fifo() {
-    //Reserve 100 spaces in fifo_storage
+        front_index = 0;
+        back_index = 99;
+        lab2::stringVector fifo_storage;
+        fifo_storage.lab2::reserve(100);
     }
 
     fifo::fifo(std::string input_string) {
-
+        front_index = 0;
+        back_index = 99;
+        lab2::stringVector fifo_storage;
+        fifo_storage.lab2::reserve(100);
+        fifo_storage.lab2::append(input_string);
     }
 
     fifo::fifo(const fifo &original) {
+        front_index = 0;
+        back_index = 99;
+        lab2::stringVector fifo_storage;
+        fifo_storage.lab2::
+
 
     }
 
     fifo::~fifo() {
+        delete fifo_storage;
 
     }
 

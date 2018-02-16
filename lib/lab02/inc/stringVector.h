@@ -23,6 +23,7 @@ namespace lab2 {
         stringVector &operator=(stringVector const &rhs);
         std::string &operator[](unsigned position);
         void sort();
+        void lab2::stringVector::set_size(unsigned new_size);
     };
 }
 

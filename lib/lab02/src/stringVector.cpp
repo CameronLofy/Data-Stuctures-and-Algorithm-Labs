@@ -113,4 +113,9 @@ namespace lab2 {
         }
     }
 
+    void lab2::stringVector::set_size(unsigned new_size) {
+        length = new_size;
+        if(allocated_length != new_size) reserve(new_size);
+    }
+
 }
