@@ -98,4 +98,8 @@ TEST_F(Lab03Fixture, lifo_Push){
     EXPECT_EQ("Test 7", lifotest->top());
     lifotest->pop();
     EXPECT_EQ("Test 6", lifotest->top());
+    lifotest->pop();
+    EXPECT_EQ("Test 5", lifotest->top());
+    lifotest->push("New Test");
+    EXPECT_EQ("New Test", lifotest->top());
 }

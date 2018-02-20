@@ -56,7 +56,7 @@ namespace lab3{
     }
 
     void lifo::push(std::string input) {
-        lifo_storage.append(input);
+        lifo_storage[index] = input;
         index++;
 
     }
