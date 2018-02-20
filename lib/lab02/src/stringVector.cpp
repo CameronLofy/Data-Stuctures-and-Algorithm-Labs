@@ -94,7 +94,7 @@ namespace lab2 {
         return *this;
     }
 
-    std::string &stringVector::operator[](unsigned position) {      //Testing passed
+    std::string &stringVector::operator[](unsigned position) const {      //Testing passed
         if(position >= allocated_length)
             throw std::string("EXCEPTION THROWN");
         return data[position];
@@ -113,9 +113,10 @@ namespace lab2 {
         }
     }
 
-    void lab2::stringVector::set_size(unsigned new_size) {
+    void stringVector::set_size(unsigned new_size) {
         length = new_size;
         if(allocated_length != new_size) reserve(new_size);
     }
+
 
 }
