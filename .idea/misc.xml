@@ -5,6 +5,13 @@
     <sourceRoots>
       <file path="$PROJECT_DIR$/lib/lab02/inc" />
       <file path="$PROJECT_DIR$/lib/lab02/src" />
+      <file path="$PROJECT_DIR$/lib/lab04" />
+      <file path="$PROJECT_DIR$/lib/lab05" />
+      <file path="$PROJECT_DIR$/lib/lab06" />
+      <file path="$PROJECT_DIR$/lib/lab07" />
+      <file path="$PROJECT_DIR$/lib/lab08" />
+      <file path="$PROJECT_DIR$/lib/lab09" />
+      <file path="$PROJECT_DIR$/lib/lab10" />
     </sourceRoots>
   </component>
 </project>

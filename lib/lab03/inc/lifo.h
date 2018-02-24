@@ -13,10 +13,10 @@ namespace lab3 {
         virtual ~lifo();                                //Destructor
         lifo &operator=(const lifo &right);            //Assignment operator
 
-        bool is_empty() const;  // Return true if the lifo is empty and false if it is not
-        unsigned size() const;  // Return the size of the lifo
+        bool is_empty();  // Return true if the lifo is empty and false if it is not
+        int size();  // Return the size of the lifo
 
-        std::string top() const;        // Return the top of the lifo.
+        std::string top();        // Return the top of the lifo.
         void push(std::string input);   // Add input string to the top of the string
         void pop();                     // Remove the top string from the lifo
     };

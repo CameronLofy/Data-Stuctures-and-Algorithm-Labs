@@ -64,6 +64,8 @@ TEST_F(Lab01Fixture, isNext) {
     stream1->get_next_op();
     stream1->get_next_op();
     EXPECT_TRUE(stream1->expression_complete());
+
+
 }
 
 
