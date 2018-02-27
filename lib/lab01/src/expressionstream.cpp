@@ -1,108 +1,106 @@
 #include "expressionstream.h"
 
 namespace lab1 {
-    bool is_operator(char c);
-
-    bool is_digit(char c);
-
-/*Basic constructor: puts input string into buffer and points all string iterators to beginning of buffer*/
+    bool is_number(char c);
     expressionstream::expressionstream(const std::string &string_in) : buffer(string_in) {
-        pos_next = buffer.begin();
-        pos_next_int = buffer.begin();
-        pos_next_op = buffer.begin();
-        is_first_int = true;
-        align_next_op();
-        align_next_int();
+        current_pos = buffer.begin();
+        next_position = current_pos;
+        skip_white_space();
+    }
+
+    void expressionstream::skip_white_space() {
+        while (*current_pos == ' ' && current_pos != buffer.end()) ++current_pos;
+        while (*next_position == ' ' && next_position != buffer.end()) ++next_position;
+    }
+
+    std::string expressionstream::get_number() {
+        bool is_negative = false;
+        std::string::iterator number_start;
+
+        //check if the number is negative, this is used to skip any white space after '-'
+        if (*current_pos == '-') is_negative = true;
+
+        //find beginning of number
+        number_start = current_pos;
+        while (number_start != buffer.end() && !is_number(*number_start))++number_start;
+
+        //find ending of number
+        next_position = number_start;
+        while (next_position != buffer.end() && is_number(*next_position))++next_position;
+
+        //create and return number using position iterators
+        return (is_negative) ? '-' + std::string(number_start, next_position) : std::string(number_start,
+                                                                                            next_position);
 
     }
 
-/*returns current buffer as a string. This will return the entire expression.*/
-    std::string expressionstream::str() const {
-        return buffer;
+    bool expressionstream::is_negative() {
+        //after finding a '-' check if it is minus or negative by checking previous character
+
+        //create an iterator to the previous character
+        std::string::iterator negative_check = next_position - 1;
+
+        //move backward until reach non-whitespace
+        while (negative_check != buffer.begin() && *negative_check == ' ') --negative_check;
+
+        //if the previous character is not a number and not a close parenthesis the number is negative
+        //EXAMPLE: the following should get negatives on the 13's but not the 5's : "-13-(-13-(5--13)-5)--13"
+        return (!is_number(*negative_check) && *negative_check != ')');
     }
 
-/*Used to replace the buffer with a new expression*/
-    void expressionstream::str(const std::string &s) {
-        buffer = s;
+    std::string expressionstream::get_next_token() {
+        //move the current_position iterator forward then get the "current" token
+        current_pos = next_position;
+        return get_current_token();
     }
 
-/*checks to see if the iterator that is furthest behind has reached the end.
- * This will show that all of the string has been analyzed.*/
-    bool expressionstream::expression_complete() {
-        return *pos_next_op == '\0' && *pos_next_int == '\0';
+    std::string expressionstream::get_current_token() {
+        skip_white_space();
+
+        //check for end of buffer
+        if (current_pos == buffer.end()) return "\0";
+
+        //reset next position each time current token is called
+        //this should stop the 'next_position' from drifting on
+        //consecutive "get_current_token()" calls
+        next_position = current_pos;
+
+        if (next_token_is_int())
+            return get_number();
+
+        //if token is not a number then it is one character long
+        //setting the 'next_position' iterator forward one will
+        //return one character
+        ++next_position;
+        return std::string(current_pos, next_position);
     }
 
-/*will return each integer as a string one by one, in order. E.G. "1+2+3" a call to get next int would return a 1, another
- * call would return a 2, the next call would return a 3. All subsequent calls would return EOF*/
-    std::string expressionstream::get_next_int() {
-        find_next_int();
-        align_next_int();
-        return next_int;
+    bool expressionstream::next_token_is_int() {
+        skip_white_space();
+        if (is_number(*next_position))
+            return true;
+        if (*next_position != '-')
+            return false;
+        return is_negative();
     }
 
-//todo: update get_next operators to handle negative first numbers
-    std::string expressionstream::get_next_op() {
-        find_next_op();
-        align_next_op();
-        return next_op;
+    bool expressionstream::next_token_is_op() {
+        skip_white_space();
+        if (next_token_is_int()) return false;
+        return (*next_position == '+' || *next_position == '-' || *next_position == '*' || *next_position == '/');
     }
 
-    void expressionstream::update_pos_next() {
-        if (pos_next_op > pos_next_int)
-            pos_next = pos_next_int;
-        else
-            pos_next = pos_next_op;
+    bool expressionstream::next_token_is_paren_open() {
+        skip_white_space();
+        return *next_position == '(';
     }
 
-    void expressionstream::find_next_int() {
-        bool is_neg = false; //is_neg == negative number found
-        std::string::iterator int_end;//next_int will point to the beginning of a number, int_end will point to the end
-
-        if (*pos_next_int == '-') {
-            is_neg = true;
-            pos_next_int++;
-        }
-        int_end = pos_next_int + 1;
-        while (int_end != buffer.end() && is_digit(*int_end)) int_end++;
-
-        next_int = std::string(pos_next_int, int_end);
-        pos_next_int = int_end;
-
-        if (is_neg) next_int = '-' + next_int;
+    bool expressionstream::next_token_is_paren_close() {
+        skip_white_space();
+        return *next_position == ')';
     }
 
-    void expressionstream::find_next_op() {
-        next_op = std::string(pos_next_op, pos_next_op + 1);
-        pos_next_op++;
-        align_next_op();
-    }
-
-    void expressionstream::align_next_int() {
-        bool op_found = false; //is_neg == negative number found, op_found == operator already found(helps with negative numbers)
-        while (pos_next_int != buffer.end() && !is_digit(*pos_next_int) && !((op_found || is_first_int) &&
-                                                                             *pos_next_int ==
-                                                                             '-')) {//not end of file && not a digit(beginning of a number) && not a negative number beginning
-            if (is_operator(*pos_next_int))op_found = true;
-            pos_next_int++;
-        }
-        is_first_int = false;
-    }
-
-    void expressionstream::align_next_op() {
-        bool int_found = false;
-
-        while (pos_next_op != buffer.end() && !is_operator(*pos_next_op) || (!int_found && *pos_next_op == '-')) {
-            if (is_digit(*pos_next_op))int_found = true;
-            pos_next_op++;
-        }
-    }
-
-    bool is_digit(char c) {
+    bool is_number(char c) {
         return (c >= '0' && c <= '9');
     }
-
-    bool is_operator(char c) {
-        return (c == '+' || c == '-' || c == '*' || c == '/' || c == '(' || c == ')' || c == '^');
-    }
-
 }

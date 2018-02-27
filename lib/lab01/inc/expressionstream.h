@@ -8,29 +8,28 @@ namespace lab1 {
     class expressionstream {
     private:
         std::string buffer;
-        std::string next_int;
-        std::string next_op;
-        std::string::iterator pos_next;
-        std::string::iterator pos_next_int;
-        std::string::iterator pos_next_op;
-        bool is_first_int;
+        std::string::iterator current_pos;
+        std::string::iterator next_position;
 
-        void update_pos_next();
-        void find_next_int();
-        void find_next_op();
-        void align_next_int();
-        void align_next_op();
+        void skip_white_space();
 
+        std::string get_number();
+
+        bool is_negative();
     public:
         explicit expressionstream(const std::string &string_in);
 
-        std::string str() const;
-        void str (const std::string& s);
+        std::string get_next_token();
 
-        bool expression_complete();
+        std::string get_current_token();
 
-        std::string get_next_int();
-        std::string get_next_op();
+        bool next_token_is_int();
+
+        bool next_token_is_op();
+
+        bool next_token_is_paren_open();
+
+        bool next_token_is_paren_close();
     };
 }
 #endif //CMPE126S18_LABS_STSTRING_H
