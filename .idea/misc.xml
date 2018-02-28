@@ -13,5 +13,9 @@
       <file path="$PROJECT_DIR$/lib/lab09" />
       <file path="$PROJECT_DIR$/lib/lab10" />
     </sourceRoots>
+    <libraryRoots>
+      <file path="$PROJECT_DIR$/lib/lab05/inc" />
+      <file path="$PROJECT_DIR$/lib/lab05/src" />
+    </libraryRoots>
   </component>
 </project>
