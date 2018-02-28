@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
-#include "fifo.h"
 #include "lifo.h"
+#include "fifo.h"
 #include "calculator.h"
+
+
 
 class Lab04Fixture : public ::testing::Test {
 
@@ -14,3 +16,9 @@ protected:
 
 public:
 };
+
+TEST_F(Lab04Fixture, build_test){
+    std::string test = "1+2";
+    lab4::calculator obj(test);
+    EXPECT_EQ(3, obj.calculate());
+}
