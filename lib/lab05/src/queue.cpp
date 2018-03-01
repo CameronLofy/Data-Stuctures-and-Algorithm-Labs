@@ -17,7 +17,7 @@ namespace lab5{
     }
 
     queue &queue::operator=(const queue &RHS) {
-        return <#initializer#>;
+        //return <#initializer#>;
     }
 
     bool queue::isEmpty() const {

@@ -1,4 +1,4 @@
-#include "calculator.h"
+#include "fancy_calculator.h"
 #include "stack.h"
 #include "queue.h"
 
@@ -23,7 +23,7 @@ namespace lab5{
         return stream;
     }
 
-    int lab4::calculator::calculate() {
+    int calculator::calculate() {
         return 0;
     }
 

@@ -17,7 +17,7 @@ namespace lab5{
     }
 
     stack &stack::operator=(const stack &RHS) {
-        return <#initializer#>;
+        //return <#initializer#>;
     }
 
     bool stack::isEmpty() const {
@@ -29,7 +29,7 @@ namespace lab5{
     }
 
     std::string stack::top() const {
-        return std::__cxx11::string();
+        //return std::__cxx11::string();
     }
 
     void stack::enqueue(const std::string &data) {

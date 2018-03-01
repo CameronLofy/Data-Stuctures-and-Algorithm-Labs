@@ -17,7 +17,7 @@ namespace lab5 {
     }
 
     linked_list &lab5::linked_list::operator=(const linked_list &RHS) {
-        return <#initializer#>;
+        //return <#initializer#>;
     }
 
 
