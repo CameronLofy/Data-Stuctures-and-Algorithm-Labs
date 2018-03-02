@@ -28,3 +28,15 @@ TEST_F(Lab04Fixture, complex_eq){
     lab4::calculator obj(test);
     EXPECT_EQ(4, obj.calculate());
 }
+
+TEST_F(Lab04Fixture, complex_eq2){
+    std::string test = "7*3+(4/2-1)-2";
+    lab4::calculator obj(test);
+    EXPECT_EQ(20, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, complex_eq3){
+    std::string test = "16+4";
+    lab4::calculator obj(test);
+    EXPECT_EQ(20, obj.calculate());
+}

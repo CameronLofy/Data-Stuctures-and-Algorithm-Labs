@@ -7,15 +7,18 @@
 namespace lab4 {
     void calculator::parse_to_infix(std::string &input_expression) {
         lab1::expressionstream stream(input_expression);
+        bool is_number(std::string input_string);
+        bool is_operator(std::string input_string);
         int counter = 0;
         while(counter<input_expression.size()){
             stream.get_next_token();
+
             infix_expression.enqueue(stream.get_current_token());
             counter++;
         }
     }
 
-    void calculator::convert_to_postfix(lab3::fifo infix_expression) {      //infix_expression is already a copy, so we ca change it
+    void calculator::convert_to_postfix(lab3::fifo infix_expression) {      //infix_expression is already a copy, so we can change it
         lab3::lifo stack;
         bool is_number(std::string input_string);
         bool is_operator(std::string input_string);
@@ -25,7 +28,7 @@ namespace lab4 {
             current_token = infix_expression.top();
             infix_expression.dequeue();
 
-            if (is_number(current_token) == true){
+            if (is_number(current_token)){
                 postfix_expression.enqueue(current_token);
             }
 
