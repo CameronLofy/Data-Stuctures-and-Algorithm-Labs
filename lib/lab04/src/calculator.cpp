@@ -5,7 +5,7 @@
 #include "calculator.h"
 #include<iostream>
 namespace lab4 {
-    void calculator::parse_to_infix(std::string &input_expression) {
+    void calculator::parse_to_infix(std::string &input_expression) {        //TODO:: edit to handle multiple digit integers
         lab1::expressionstream stream(input_expression);
         bool is_number(std::string input_string);
         bool is_operator(std::string input_string);
@@ -72,7 +72,7 @@ namespace lab4 {
 
     }
 
-    std::istream &operator>>(std::istream &stream, calculator &RHS) {
+    std::istream &operator>>(std::istream &stream, calculator &RHS) {       //TODO:: something with this
         std::string input;
         while(stream.peek() != EOF){
 
@@ -135,7 +135,7 @@ namespace lab4 {
 
     }
 
-    std::ostream &operator<<(std::ostream &stream, calculator &RHS) {
+    std::ostream &operator<<(std::ostream &stream, calculator &RHS) {       //TODO:: do something else here
 
         return stream;
     }
