@@ -82,3 +82,33 @@ TEST_F(Lab04Fixture, parentheses2){
     lab4::calculator obj(test);
     EXPECT_EQ(10, obj.calculate());
 }
+
+TEST_F(Lab04Fixture, parentheses3){
+    std::string test = "5*(4-2)-(6-2)";
+    lab4::calculator obj(test);
+    EXPECT_EQ(6, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, doubleInt_parentheses){
+    std::string test = "10*(42-20)";
+    lab4::calculator obj(test);
+    EXPECT_EQ(220, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, doubleInt_parentheses2){
+    std::string test = "(42-20)*5";
+    lab4::calculator obj(test);
+    EXPECT_EQ(110, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, doubleInt_parentheses3){
+    std::string test = "(42-20)*10";
+    lab4::calculator obj(test);
+    EXPECT_EQ(220, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, doubleInt_parentheses4){
+    std::string test = "(42-20)*((22/2)-6)";
+    lab4::calculator obj(test);
+    EXPECT_EQ(110, obj.calculate());
+}

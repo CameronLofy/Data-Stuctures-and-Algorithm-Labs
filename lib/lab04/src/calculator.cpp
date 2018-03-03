@@ -29,9 +29,10 @@ namespace lab4 {
 
             else if(i==size-1){     //if last number, otherwise crashes when checking for temp[i+1]
                 infix_expression.enqueue(temp[i]);
+                infix_size++;
             }
 
-            if(!is_number(temp[i])){
+            if(i!=size-1 && !is_number(temp[i])){
                 infix_expression.enqueue(temp[i]);
                 infix_size++;
             }
@@ -50,7 +51,7 @@ namespace lab4 {
                     op=op+3;
                 }
                 if(op != size) {
-                    while (op != size - 1 && !is_operator(temp[op])) {      //finds position of operator
+                    while (op != size - 1 && is_number(temp[op])) {      //finds position of operator
                         op++;
                     }
                 }
@@ -191,6 +192,9 @@ namespace lab4 {
     // AUXILIARY FUNCTIONS
     bool is_number(std::string input_string){
         if(input_string >= "0" && input_string <= "999"){
+            if(input_string == "+" || input_string == "-" || input_string == "*" || input_string == "/" || input_string == "(" || input_string == ")") {
+                return false;
+            }
             return true;
         }
         return false;
