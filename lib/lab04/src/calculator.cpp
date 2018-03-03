@@ -120,11 +120,10 @@ namespace lab4 {
 
     }
 
-    std::istream &operator>>(std::istream &stream, calculator &RHS) {       //TODO:: something with this
+    std::istream &operator>>(std::istream &stream, calculator &RHS) {
         std::string input;
         while(stream.peek() != EOF){
-
-
+            input = stream.get();
         }
         RHS.parse_to_infix(input);
         RHS.convert_to_postfix(RHS.infix_expression);
@@ -183,8 +182,23 @@ namespace lab4 {
 
     }
 
-    std::ostream &operator<<(std::ostream &stream, calculator &RHS) {       //TODO:: do something else here
+    std::ostream &operator<<(std::ostream &stream, calculator &RHS) {
+        int infix_size = RHS.infix_expression.size();
+        int postfix_size = RHS.postfix_expression.size();
 
+        stream << std::string("Infix Expression: ");
+        for (int i = 0; i < infix_size; i++) {
+            stream << RHS.infix_expression.top();
+            RHS.infix_expression.dequeue();
+        }
+        stream << "\n";
+
+        stream << std::string("Postfix Expression: ");
+        for (int i = 0; i < postfix_size; i++) {
+            stream << RHS.postfix_expression.top();
+            RHS.postfix_expression.dequeue();
+        }
+        stream << "\n";
         return stream;
     }
 
