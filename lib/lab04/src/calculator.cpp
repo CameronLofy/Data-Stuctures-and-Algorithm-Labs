@@ -5,7 +5,7 @@
 #include "calculator.h"
 #include<iostream>
 namespace lab4 {
-    void calculator::parse_to_infix(std::string &input_expression) {        //TODO:: edit to handle multiple digit integers
+    void calculator::parse_to_infix(std::string &input_expression) {
         bool is_number(std::string input_string);
         bool is_operator(std::string input_string);
 

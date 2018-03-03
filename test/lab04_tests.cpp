@@ -70,3 +70,15 @@ TEST_F(Lab04Fixture, addition){
     lab4::calculator obj(test);
     EXPECT_EQ(40, obj.calculate());
 }
+
+TEST_F(Lab04Fixture, parentheses){
+    std::string test = "(4-2)*5";
+    lab4::calculator obj(test);
+    EXPECT_EQ(10, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, parentheses2){
+    std::string test = "5*(4-2)";
+    lab4::calculator obj(test);
+    EXPECT_EQ(10, obj.calculate());
+}
