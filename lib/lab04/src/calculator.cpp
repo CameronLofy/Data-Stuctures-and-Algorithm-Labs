@@ -6,15 +6,62 @@
 #include<iostream>
 namespace lab4 {
     void calculator::parse_to_infix(std::string &input_expression) {        //TODO:: edit to handle multiple digit integers
-        lab1::expressionstream stream(input_expression);
         bool is_number(std::string input_string);
         bool is_operator(std::string input_string);
-        int counter = 0;
-        while(counter<input_expression.size()){
-            stream.get_next_token();
 
-            infix_expression.enqueue(stream.get_current_token());
-            counter++;
+        int size = 0;
+        int op = 0;
+        int infix_size = 0;
+
+        std::string temp[input_expression.size()];
+        for(std::string::iterator it = input_expression.begin(); it != input_expression.end(); ++it) {
+            //do_things_with(*it);
+            temp[size] = *it;
+            size++;
+        }
+
+
+        for(int i=0; i<size; i++){
+
+            if(temp[i] == " "){      //skips blank spaces
+                i++;
+            }
+
+            else if(i==size-1){     //if last number, otherwise crashes when checking for temp[i+1]
+                infix_expression.enqueue(temp[i]);
+            }
+
+            if(!is_number(temp[i])){
+                infix_expression.enqueue(temp[i]);
+                infix_size++;
+            }
+
+            if(i!=size-1 && is_number(temp[i]) && !is_number(temp[i+1]) ){  //if only one digit, queues it right away
+                infix_expression.enqueue(temp[i]);
+                infix_size++;
+            }
+
+            if(i!=size-1 && is_number(temp[i]) && is_number(temp[i+1])){    //if multidigit number
+                op=i;
+                if(op == size-2){
+                    op=op+2;
+                }
+                if(op == size-3){
+                    op=op+3;
+                }
+                if(op != size) {
+                    while (op != size - 1 && !is_operator(temp[op])) {      //finds position of operator
+                        op++;
+                    }
+                }
+                std::string int_temp;
+                for(int z=i; z < op; z++){
+                    int_temp += temp[i++];      //puts values of temp[i] into string int_temp until it reached the operator
+                }
+                i = op-1;
+                infix_expression.enqueue(int_temp);
+                infix_size++;
+            }
         }
     }
 
@@ -143,7 +190,7 @@ namespace lab4 {
 
     // AUXILIARY FUNCTIONS
     bool is_number(std::string input_string){
-        if(input_string =="0"||input_string =="1"||input_string =="2"||input_string =="3"||input_string =="4"||input_string =="5"||input_string =="6"||input_string =="7"||input_string =="8"||input_string =="9"){
+        if(input_string >= "0" && input_string <= "999"){
             return true;
         }
         return false;

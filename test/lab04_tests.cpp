@@ -36,7 +36,37 @@ TEST_F(Lab04Fixture, complex_eq2){
 }
 
 TEST_F(Lab04Fixture, complex_eq3){
-    std::string test = "16+4";
+    std::string test = "2+16+4";
     lab4::calculator obj(test);
-    EXPECT_EQ(20, obj.calculate());
+    EXPECT_EQ(22, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, complex_eq4){
+    std::string test = "(420/10+8-4)/2";
+    lab4::calculator obj(test);
+    EXPECT_EQ(23, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, division){
+    std::string test = "999/9";
+    lab4::calculator obj(test);
+    EXPECT_EQ(111, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, multiplication){
+    std::string test = "2*16*4";
+    lab4::calculator obj(test);
+    EXPECT_EQ(128, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, subtraction){
+    std::string test = "24-8-4+2-3";
+    lab4::calculator obj(test);
+    EXPECT_EQ(11, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, addition){
+    std::string test = "1+15+4+20";
+    lab4::calculator obj(test);
+    EXPECT_EQ(40, obj.calculate());
 }
