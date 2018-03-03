@@ -29,7 +29,7 @@ namespace lab5{
     }
 
     std::string queue::top() const {
-        return std::__cxx11::string();
+        //return std::__cxx11::string();
     }
 
     void queue::enqueue(const std::string &data) {

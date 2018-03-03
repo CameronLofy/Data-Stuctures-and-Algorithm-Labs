@@ -18,8 +18,10 @@ namespace lab5 {
         unsigned queueSize() const;
 
         std::string top() const;
-        void enqueue(const std::string &data);
-        void dequeue();
+
+        void push(const std::string &data);
+
+        void pop();
 
         friend std::ostream& operator<<(std::ostream& stream, stack& RHS);
         friend std::istream& operator>>(std::istream& stream, stack& RHS);

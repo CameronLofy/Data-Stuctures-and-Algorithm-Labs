@@ -1,6 +1,6 @@
 #ifndef CMPE126S18_LABS_LIB_LAB5_NODE_H
 #define CMPE126S18_LABS_LIB_LAB5_NODE_H
-#include <String>
+#include <string>
 
 namespace lab5 {
     class node {

@@ -32,11 +32,11 @@ namespace lab5{
         //return std::__cxx11::string();
     }
 
-    void stack::enqueue(const std::string &data) {
+    void stack::push(const std::string &data) {
 
     }
 
-    void stack::dequeue() {
+    void stack::pop() {
 
     }
 
