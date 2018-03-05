@@ -137,15 +137,17 @@ namespace lab4 {
         int final;
 
         lab3::lifo calc_stack;
-        while(!postfix_expression.is_empty()){
-            if(is_number(postfix_expression.top())) {
-                calc_stack.push(postfix_expression.top());
-                postfix_expression.dequeue();
+        lab3::fifo post_copy;
+        post_copy = postfix_expression;
+        while(!post_copy.is_empty()){
+            if(is_number(post_copy.top())) {
+                calc_stack.push(post_copy.top());
+                post_copy.dequeue();
             }
 
-            else if(is_operator(postfix_expression.top())){
-                std::string tempOP = postfix_expression.top();
-                postfix_expression.dequeue();
+            else if(is_operator(post_copy.top())){
+                std::string tempOP = post_copy.top();
+                post_copy.dequeue();
                 int x = std::stoi(calc_stack.top());
                 calc_stack.pop();
                 int y = std::stoi(calc_stack.top());

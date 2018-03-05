@@ -38,10 +38,10 @@ namespace lab3{
             return (*this);
         }
         fifo_storage.reserve(right.fifo_storage.capacity());
-        front_index = right.front_index;
-        back_index = right.back_index;
+        this->front_index = right.front_index;
+        this->back_index = right.back_index;
         for(int i = 0; i<right.fifo_storage.size(); i++){
-            fifo_storage[i] = right.fifo_storage[i];
+            this->fifo_storage[i] = right.fifo_storage[i];
         }
         //return <#initializer#>;
 
