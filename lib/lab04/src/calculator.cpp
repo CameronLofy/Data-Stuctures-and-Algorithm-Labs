@@ -235,7 +235,7 @@ namespace lab4 {
             lab3::lifo push(input_string);
         }
         else {
-            throw"ERROR: NOT OPERATOR OR NUMBER";
+            throw "ERROR: NOT OPERATOR OR NUMBER";
         }
     }
 
