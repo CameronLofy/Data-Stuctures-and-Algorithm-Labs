@@ -8,6 +8,7 @@ namespace lab5 {
 
     linked_list::linked_list(std::string &data) {
         head->data = data;
+        tail = head;
     }
 
     linked_list::linked_list(const linked_list &original) {     //copy constructor
@@ -25,6 +26,15 @@ namespace lab5 {
     }
 
     linked_list &lab5::linked_list::operator=(const linked_list &RHS) {
+        node *copy = RHS.head;
+        node *current = new node(copy->data);
+        while(current->next!=NULL){
+            current = current->next;
+            copy = copy->next;
+            current->data = copy->data;
+        }
+
+
         //return <#initializer#>;
     }
 
@@ -62,9 +72,11 @@ namespace lab5 {
         if (prev) { // if a previous node exists
             prev->next = temp;
             temp->next = current;
-        } else { // there is no previous node, temp is at at head
+        }
+
+        else { // there is no previous node, temp is at at head
             head = temp;
-           temp->next = current;
+            head->next = current;
         }
         delete temp;
 
@@ -73,11 +85,8 @@ namespace lab5 {
 
     void linked_list::append(const std::string input) {
         node *temp = new node(input);
-        node *tail = head;
-        while(tail->next!=NULL){
-            tail = tail->next;
-        }
         tail->next = temp;
+        tail = tail->next;
 
         delete temp;
 
@@ -116,6 +125,9 @@ namespace lab5 {
     }
 
     std::istream& operator>>(std::istream &stream, linked_list &RHS) {
+        std::string temp;
+        getline(stream, temp);
+        RHS.append(temp);
         return stream;
     }
 

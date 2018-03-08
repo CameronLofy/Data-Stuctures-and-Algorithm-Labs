@@ -34,17 +34,14 @@ namespace lab3{
     }
 
     fifo &fifo::operator=(const fifo &right) {
-        if (&right == this){
-            return (*this);
-        }
-        fifo_storage.reserve(right.fifo_storage.capacity());
-        this->front_index = right.front_index;
-        this->back_index = right.back_index;
-        for(int i = 0; i<right.fifo_storage.size(); i++){
-            this->fifo_storage[i] = right.fifo_storage[i];
-        }
-        //return <#initializer#>;
 
+        fifo_storage.reserve(right.fifo_storage.capacity());
+        this-> front_index = right.front_index;//Assignment operators
+        this->back_index = right.back_index;
+        for(int i=0;i<right.fifo_storage.size();i++){
+            this->fifo_storage[i]=right.fifo_storage[i];
+        }
+        return *this;
     }
 
     bool fifo::is_empty() const {
