@@ -15,7 +15,6 @@ namespace lab4 {
 
         std::string temp[input_expression.size()];
         for(std::string::iterator it = input_expression.begin(); it != input_expression.end(); ++it) {
-            //do_things_with(*it);
             temp[size] = *it;
             size++;
         }
@@ -95,9 +94,19 @@ namespace lab4 {
             }
 
             if (current_token == ")") {
+                if(stack.is_empty()){
+                    throw (std::string("ERROR: INVALID ARGUMENT"));
+                }
                 while (stack.top() != "(") {
+
                     postfix_expression.enqueue(stack.top());
                     stack.pop();
+
+                    if(stack.is_empty()){
+                        throw (std::string("ERROR: INVALID ARGUMENT"));
+                    }
+
+
                 }
                 stack.pop();
             }

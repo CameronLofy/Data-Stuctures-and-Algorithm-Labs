@@ -114,7 +114,19 @@ TEST_F(Lab04Fixture, doubleInt_parentheses4){
 }
 
 TEST_F(Lab04Fixture, doubleInt_parentheses5){
-    std::string test = "(((4*2)+10)/9)-(12/3-3)";
+    std::string test = "(((4*2)+10)/9)-(12/3-4)";
     lab4::calculator obj(test);
-    EXPECT_EQ(1, obj.calculate());
+    EXPECT_EQ(2, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, TripleInt_parentheses){
+    std::string test = "(((400*2)/16)+500)/11";
+    lab4::calculator obj(test);
+    EXPECT_EQ(50, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, invalid){
+    std::string test = ")3+4)";
+    lab4::calculator obj(test);
+    EXPECT_THROW(obj.calculate(),std::string);
 }
