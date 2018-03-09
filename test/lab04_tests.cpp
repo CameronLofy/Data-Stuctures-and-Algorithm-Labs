@@ -112,3 +112,9 @@ TEST_F(Lab04Fixture, doubleInt_parentheses4){
     lab4::calculator obj(test);
     EXPECT_EQ(110, obj.calculate());
 }
+
+TEST_F(Lab04Fixture, doubleInt_parentheses5){
+    std::string test = "(((4*2)+10)/9)-(12/3-3)";
+    lab4::calculator obj(test);
+    EXPECT_EQ(1, obj.calculate());
+}

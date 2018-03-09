@@ -68,13 +68,15 @@ namespace lab4 {
 
     void calculator::convert_to_postfix(lab3::fifo infix_expression) {      //infix_expression is already a copy, so we can change it
         lab3::lifo stack;
+        lab3::fifo infix_copy(infix_expression);
         bool is_number(std::string input_string);
         bool is_operator(std::string input_string);
         int operator_priority(std::string operator_in);
+
         std::string current_token;
-        while (!infix_expression.is_empty()) {
-            current_token = infix_expression.top();
-            infix_expression.dequeue();
+        while (!infix_copy.is_empty()) {
+            current_token = infix_copy.top();
+            infix_copy.dequeue();
 
             if (is_number(current_token)){
                 postfix_expression.enqueue(current_token);
