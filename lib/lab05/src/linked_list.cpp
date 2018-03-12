@@ -87,6 +87,7 @@ namespace lab5 {
         node *temp = new node(input);
         tail->next = temp;
         tail = tail->next;
+        tail->next = NULL;
 
         delete temp;
 
