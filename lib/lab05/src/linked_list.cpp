@@ -22,7 +22,12 @@ namespace lab5 {
     }
 
     linked_list::~linked_list() {
-
+        while(head!=NULL){
+            node *temp = head->next;
+            delete head;
+            head= temp;
+        }
+        tail = nullptr;
     }
 
     linked_list &lab5::linked_list::operator=(const linked_list &RHS) {
@@ -112,16 +117,20 @@ namespace lab5 {
             throw "ERROR: INPUT INTEGER TOO BIG FOR LIST";
         }
         else {
-            node *temp = current;
-            temp->next = current;
-            delete head;
-            head = temp;
+            head = current->next;
         }
 
 
     }
 
     std::ostream& operator<<(std::ostream &stream, linked_list &RHS) {
+        int size = RHS.listSize();
+
+        stream << std::string("Linked List: ");
+        for (int i = 0; i < size; i++) {
+            stream << RHS.get_value_at(i);
+            stream << " ";
+        }
         return stream;
     }
 
@@ -134,9 +143,45 @@ namespace lab5 {
 
     void linked_list::sort() {
 
+        int i,j;
+        int size = listSize();
+        std::string temp;
+
+        for (j = 0; j < size-1; j++)
+        {
+            int iMin = j;
+            for (i = j+1; i < size; i++)
+            {
+                if (get_value_at(i) < get_value_at(iMin))
+                {
+                    iMin = i;
+                }
+            }
+
+            if (iMin != j)
+            {
+                std::string temp_i = get_value_at(i);   //creates temporary string values
+                std::string temp_j = get_value_at(j);
+
+                remove(j);
+                insert(temp_i, j);      //replaces the value at j with temp_i
+
+                remove(i);
+                insert(temp_j, i);      //replaces the value at i with temp_j
+            }
+        }
     }
 
-    std::string linked_list::get_value_at(unsigned location) {
-
+    std::string linked_list::get_value_at(unsigned location) const{
+        std::string value =0;
+        node* current = head;
+        for(int i=0; i<location; i++){
+            current= current->next;
+        }
+        if(head == NULL){
+            throw "ERROR: NO VALUES IN LINKED LIST";
+        }
+        value = current->data;
+        return value;
     }
 }

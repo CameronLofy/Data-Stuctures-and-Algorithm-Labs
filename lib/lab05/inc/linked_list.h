@@ -25,7 +25,7 @@ namespace lab5 {
         bool isEmpty() const;
         unsigned listSize() const;
 
-        std::string get_value_at(unsigned location);
+        std::string get_value_at(unsigned location)const;
         void insert(const std::string input, unsigned location = 0 );
         void append(const std::string input);
         void remove(unsigned location = 0);
