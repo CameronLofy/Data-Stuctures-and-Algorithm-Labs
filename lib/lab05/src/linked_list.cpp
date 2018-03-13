@@ -45,7 +45,7 @@ namespace lab5 {
 
 
     bool linked_list::isEmpty() const {
-        if(head == NULL && tail == NULL) {
+        if(head == NULL) {
             return true;
         }
         return false;
@@ -83,18 +83,40 @@ namespace lab5 {
             head = temp;
             head->next = current;
         }
-        delete temp;
 
 
     }
 
     void linked_list::append(const std::string input) {
+        node* current=head;
+        if(head == NULL){
+            node *temp = new node(input);
+            head = temp;
+            tail = temp;
+        }
+        else {
+            while (current->next != NULL) {
+                current = current->next;
+            }
+            node *temp = new node(input);
+            current->next = temp;
+            temp->next = NULL;
+            tail = temp;
+        }
+
+
+
+        /*if(tail ==NULL){
+            head->data = input;
+            tail->data = input;
+            tail->next = NULL;
+        }
         node *temp = new node(input);
         tail->next = temp;
         tail = tail->next;
         tail->next = NULL;
 
-        delete temp;
+        delete temp;*/
 
 
     }
@@ -111,12 +133,11 @@ namespace lab5 {
         if (prev) { // if a previous node exists
             prev->next = current->next;
             current = NULL;
-            delete current;
         }
-        if(location>=listSize()){
+        if(location>listSize()){
             throw "ERROR: INPUT INTEGER TOO BIG FOR LIST";
         }
-        else {
+        else if(!prev){
             head = current->next;
         }
 
@@ -143,13 +164,12 @@ namespace lab5 {
 
     void linked_list::sort() {
 
-        int i,j;
+        unsigned i,j;
         int size = listSize();
-        std::string temp;
 
         for (j = 0; j < size-1; j++)
         {
-            int iMin = j;
+            unsigned iMin = j;
             for (i = j+1; i < size; i++)
             {
                 if (get_value_at(i) < get_value_at(iMin))
@@ -160,20 +180,20 @@ namespace lab5 {
 
             if (iMin != j)
             {
-                std::string temp_i = get_value_at(i);   //creates temporary string values
-                std::string temp_j = get_value_at(j);
+                std::string temp_i(get_value_at(iMin));   //creates temporary string values
+                std::string temp_j(get_value_at(j));
 
                 remove(j);
                 insert(temp_i, j);      //replaces the value at j with temp_i
 
-                remove(i);
-                insert(temp_j, i);      //replaces the value at i with temp_j
+                remove(iMin);
+                insert(temp_j, iMin);      //replaces the value at i with temp_j
             }
         }
     }
 
     std::string linked_list::get_value_at(unsigned location) const{
-        std::string value =0;
+        std::string value;
         node* current = head;
         for(int i=0; i<location; i++){
             current= current->next;
