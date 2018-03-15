@@ -124,9 +124,3 @@ TEST_F(Lab04Fixture, TripleInt_parentheses){
     lab4::calculator obj(test);
     EXPECT_EQ(50, obj.calculate());
 }
-
-TEST_F(Lab04Fixture, invalid){
-    std::string test = ")3+4)";
-    lab4::calculator obj(test);
-    EXPECT_ANY_THROW(obj.calculate());
-}

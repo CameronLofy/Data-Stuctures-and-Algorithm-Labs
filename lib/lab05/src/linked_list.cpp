@@ -45,7 +45,7 @@ namespace lab5 {
 
 
     bool linked_list::isEmpty() const {
-        if(head == NULL) {
+        if(!head) {
             return true;
         }
         return false;

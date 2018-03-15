@@ -35,6 +35,11 @@ TEST_F(Lab05Fixture, Queue_2){
     lab5::queue q1(Test);
     q1.enqueue("Hello");
     EXPECT_EQ("Test", q1.top());
+    lab5::queue q2;
+    q2 = q1;
+    EXPECT_EQ("Test", q2.top());
+    lab5::queue q3(q1);
+    EXPECT_EQ("Test", q3.top());
     q1.enqueue("World");
     EXPECT_EQ(3, q1.queueSize());
     EXPECT_EQ("Test", q1.top());
@@ -89,4 +94,72 @@ TEST_F(Lab05Fixture, Sort_2){
     EXPECT_EQ("6", list_1.get_value_at(0));
     EXPECT_EQ("7", list_1.get_value_at(1));
 
+}
+
+TEST_F(Lab05Fixture, Stack){
+    lab5::stack S1;
+    EXPECT_TRUE(S1.isEmpty());
+    std::string a = "hello";
+    std::string b = "world";
+    S1.push(a);
+    EXPECT_EQ("hello", S1.top());
+    S1.push(b);
+    EXPECT_EQ("world",S1.top());
+    EXPECT_EQ(2,S1.queueSize());
+    lab5::stack S2;
+    S2 = S1;
+    EXPECT_EQ("world", S2.top());
+    EXPECT_EQ(2,S1.queueSize());
+    S1.pop();
+    S2.pop();
+    EXPECT_EQ("hello",S1.top());
+    EXPECT_EQ("hello",S1.top());
+}
+
+TEST_F(Lab05Fixture, Calculator){
+    std::string test1 = "3^2";
+    lab5::calculator calc(test1);
+    EXPECT_EQ(9, calc.calculate());
+}
+
+TEST_F(Lab05Fixture, TripleInt_parentheses){
+    std::string test = "(((400*2)/16)+500)/11";
+    lab5::calculator obj(test);
+    EXPECT_EQ(50, obj.calculate());
+}
+
+TEST_F(Lab05Fixture, build_test){
+    std::string test = "4+2+5+8";
+    lab5::calculator obj(test);
+    EXPECT_EQ(19, obj.calculate());
+}
+
+TEST_F(Lab05Fixture, Fancy_parentheses){
+    std::string test = "(((4^2)/8)+2)";
+    lab5::calculator obj(test);
+    EXPECT_EQ(4, obj.calculate());
+}
+
+TEST_F(Lab05Fixture, Fancy_Modulo){
+    std::string test = "15%2";
+    lab5::calculator obj(test);
+    EXPECT_EQ(1, obj.calculate());
+}
+
+TEST_F(Lab05Fixture, Fancy_Modulo_2){
+    std::string test = "(((40%19)*5)^2)/25";
+    lab5::calculator obj(test);
+    EXPECT_EQ(4, obj.calculate());
+}
+
+TEST_F(Lab05Fixture, Fancy_Modulo_3){
+    std::string test = "((((40%19)*5)^2)/25)";
+    lab5::calculator obj(test);
+    EXPECT_EQ(4, obj.calculate());
+}
+
+TEST_F(Lab05Fixture, complicated2){
+    std::string a = "10-(2^3)";
+    lab5::calculator C(a);
+    EXPECT_EQ(2,C.calculate());
 }
