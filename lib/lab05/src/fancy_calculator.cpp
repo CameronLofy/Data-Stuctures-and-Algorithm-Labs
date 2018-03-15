@@ -3,7 +3,7 @@
 #include "queue.h"
 
 namespace lab5{
-    void calculator::parse_to_infix(std::string &input_expression) {        //TODO:: fix bug with end parentheses included in digit (current token:"25)"
+    void calculator::parse_to_infix(std::string &input_expression) {
         bool is_number(std::string input_string);
         bool is_operator(std::string input_string);
 
