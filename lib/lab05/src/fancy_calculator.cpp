@@ -41,14 +41,14 @@ namespace lab5{
 
             if(i!=size-1 && is_number(temp[i]) && is_number(temp[i+1])){    //if multidigit number
                 op=i;
-                if(op == size-2){
+                /*if(op == size-2){
                     op=op+2;
                 }
                 if(op == size-3){
                     op=op+3;
-                }
+                }*/
                 if(op != size) {
-                    while (op != size - 1 && is_number(temp[op])) {      //finds position of operator
+                    while (op != size && is_number(temp[op])) {      //finds position of operator
                         op++;
                     }
                 }
@@ -87,6 +87,7 @@ namespace lab5{
                 }
                 stack.push(current_token);
             }
+
             if (current_token == "(") {
                 stack.push(current_token);
             }
@@ -237,7 +238,7 @@ namespace lab5{
     // AUXILIARY FUNCTIONS
     bool is_number(std::string input_string){
         if(input_string >= "0" && input_string <= "999"){
-            if(input_string == "+" || input_string == "-" || input_string == "*" || input_string == "/" || input_string == "(" || input_string == ")") {
+            if(input_string == "+" || input_string == "-" || input_string == "*" || input_string == "/" || input_string == "(" || input_string == ")" || input_string == "%") {
                 return false;
             }
             return true;
@@ -258,10 +259,10 @@ namespace lab5{
 
     int operator_priority(std::string operator_in){
         int priority;
-        if(operator_in == "+"||"-"){
+        if(operator_in == "+"|| operator_in == "-"){
             priority = 1;
         }
-        if(operator_in == "*" || "/" || "%"){
+        if(operator_in == "*" || operator_in == "/" || operator_in == "%"){
             priority = 2;
         }
         if(operator_in == "^"){
