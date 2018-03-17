@@ -2,11 +2,13 @@
 
 namespace lab6{
     doubly_linked_list::doubly_linked_list() {
-
+        head = NULL;
+        tail = NULL;
     }
 
     doubly_linked_list::doubly_linked_list(int input) {
-
+        head = new node(input);
+        tail = new node(input);
     }
 
     doubly_linked_list::doubly_linked_list(std::vector<int> vector_input) {
@@ -22,10 +24,17 @@ namespace lab6{
     }
 
     int doubly_linked_list::get_data(unsigned position) {
-
+        int value;
+        node* current = head;
+        for(int i=0; i<position; i++){
+            current= current->next;
+        }
+        value = current->get_data();
+        return value;
     }
 
     std::vector<int> doubly_linked_list::get_set(unsigned position_from, unsigned position_to) {
+        
 
     }
 
