@@ -34,7 +34,7 @@ namespace lab6{
     }
 
     std::vector<int> doubly_linked_list::get_set(unsigned position_from, unsigned position_to) {
-        
+
 
     }
 

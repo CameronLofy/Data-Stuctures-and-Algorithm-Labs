@@ -158,27 +158,17 @@ TEST_F(Lab05Fixture, Fancy_Modulo_3){
     EXPECT_EQ(4, obj.calculate());
 }
 
-TEST_F(Lab05Fixture, complicated2){
-    std::string a = "10-(2^3)";
-    lab5::calculator C(a);
-    EXPECT_EQ(2,C.calculate());
-}
-
 TEST_F(Lab05Fixture, Fancy_Modulo_Paren){
     std::string test = "(150%10)";
     lab5::calculator obj(test);
     EXPECT_EQ(0, obj.calculate());
 }
 
-TEST_F(Lab05Fixture, Fancy_As_Fuck){
-    std::string test = "(425%7)*(3^3)-(1+12*(10%7))";
+TEST_F(Lab05Fixture, Like_Really_Fancy){
+    std::string test = "(3^3)*(425%10)-(3+(43%40)*12)";
     lab5::calculator obj(test);
-    EXPECT_EQ(98, obj.calculate());
+    EXPECT_EQ(96, obj.calculate());
 }
 
-TEST_F(Lab05Fixture, complicated){
-    std::string a = "2-(3*4/6)+4";
-    lab5::calculator C(a);
-    EXPECT_EQ(4,C.calculate());
-}
+
 
