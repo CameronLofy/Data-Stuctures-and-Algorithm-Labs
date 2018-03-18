@@ -12,15 +12,36 @@ namespace lab6{
     }
 
     doubly_linked_list::doubly_linked_list(std::vector<int> vector_input) {
+        if(vector_input.empty()){
+            doubly_linked_list();
+        }
+        for(int i=0; i<vector_input.size(); i++){
+            append(vector_input.at(i));
+        }
 
     }
 
     doubly_linked_list::doubly_linked_list(const doubly_linked_list &original) {
+        node* current;
+        current = original.head;
+        head = original.head;
 
+        while(current){
+            node* copy = new node(current->get_data());
+            copy->next = current->next;
+            copy->prev = current->prev;
+            current = current->next;
+        }
+        tail = original.tail;
     }
 
     doubly_linked_list::~doubly_linked_list() {
-
+        node* temp;
+        while(head){
+            temp = head;
+            head = head->next;
+            delete temp;
+        }
     }
 
     int doubly_linked_list::get_data(unsigned position) {
@@ -34,44 +55,256 @@ namespace lab6{
     }
 
     std::vector<int> doubly_linked_list::get_set(unsigned position_from, unsigned position_to) {
+        std::vector<int> set;
+        int value;
+        node* current = head;
+        if(position_from >=size() || position_to>=size() || position_from > position_to || position_from < 0 || position_to < 0){
+            throw "ERROR: invalid positions";
+        }
 
-
+        for(int i=0; i<position_from; i++){
+            current= current->next;
+        }
+        for(int i=position_from; i<=position_to; i++){
+            value = current->get_data();
+            current= current->next;
+            set.push_back(value);
+        }
+        return set;
     }
 
     unsigned doubly_linked_list::size() {
-
+        node* current = head;
+        unsigned count=0;
+        while(current != NULL){
+            current = current->next;
+            count++;
+        }
+        return count;
     }
 
     bool doubly_linked_list::is_empty() {
+        if(size() == 0){
+            return true;
+        }
+        return false;
 
     }
 
     void doubly_linked_list::append(int input) {
+        node* current=head;
+        if(head == NULL){
+            node *temp = new node(input);
+            head = temp;
+            tail = temp;
+        }
+        else {
+            while (current->next != NULL) {
+                current = current->next;
+
+            }
+            node *temp = new node(input);
+            current->next = temp;
+            temp->next = NULL;
+            temp->prev = current;
+            tail = temp;
+        }
 
     }
 
     void doubly_linked_list::insert(int input, unsigned int location) {
+        node *prev=NULL;
+        node *current;
+        node *temp = new node(input);
+        current = head;
+        //make for loop to find location,
+        for(int i = 0; i < location; i++) { // iterate to the two nodes you want to insert between
+            prev = current;
+            current = current->next;
+        }
+        if (prev) { // if a previous node exists
+            prev->next = temp;
+            temp->prev = prev;
+            temp->next = current;
+            current->prev = temp;
+        }
+
+        else { // there is no previous node, temp is at at head
+            head = temp;
+            head->next = current;
+            current->prev = head;
+            head->prev = NULL;
+        }
 
     }
 
     void doubly_linked_list::remove(unsigned location) {
+        node *prev=NULL;
+        node *current;
+        current = head;
+
+        for(int i = 0; i < location; i++) { // iterate to the location of the node you want to delete
+            prev = current;
+            current = current->next;
+        }
+        if (prev) { // if a previous node exists
+            prev->next = current->next;
+            current->next->prev = current->prev;
+        }
+        if(location>size()){
+            throw "ERROR: INPUT INTEGER TOO BIG FOR LIST";
+        }
+        else if(!prev){
+            head = current->next;
+            current->next->prev = NULL;
+        }
+        delete(current);
 
     }
 
     doubly_linked_list doubly_linked_list::split(unsigned position) {
-
+        doubly_linked_list split(get_set(position, size()-1));
+        for(int i=size()-1; i>=position; i--){
+            remove(i);
+        }
+        return split;
     }
 
     doubly_linked_list doubly_linked_list::split_set(unsigned position_1, unsigned position_2) {
+        doubly_linked_list split(get_set(position_1, position_2));
+        for(int i=position_2; i>=position_1; i--){
+            remove(i);
+        }
+        return split;
 
     }
 
     void doubly_linked_list::swap(unsigned position_1, unsigned position_2) {
 
+        if(position_1 > position_2){    //so position_1 ia always first
+            int temp = position_1;
+            position_1 = position_2;
+            position_2 = temp;
+        }
+
+        if(position_1 == position_2){
+            throw "ERROR: Cannot swap same position";
+        }
+
+        node* A = head;
+        for(int i=0; i<position_1; i++) {
+            A = A->next;
+        }
+
+        node* B = head;
+        for(int i=0; i<position_2; i++){
+            B = B->next;
+        }
+
+        node* Aprev = A->prev;
+        node* Anext = A->next;
+        node* Bprev = B->prev;
+        node* Bnext = B->next;
+
+        if(Anext == B && Aprev != NULL && Bnext != NULL){   //Swapping elements next to each other
+            Aprev->next = B;
+            B->prev = Aprev;
+            B->next = A;
+            A->prev = B;
+            A->next = Bnext;
+            Bnext->prev = A;
+        }
+
+        else if(Aprev == NULL && Bnext == NULL){ //when swapping head and tail
+            if(size()==2){      //if next to each other
+                B->next = A;
+                A->prev = B;
+                A->next = NULL;
+                B->prev = NULL;
+            }
+            else {
+                A->prev = Bprev;
+                A->next = NULL;
+                Bprev->next = A;
+                B->prev = NULL;
+                B->next = Anext;
+                Anext->prev = B;
+            }
+        }
+
+        else if(Aprev == NULL && Bnext != NULL){    //Swapping head and another element that's not tail
+
+            if(Anext == B){         //If next to each other
+                Bnext->prev = A;
+                A->next = Bnext;
+                B->next = A;
+                B->prev = NULL;
+                A->prev = B;
+            }
+            else {
+                A->next = Bnext;
+                B->next = Anext;
+                A->prev = Bprev;
+                B->prev = NULL;
+                Bprev->next = A;
+                Bnext->prev = A;
+                Anext->next = B;
+            }
+        }
+
+        else if(Aprev != NULL && Bnext == NULL){    //Swapping tail and another element that's not head
+
+            if(Anext == B) {         //if next to each other
+                Aprev->next = B;
+                B->prev = Aprev;
+                B->next = A;
+                A->prev = B;
+                A->next = NULL;
+            }
+            else{
+                Aprev->next = B;
+                B->prev = Aprev;
+                B->next = Anext;
+                Anext->prev = B;
+                Bprev->next = A;
+                A->prev = Bprev;
+                B->next = NULL;
+            }
+        }
+
+        else {                  //if no edge cases apply
+            Aprev->next = B;
+            Anext->prev = B;
+            Bprev->next = A;
+            Bnext->prev = A;
+            A->prev = Bprev;
+            B->prev = Aprev;
+            A->next = Bnext;
+            B->next = Anext;
+        }
     }
 
     void doubly_linked_list::swap_set(unsigned location_1_start, unsigned location_1_end, unsigned location_2_start,
-                                      unsigned location_2_end) {
+                                      unsigned location_2_end) {            //TODO:: redo using nodes instead of removing inserting data
+        std::vector<int> setA;
+        setA = get_set(location_1_start, location_1_end);
+        std::vector<int> setB;
+        setB = get_set(location_2_start, location_2_end);
+
+        for(int i = location_2_start; i<location_2_end; i++){
+            remove(i);
+        }
+        for(int i = location_1_start; i<location_1_end; i++){
+            remove(i);
+        }
+
+        int shift = setB.size()-setA.size();
+        for(int i=0; i<setB.size(); i++){
+            insert(setA.at(i), location_1_start);
+        }
+        for(int i=0; i<setA.size(); i++){
+            insert(setB.at(i), location_2_start+shift);
+        }
 
     }
 
