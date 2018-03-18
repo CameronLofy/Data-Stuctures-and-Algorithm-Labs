@@ -221,6 +221,8 @@ namespace lab6{
                 A->prev = B;
                 A->next = NULL;
                 B->prev = NULL;
+                head = B;
+                tail = A;
             }
             else {
                 A->prev = Bprev;
@@ -229,26 +231,31 @@ namespace lab6{
                 B->prev = NULL;
                 B->next = Anext;
                 Anext->prev = B;
+                head = B;
+                tail = A;
             }
         }
 
         else if(Aprev == NULL && Bnext != NULL){    //Swapping head and another element that's not tail
 
             if(Anext == B){         //If next to each other
-                Bnext->prev = A;
-                A->next = Bnext;
                 B->next = A;
-                B->prev = NULL;
                 A->prev = B;
+                A->next = Bnext;
+                Bnext->prev = A;
+                B->prev = NULL;
+                head = B;
+
             }
             else {
-                A->next = Bnext;
-                B->next = Anext;
-                A->prev = Bprev;
-                B->prev = NULL;
+                Anext->prev = B;
                 Bprev->next = A;
                 Bnext->prev = A;
-                Anext->next = B;
+                A->prev = Bprev;
+                B->prev = NULL;
+                A->next = Bnext;
+                B->next = Anext;
+                head = B;
             }
         }
 
@@ -260,6 +267,7 @@ namespace lab6{
                 B->next = A;
                 A->prev = B;
                 A->next = NULL;
+                tail = A;
             }
             else{
                 Aprev->next = B;
@@ -268,7 +276,8 @@ namespace lab6{
                 Anext->prev = B;
                 Bprev->next = A;
                 A->prev = Bprev;
-                B->next = NULL;
+                A->next = NULL;
+                tail = A;
             }
         }
 
