@@ -295,7 +295,146 @@ namespace lab6{
 
     void doubly_linked_list::swap_set(unsigned location_1_start, unsigned location_1_end, unsigned location_2_start,
                                       unsigned location_2_end) {            //TODO:: redo using nodes instead of removing inserting data
-        std::vector<int> setA;
+
+        if(location_1_start > location_2_start && location_1_start > location_2_end){
+            int tempStart = location_1_start;
+            int tempEnd = location_1_end;
+            location_1_start = location_2_start;
+            location_2_start = tempStart;
+            location_1_end = location_2_end;
+            location_2_end = tempEnd;
+        }
+
+        if(location_1_start > location_1_end){
+            int temp = location_1_start;
+            location_1_start = location_1_end;
+            location_1_end = temp;
+        }
+
+        if(location_2_start > location_2_end){
+            int temp = location_2_start;
+            location_2_start = location_2_end;
+            location_2_end = temp;
+        }
+
+        if(location_1_end>=location_2_start){
+            throw "ERROR: Invalid Entries";
+        }
+
+        node* A = head;
+        for(int i=0; i<location_1_start; i++){
+            A = A->next;
+        }
+        node* B = A;
+        for(int i=location_1_start; i<location_1_end; i++){
+            B = B->next;
+        }
+        node* C = B;
+        for(int i=location_1_end; i<location_2_start; i++){
+            C = C->next;
+        }
+        node* D = C;
+        for(int i=location_2_start; i<location_2_end; i++){
+            D = D->next;
+        }
+
+        node* Aprev = A->prev;
+        node* Bnext = B->next;
+        node* Cprev = C->prev;
+        node* Dnext = D->next;
+
+        if(Aprev != NULL && Dnext != NULL && Cprev == B){
+            Aprev->next = C;
+            C->prev = Aprev;
+            D->next = A;
+            A->prev = D;
+            B->next = Dnext;
+            Dnext->prev = B;
+        }
+
+        else if(Aprev == NULL && Dnext == NULL){         //If swapping set with head and set with tail
+
+            if(Cprev == B){
+                C->prev = NULL;
+                D->next = A;
+                A->prev = D;
+                B->next = NULL;
+                head = C;
+                tail = B;
+            }
+            else {
+                C->prev = NULL;
+                D->next = Bnext;
+                Bnext->prev = D;
+                Cprev->next = A;
+                A->prev = Cprev;
+                B->next = NULL;
+                head = C;
+                tail = B;
+            }
+
+        }
+
+        else if(Aprev ==NULL && Dnext != NULL){     //If swapping set with head and another set not including tail
+            if(Bnext == C || Cprev == B){                          //If sets are right next to each other
+                C->prev = NULL;
+                D->next = A;
+                A->prev = D;
+                B->next = Dnext;
+                Dnext->prev = D;
+                head = C;
+            }
+            else {                  //If sets are not next to each other
+                C->prev = NULL;
+                D->next = Bnext;
+                Bnext->prev = D;
+                Cprev->next = A;
+                A->prev = Cprev;
+                B->next = Dnext;
+                Dnext->prev = B;
+                head = C;
+            }
+        }
+
+        else if(Aprev != NULL && Dnext == NULL){    //If swapping set with tail and any other set that doesn't include head
+
+            if(Cprev == B){         //If next to each other
+                Aprev->next = C;
+                C->prev = Aprev;
+                D->next = A;
+                A->prev = D;
+                B->next = NULL;
+                tail = B;
+            }
+            else {
+                Aprev->next = C;
+                C->prev = Aprev;
+                D->next = Bnext;
+                Bnext->prev = D;
+                Cprev->next = A;
+                A->prev = Cprev;
+                B->next = NULL;
+                tail = B;
+            }
+
+        }
+
+        //Generic condition
+        else {
+            Aprev->next = C;
+            C->prev = Aprev;
+            D->next = Bnext;
+            Bnext->prev = D;
+            Cprev->next = A;
+            A->prev = Cprev;
+            B->next = Dnext;
+            Dnext->prev = B;
+        }
+
+
+
+
+        /*std::vector<int> setA;
         setA = get_set(location_1_start, location_1_end);
         std::vector<int> setB;
         setB = get_set(location_2_start, location_2_end);
@@ -313,7 +452,7 @@ namespace lab6{
         }
         for(int i=0; i<setA.size(); i++){
             insert(setB.at(i), location_2_start+shift);
-        }
+        }*/
 
     }
 
