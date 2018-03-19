@@ -294,7 +294,7 @@ namespace lab6{
     }
 
     void doubly_linked_list::swap_set(unsigned location_1_start, unsigned location_1_end, unsigned location_2_start,
-                                      unsigned location_2_end) {            //TODO:: redo using nodes instead of removing inserting data
+                                      unsigned location_2_end) {
 
         if(location_1_start > location_2_start && location_1_start > location_2_end){
             int tempStart = location_1_start;
@@ -457,7 +457,27 @@ namespace lab6{
     }
 
     void doubly_linked_list::sort() {
-        // Implement Insertion Sort
+        if(is_empty()){
+            throw "Cannot sort an empty list";
+        }
+        node* prev = head;
+        int loc_prev = 0;
+        node* curr = prev->next;
+        int loc_curr = 1;
+        while(curr != NULL){    // If curr==NULL then no more numbers to sort
+            node* temp = curr;  // Will also return if only one value in list
+            curr = curr->next;
+            int tmp_loc1 = loc_curr;
+            int tmp_loc2 = loc_prev;
+            while(temp->prev!= NULL && temp->get_data() < temp->prev->get_data()){
+                swap(tmp_loc1, tmp_loc2);
+                tmp_loc1--;
+                tmp_loc2--;
+            }
+            loc_curr++;
+            loc_prev++;
+            prev = prev->next;
+        }
     }
 
     doubly_linked_list doubly_linked_list::operator+(const doubly_linked_list &rhs) const {
