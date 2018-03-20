@@ -124,3 +124,27 @@ TEST_F(Lab04Fixture, TripleInt_parentheses){
     lab4::calculator obj(test);
     EXPECT_EQ(50, obj.calculate());
 }
+
+TEST_F(Lab04Fixture, Big_Numbers){
+    std::string test = "50000-25000";
+    lab4::calculator obj(test);
+    EXPECT_EQ(25000, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, Big_Numbers2){
+    std::string test = "(50000-25000)/20";
+    lab4::calculator obj(test);
+    EXPECT_EQ(1250, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, Big_Numbers3){
+    std::string test = "(((400*20)/16)+10000)/10";
+    lab4::calculator obj(test);
+    EXPECT_EQ(1050, obj.calculate());
+}
+
+TEST_F(Lab04Fixture, Spaces){
+    std::string test = "( (  ( 4  0  0   *  2 0 )   / 16 ) + 1 000 0 ) / 1 0    ";
+    lab4::calculator obj(test);
+    EXPECT_EQ(1050, obj.calculate());
+}

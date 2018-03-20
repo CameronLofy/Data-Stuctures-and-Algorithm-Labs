@@ -103,8 +103,8 @@ namespace lab2 {
 
     void stringVector::sort() {             //passed testing
 
-        for(int i = (length -1); i>0; i--){
-            for (int j=0; j<i; j++){
+        for(int i = (length -1); i>0; i--){     // Uses the first for loop to get sixe for second for loop
+            for (int j=0; j<i; j++){            // Bubbles the highest value to the top
                 if (data [j].compare(data[j+1])>0){
                     //if compare returns positive 1
                     swap(j, j+1);
@@ -115,7 +115,9 @@ namespace lab2 {
 
     void stringVector::set_size(unsigned new_size) {
         length = new_size;
-        if(allocated_length != new_size) reserve(new_size);
+        if(allocated_length != new_size) {
+            reserve(new_size);
+        }
     }
 
 

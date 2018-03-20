@@ -41,12 +41,6 @@ namespace lab5{
 
             if(i!=size-1 && is_number(temp[i]) && is_number(temp[i+1])){    //if multidigit number
                 op=i;
-                /*if(op == size-2){
-                    op=op+2;
-                }
-                if(op == size-3){
-                    op=op+3;
-                }*/
                 if(op != size) {
                     while (op != size && is_number(temp[op])) {      //finds position of operator
                         op++;

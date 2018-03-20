@@ -26,7 +26,7 @@ namespace lab6{
         current = original.head;
         head = original.head;
 
-        while(current){
+        while(current!= NULL){
             node* copy = new node(current->get_data());
             copy->next = current->next;
             copy->prev = current->prev;
@@ -45,6 +45,9 @@ namespace lab6{
     }
 
     int doubly_linked_list::get_data(unsigned position) {
+        if(position> size()){                                       //TODO:: Make sure throw statement works
+            throw "Position does not exist in current list";
+        }
         int value;
         node* current = head;
         for(int i=0; i<position; i++){
@@ -476,19 +479,36 @@ namespace lab6{
             }
             loc_curr++;
             loc_prev++;
-            prev = prev->next;
         }
     }
 
     doubly_linked_list doubly_linked_list::operator+(const doubly_linked_list &rhs) const {
-
+        doubly_linked_list copy;
+        node* current = head;
+        copy.head = head;
+        while(current != NULL) {
+            current = current->next;
+            copy.append(current->get_data());
+        }
+        node* r_curr = rhs.head;
+        while(r_curr != NULL){
+            copy.append(r_curr->get_data());
+            r_curr = r_curr->next;
+        }
+        return copy;
     }
 
     doubly_linked_list& doubly_linked_list::operator=(const doubly_linked_list &rhs) {
+        // Remove all elements and append all rhs elements?
 
     }
 
     doubly_linked_list& doubly_linked_list::operator+=(const doubly_linked_list &rhs) {
+        node* current = rhs.head;
+        while(current != NULL){
+            append(current->get_data());
+            current = current->next;
+        }
 
     }
 

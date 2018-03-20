@@ -14,40 +14,49 @@ namespace lab4 {
         int infix_size = 0;
 
         std::string temp[input_expression.size()];
+        int opCount=0;
+        std::string white_space;
         for(std::string::iterator it = input_expression.begin(); it != input_expression.end(); ++it) {
-            temp[size] = *it;
-            size++;
+            white_space = *it;
+            if(white_space == " "){
+
+            }
+            else {
+                temp[size] = *it;
+                if (!is_number(temp[size])) {        //Keeps track of how many operators are in the expression
+                    opCount++;
+                }
+                size++;
+            }
         }
 
 
         for(int i=0; i<size; i++){
 
-            if(temp[i] == " "){      //skips blank spaces
-                i++;
-            }
+            /*if(temp[i] == " "){      //skips blank spaces
+                opCount--;
+            }*/
 
-            else if(i==size-1){     //if last number, otherwise crashes when checking for temp[i+1]
+            if(i==size-1){     //if last number, otherwise crashes when checking for temp[i+1]
                 infix_expression.enqueue(temp[i]);
                 infix_size++;
             }
 
-            if(i!=size-1 && !is_number(temp[i])){
+            else if(i!=size-1 && !is_number(temp[i])){
+                infix_expression.enqueue(temp[i]);
+                infix_size++;
+                opCount--;
+            }
+
+            else if(i!=size-1 && is_number(temp[i]) && !is_number(temp[i+1]) ){  //if only one digit, queues it right away
                 infix_expression.enqueue(temp[i]);
                 infix_size++;
             }
 
-            if(i!=size-1 && is_number(temp[i]) && !is_number(temp[i+1]) ){  //if only one digit, queues it right away
-                infix_expression.enqueue(temp[i]);
-                infix_size++;
-            }
-
-            if(i!=size-1 && is_number(temp[i]) && is_number(temp[i+1])){    //if multidigit number
+            else if(i!=size-1 && is_number(temp[i]) && is_number(temp[i+1])){    //if multidigit number
                 op=i;
-                if(op == size-2){
-                    op=op+2;
-                }
-                if(op == size-3){
-                    op=op+3;
+                if(opCount == 0){           // If no more operators in expression
+                    op = size;
                 }
                 if(op != size) {
                     while (op != size - 1 && is_number(temp[op])) {      //finds position of operator
@@ -215,7 +224,7 @@ namespace lab4 {
 
     // AUXILIARY FUNCTIONS
     bool is_number(std::string input_string){
-        if(input_string >= "0" && input_string <= "999"){
+        if(input_string >= "0" && input_string <= "99999"){
             if(input_string == "+" || input_string == "-" || input_string == "*" || input_string == "/" || input_string == "(" || input_string == ")") {
                 return false;
             }
