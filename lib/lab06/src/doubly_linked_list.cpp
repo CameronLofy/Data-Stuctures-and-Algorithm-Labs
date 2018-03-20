@@ -28,8 +28,6 @@ namespace lab6{
 
         while(current!= NULL){
             node* copy = new node(current->get_data());
-            copy->next = current->next;
-            copy->prev = current->prev;
             current = current->next;
         }
         tail = original.tail;
@@ -45,7 +43,7 @@ namespace lab6{
     }
 
     int doubly_linked_list::get_data(unsigned position) {
-        if(position> size()){                                       //TODO:: Make sure throw statement works
+        if(position >= size()){                                       //TODO:: Make sure throw statement works
             throw "Position does not exist in current list";
         }
         int value;
@@ -499,6 +497,13 @@ namespace lab6{
     }
 
     doubly_linked_list& doubly_linked_list::operator=(const doubly_linked_list &rhs) {
+        node *copy = rhs.head;
+        node *current = new node(copy->get_data());
+        while(current->next!=NULL){
+            current = current->next;
+            current = new node(copy->get_data());
+        }
+        return *this;
         // Remove all elements and append all rhs elements?
 
     }

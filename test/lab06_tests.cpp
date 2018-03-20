@@ -80,6 +80,7 @@ public:
 TEST_F(Lab06Fixture, Constructor){
     EXPECT_EQ(0, test1->get_data(0));
     EXPECT_EQ(1, test1->get_data(1));
+    EXPECT_EQ(17, test1->size());
 }
 
 TEST_F(Lab06Fixture, swap){
@@ -352,6 +353,13 @@ TEST(doubly_linked_list, copyConstructorTest)
 
     newLL.append(5);
     EXPECT_EQ(5, newLL.get_data(2));              //Add something new to new LL
+    EXPECT_EQ(3, newLL.size());
     EXPECT_EQ(2, testLL.get_data(1));
-    EXPECT_ANY_THROW(testLL.get_data(2));
+    EXPECT_EQ(2, testLL.size());
 }
+
+
+
+
+
+
