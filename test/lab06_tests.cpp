@@ -309,11 +309,91 @@ TEST_F(Lab06Fixture, Sort_5){
 
 }
 
+TEST_F(Lab06Fixture, OpPlus){
+    lab6::doubly_linked_list test(5);
+    test.append(8);
+    test.append(2);
+    test.append(4);
+    lab6::doubly_linked_list test_2(1);
+    test_2.append(2);
+    test_2.append(5);
+    test_2.append(3);
+    lab6::doubly_linked_list copy;
+    copy = test + test_2;
+    EXPECT_EQ(5, copy.get_data(0));
+    EXPECT_EQ(8, copy.get_data(1));
+    EXPECT_EQ(2, copy.get_data(2));
+    EXPECT_EQ(4, copy.get_data(3));
+    EXPECT_EQ(1, copy.get_data(4));
+    EXPECT_EQ(2, copy.get_data(5));
+    EXPECT_EQ(5, copy.get_data(6));
+    EXPECT_EQ(3, copy.get_data(7));
+}
+
+TEST_F(Lab06Fixture, OpPlusEqual){
+    lab6::doubly_linked_list test(5);
+    test.append(8);
+    test.append(2);
+    test.append(4);
+    lab6::doubly_linked_list test_2(1);
+    test_2.append(2);
+    test_2.append(5);
+    test_2.append(3);
+
+    test += test_2;
+    EXPECT_EQ(5, test.get_data(0));
+    EXPECT_EQ(8, test.get_data(1));
+    EXPECT_EQ(2, test.get_data(2));
+    EXPECT_EQ(4, test.get_data(3));
+    EXPECT_EQ(1, test.get_data(4));
+    EXPECT_EQ(2, test.get_data(5));
+    EXPECT_EQ(5, test.get_data(6));
+    EXPECT_EQ(3, test.get_data(7));
+}
+
 TEST_F(Lab06Fixture, Operator_Plus){
     lab6::doubly_linked_list plus;
     lab6::doubly_linked_list Test_1(lab6::doubly_linked_list &test1);
     lab6::doubly_linked_list Test_2(lab6::doubly_linked_list &test2);
 
+}
+
+TEST_F(Lab06Fixture, boolean) {
+    lab6::doubly_linked_list test(5);
+    test.append(8);
+    test.append(2);
+    test.append(4);
+    test.append(1);
+    test.append(3);
+    test.append(7);
+    test.append(6);
+    test.append(0);
+    lab6::doubly_linked_list test_2(5);
+    test_2.append(8);
+    test_2.append(2);
+    test_2.append(4);
+    test_2.append(1);
+    test_2.append(3);
+    test_2.append(7);
+    test_2.append(6);
+    test_2.append(0);
+
+
+    EXPECT_TRUE(test==test_2);
+
+    EXPECT_FALSE(test2 == test4);
+}
+
+TEST(doubly_linked_list, BoolEqual){
+    lab6::doubly_linked_list testLL1(32);
+    testLL1.append(14);
+    testLL1.append(6);
+    testLL1.append(73);
+    lab6::doubly_linked_list testLL2(32);
+    testLL2.append(14);
+    testLL2.append(6);
+    testLL2.append(73);
+    EXPECT_TRUE(testLL1 == testLL2);
 }
 
 TEST(doubly_linked_list,addTest) {
@@ -345,17 +425,21 @@ TEST(doubly_linked_list,addTest) {
 
 }
 
-TEST(doubly_linked_list, copyConstructorTest)
+TEST_F(Lab06Fixture, copyConstructor)
 {
-    lab6::doubly_linked_list testLL(1);
-    testLL.append(2);
-    lab6::doubly_linked_list newLL(testLL);
+    lab6::doubly_linked_list test(1);
+    test.append(2);
+    lab6::doubly_linked_list copy(test);
 
-    newLL.append(5);
-    EXPECT_EQ(5, newLL.get_data(2));              //Add something new to new LL
-    EXPECT_EQ(3, newLL.size());
-    EXPECT_EQ(2, testLL.get_data(1));
-    EXPECT_EQ(2, testLL.size());
+    copy.append(5);
+    EXPECT_EQ(5, copy.get_data(2));              //Add something new to new LL
+    EXPECT_EQ(3, copy.size());
+    EXPECT_EQ(2, test.get_data(1));
+    EXPECT_EQ(2, test.size());
+}
+
+TEST_F(Lab06Fixture, SplitSet){
+
 }
 
 

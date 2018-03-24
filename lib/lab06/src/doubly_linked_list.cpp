@@ -22,6 +22,23 @@ namespace lab6{
     }
 
     doubly_linked_list::doubly_linked_list(const doubly_linked_list &original) {
+        node* temp = original.head;
+        node* prev = new node(temp->get_data());
+        this->head = prev;
+        while(temp->next != NULL){
+            temp = temp->next;
+            node* curr = new node(temp->get_data());
+            curr->prev = prev;
+            prev->next = curr;
+            prev = curr;
+            curr = curr->next;
+        }
+        prev->next = NULL;
+        this->tail = prev;
+
+    }
+
+    /*doubly_linked_list::doubly_linked_list(const doubly_linked_list &original) {
         node* current;
         current = original.head;
         head = original.head;
@@ -32,6 +49,7 @@ namespace lab6{
         }
         tail = original.tail;
     }
+     */
 
     doubly_linked_list::~doubly_linked_list() {
         node* temp;
@@ -74,7 +92,7 @@ namespace lab6{
         return set;
     }
 
-    unsigned doubly_linked_list::size() {
+    unsigned doubly_linked_list::size() const {
         node* current = head;
         unsigned count=0;
         while(current != NULL){
@@ -163,8 +181,9 @@ namespace lab6{
 
     }
 
-    doubly_linked_list doubly_linked_list::split(unsigned position) {
+    doubly_linked_list doubly_linked_list::split(unsigned position) {       //TODO:: Verfiy this works
         doubly_linked_list split(get_set(position, size()-1));
+
         for(int i=size()-1; i>=position; i--){
             remove(i);
         }
@@ -431,30 +450,6 @@ namespace lab6{
             B->next = Dnext;
             Dnext->prev = B;
         }
-
-
-
-
-        /*std::vector<int> setA;
-        setA = get_set(location_1_start, location_1_end);
-        std::vector<int> setB;
-        setB = get_set(location_2_start, location_2_end);
-
-        for(int i = location_2_start; i<location_2_end; i++){
-            remove(i);
-        }
-        for(int i = location_1_start; i<location_1_end; i++){
-            remove(i);
-        }
-
-        int shift = setB.size()-setA.size();
-        for(int i=0; i<setB.size(); i++){
-            insert(setA.at(i), location_1_start);
-        }
-        for(int i=0; i<setA.size(); i++){
-            insert(setB.at(i), location_2_start+shift);
-        }*/
-
     }
 
     void doubly_linked_list::sort() {
@@ -482,26 +477,24 @@ namespace lab6{
 
     doubly_linked_list doubly_linked_list::operator+(const doubly_linked_list &rhs) const {
         doubly_linked_list copy;
-        node* current = head;
-        copy.head = head;
-        while(current != NULL) {
-            current = current->next;
-            copy.append(current->get_data());
+        node* curr = this->head;
+        node* right = rhs.head;
+        while(curr != NULL) {
+            copy.append(curr->get_data());
+            curr = curr->next;
         }
-        node* r_curr = rhs.head;
-        while(r_curr != NULL){
-            copy.append(r_curr->get_data());
-            r_curr = r_curr->next;
+        while(right != NULL){
+            copy.append((right->get_data()));
+            right = right->next;
         }
         return copy;
     }
 
     doubly_linked_list& doubly_linked_list::operator=(const doubly_linked_list &rhs) {
-        node *copy = rhs.head;
-        node *current = new node(copy->get_data());
-        while(current->next!=NULL){
-            current = current->next;
-            current = new node(copy->get_data());
+        node* copy = rhs.head;
+        while(copy!=NULL){
+            this->append(copy->get_data());
+            copy = copy->next;
         }
         return *this;
         // Remove all elements and append all rhs elements?
@@ -509,23 +502,52 @@ namespace lab6{
     }
 
     doubly_linked_list& doubly_linked_list::operator+=(const doubly_linked_list &rhs) {
-        node* current = rhs.head;
-        while(current != NULL){
-            append(current->get_data());
-            current = current->next;
+        node* curr = rhs.head;
+        while(curr != NULL){
+            this->append(curr->get_data());
+            curr = curr->next;
         }
-
+        return *this;
     }
 
     bool doubly_linked_list::operator==(const doubly_linked_list &rhs) {
+        node* curr = head;
+        node* right = rhs.head;
+
+        if(this->size() != rhs.size()){
+            return false;
+        }
+        else{
+            while(curr){
+                if(curr->get_data() != right->get_data()){
+                    return false;
+                }
+                curr = curr->next;
+                right = right->next;
+            }
+            return true;
+        }
+
 
     }
 
     std::ostream &operator<<(std::ostream &stream, doubly_linked_list &RHS) {
+        node* curr = RHS.head;
+        stream << std::string("Doubly Linked List: ");
+        while(curr){
+            stream << curr->get_data();
+            stream << " ";
+            curr = curr->next;
+        }
+        return stream;
 
     }
 
     std::istream &operator>>(std::istream &stream, doubly_linked_list &RHS) {
+        int input;
+        stream >> input;
+        RHS.append(input);
+        return stream;
 
     }
 }

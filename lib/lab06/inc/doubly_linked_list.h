@@ -18,7 +18,7 @@ namespace lab6{
         int get_data(unsigned position);
         std::vector<int> get_set(unsigned position_from, unsigned position_to);
 
-        unsigned size();
+        unsigned size() const;
         bool is_empty();
 
         void append(int input);

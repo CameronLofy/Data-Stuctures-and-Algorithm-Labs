@@ -38,9 +38,6 @@ namespace lab5 {
             copy = copy->next;
             current->data = copy->data;
         }
-
-
-        //return <#initializer#>;
     }
 
 
@@ -140,8 +137,6 @@ namespace lab5 {
         else if(!prev){
             head = current->next;
         }
-
-
     }
 
     std::ostream& operator<<(std::ostream &stream, linked_list &RHS) {
