@@ -439,6 +439,17 @@ TEST_F(Lab06Fixture, Split){
     EXPECT_EQ(6, test1->size());
 }
 
+TEST_F(Lab06Fixture, SplitSet){
+    test1->split_set(6,10);
+    EXPECT_EQ(0, test1->get_data(0));
+    EXPECT_EQ(1, test1->get_data(1));
+    EXPECT_EQ(2, test1->get_data(2));
+    EXPECT_EQ(3, test1->get_data(3));
+    EXPECT_EQ(4, test1->get_data(4));
+    EXPECT_EQ(5, test1->get_data(5));
+    EXPECT_EQ(12, test1->size());
+}
+
 
 
 

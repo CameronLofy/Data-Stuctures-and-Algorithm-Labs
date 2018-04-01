@@ -184,7 +184,7 @@ namespace lab6{
 
     doubly_linked_list doubly_linked_list::split_set(unsigned position_1, unsigned position_2) {
         doubly_linked_list splitSet(get_set(position_1, position_2));
-        for(int i=position_1; i <= position_2; i++){
+        for(int i=position_2; i >= position_1; i--){
             remove(i);
         }
         return splitSet;
