@@ -38,18 +38,6 @@ namespace lab6{
 
     }
 
-    /*doubly_linked_list::doubly_linked_list(const doubly_linked_list &original) {
-        node* current;
-        current = original.head;
-        head = original.head;
-
-        while(current!= NULL){
-            node* copy = new node(current->get_data());
-            current = current->next;
-        }
-        tail = original.tail;
-    }
-     */
 
     doubly_linked_list::~doubly_linked_list() {
         node* temp;
@@ -61,7 +49,7 @@ namespace lab6{
     }
 
     int doubly_linked_list::get_data(unsigned position) {
-        if(position >= size()){                                       //TODO:: Make sure throw statement works
+        if(position >= size()){
             throw "Position does not exist in current list";
         }
         int value;
@@ -86,7 +74,7 @@ namespace lab6{
         }
         for(int i=position_from; i<=position_to; i++){
             value = current->get_data();
-            current= current->next;
+            current = current->next;
             set.push_back(value);
         }
         return set;
@@ -166,11 +154,15 @@ namespace lab6{
             prev = current;
             current = current->next;
         }
-        if (prev) { // if a previous node exists
+        if(location == size()-1){
+            prev->next = NULL;
+            tail = prev;
+        }
+        else if (prev) { // if a previous node exists
             prev->next = current->next;
             current->next->prev = current->prev;
         }
-        if(location>size()){
+        else if(location>size()){
             throw "ERROR: INPUT INTEGER TOO BIG FOR LIST";
         }
         else if(!prev){
@@ -181,21 +173,21 @@ namespace lab6{
 
     }
 
-    doubly_linked_list doubly_linked_list::split(unsigned position) {       //TODO:: Verfiy this works
+    doubly_linked_list doubly_linked_list::split(unsigned position) {
         doubly_linked_list split(get_set(position, size()-1));
 
-        for(int i=size()-1; i>=position; i--){
+        for(int i=size()-1; i >= position; i--){
             remove(i);
         }
         return split;
     }
 
     doubly_linked_list doubly_linked_list::split_set(unsigned position_1, unsigned position_2) {
-        doubly_linked_list split(get_set(position_1, position_2));
-        for(int i=position_2; i>=position_1; i--){
+        doubly_linked_list splitSet(get_set(position_1, position_2));
+        for(int i=position_1; i <= position_2; i++){
             remove(i);
         }
-        return split;
+        return splitSet;
 
     }
 

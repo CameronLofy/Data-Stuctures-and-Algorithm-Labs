@@ -351,13 +351,6 @@ TEST_F(Lab06Fixture, OpPlusEqual){
     EXPECT_EQ(3, test.get_data(7));
 }
 
-TEST_F(Lab06Fixture, Operator_Plus){
-    lab6::doubly_linked_list plus;
-    lab6::doubly_linked_list Test_1(lab6::doubly_linked_list &test1);
-    lab6::doubly_linked_list Test_2(lab6::doubly_linked_list &test2);
-
-}
-
 TEST_F(Lab06Fixture, boolean) {
     lab6::doubly_linked_list test(5);
     test.append(8);
@@ -377,10 +370,7 @@ TEST_F(Lab06Fixture, boolean) {
     test_2.append(7);
     test_2.append(6);
     test_2.append(0);
-
-
     EXPECT_TRUE(test==test_2);
-
     EXPECT_FALSE(test2 == test4);
 }
 
@@ -432,14 +422,21 @@ TEST_F(Lab06Fixture, copyConstructor)
     lab6::doubly_linked_list copy(test);
 
     copy.append(5);
-    EXPECT_EQ(5, copy.get_data(2));              //Add something new to new LL
+    EXPECT_EQ(5, copy.get_data(2));
     EXPECT_EQ(3, copy.size());
     EXPECT_EQ(2, test.get_data(1));
     EXPECT_EQ(2, test.size());
 }
 
-TEST_F(Lab06Fixture, SplitSet){
-
+TEST_F(Lab06Fixture, Split){
+    test1->split(6);
+    EXPECT_EQ(0, test1->get_data(0));
+    EXPECT_EQ(1, test1->get_data(1));
+    EXPECT_EQ(2, test1->get_data(2));
+    EXPECT_EQ(3, test1->get_data(3));
+    EXPECT_EQ(4, test1->get_data(4));
+    EXPECT_EQ(5, test1->get_data(5));
+    EXPECT_EQ(6, test1->size());
 }
 
 
