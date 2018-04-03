@@ -2,104 +2,256 @@
 #include "fifo.h"
 #include "lifo.h"
 
-
 class Lab03Fixture : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
-        testVec = new lab3::fifo;
-        testVec->enqueue("Test 1");
-        testVec->enqueue("Test 2");
-        testVec->enqueue("Test 3");
-        testVec->enqueue("Test 4");
-        testVec->enqueue("Test 5");
-
-        lifotest = new lab3::lifo;
-        lifotest->push("Test 1");
-        lifotest->push("Test 2");
-        lifotest->push("Test 3");
-        lifotest->push("Test 4");
-        lifotest->push("Test 5");
+        FIFO_underTest = new lab3::fifo;
+        LIFO_underTest = new lab3::lifo;
     }
 
     virtual void TearDown() {
+        delete(FIFO_underTest);
+        delete(LIFO_underTest);
     }
 
 public:
-    lab3::fifo * testVec;
-    lab3::lifo * lifotest;
+    lab3::fifo *FIFO_underTest;
+    lab3::lifo *LIFO_underTest;
 };
 
-//FIFO TESTS
-
-TEST_F(Lab03Fixture, fifo_constructor){
-       lab3::fifo ct;
-    EXPECT_TRUE(ct.is_empty());
-    EXPECT_EQ(0, ct.size());
-
+TEST(crash_test,crash_test_fifo_Test){
+    lab3::fifo *fifo_UT=new lab3::fifo;
+    delete fifo_UT;
 }
 
-TEST_F(Lab03Fixture, fifo_ExplicitConstructor){
-    lab3::fifo ict("Test 1");
-    EXPECT_EQ(1, ict.size());
-    EXPECT_EQ("Test 1", ict.top());
-    ict.enqueue("Test 2");
-    ict.dequeue();
-    EXPECT_EQ("Test 2", ict.top());
+TEST(crash_test,crash_test_lifo_Test){
+    lab3::lifo *lifo_UT=new lab3::lifo;
+    delete lifo_UT;
+}
 
+TEST_F(Lab03Fixture, fifo_input_con_top_test){
+    delete(FIFO_underTest);
+    FIFO_underTest = new lab3::fifo("test string");
+    EXPECT_EQ("test string",FIFO_underTest->top());
+}
+
+TEST_F(Lab03Fixture, lifo_input_con_top_test){
+    delete(LIFO_underTest);
+    LIFO_underTest = new lab3::lifo("test string");
+    EXPECT_EQ("test string",LIFO_underTest->top());
+}
+
+TEST_F(Lab03Fixture, fifo_enqueue_dequeue_top_test){
+    FIFO_underTest->enqueue("test string");
+    EXPECT_EQ("test string",FIFO_underTest->top());
+
+    FIFO_underTest->enqueue("test string1");
+    EXPECT_EQ("test string",FIFO_underTest->top());
+
+    FIFO_underTest->enqueue("test string2");
+    EXPECT_EQ("test string",FIFO_underTest->top());
+
+    FIFO_underTest->enqueue("test string3");
+    EXPECT_EQ("test string",FIFO_underTest->top());
+
+    FIFO_underTest->dequeue();
+    EXPECT_EQ("test string1",FIFO_underTest->top());
+
+    FIFO_underTest->dequeue();
+    EXPECT_EQ("test string2",FIFO_underTest->top());
+
+    FIFO_underTest->dequeue();
+    EXPECT_EQ("test string3",FIFO_underTest->top());
+
+    FIFO_underTest->dequeue();
+}
+
+TEST_F(Lab03Fixture, lifo_push_pop_top_test){
+    LIFO_underTest->push("test string");
+    EXPECT_EQ("test string",LIFO_underTest->top());
+
+    LIFO_underTest->push("test string1");
+    EXPECT_EQ("test string1",LIFO_underTest->top());
+
+    LIFO_underTest->push("test string2");
+    EXPECT_EQ("test string2",LIFO_underTest->top());
+
+    LIFO_underTest->push("test string3");
+    EXPECT_EQ("test string3",LIFO_underTest->top());
+
+    LIFO_underTest->pop();
+    EXPECT_EQ("test string2",LIFO_underTest->top());
+
+    LIFO_underTest->pop();
+    EXPECT_EQ("test string1",LIFO_underTest->top());
+
+    LIFO_underTest->pop();
+    EXPECT_EQ("test string",LIFO_underTest->top());
+
+    LIFO_underTest->pop();
 }
 
 
-TEST_F(Lab03Fixture, fifo_CopyConstructor){
-    lab3::fifo* copy = testVec;
-    EXPECT_EQ("Test 1",copy->top());
-    copy->dequeue();
-    EXPECT_EQ("Test 2",copy->top());
-    delete copy;
+TEST_F(Lab03Fixture, fifo_size_isEmpty_test) {
+    EXPECT_TRUE(FIFO_underTest->is_empty());
+    EXPECT_EQ(0,FIFO_underTest->size());
+
+    FIFO_underTest->enqueue("test string");
+    EXPECT_EQ(1,FIFO_underTest->size());
+    EXPECT_FALSE(FIFO_underTest->is_empty());
+
+    FIFO_underTest->enqueue("test string1");
+    EXPECT_EQ(2,FIFO_underTest->size());
+    EXPECT_FALSE(FIFO_underTest->is_empty());
+
+    FIFO_underTest->enqueue("test string2");
+    EXPECT_EQ(3,FIFO_underTest->size());
+    EXPECT_FALSE(FIFO_underTest->is_empty());
+
+    FIFO_underTest->enqueue("test string3");
+    EXPECT_EQ(4,FIFO_underTest->size());
+    EXPECT_FALSE(FIFO_underTest->is_empty());
+
+    FIFO_underTest->dequeue();
+    EXPECT_EQ(3,FIFO_underTest->size());
+    EXPECT_FALSE(FIFO_underTest->is_empty());
+
+    FIFO_underTest->dequeue();
+    EXPECT_EQ(2,FIFO_underTest->size());
+    EXPECT_FALSE(FIFO_underTest->is_empty());
+
+    FIFO_underTest->dequeue();
+    EXPECT_EQ(1,FIFO_underTest->size());
+    EXPECT_FALSE(FIFO_underTest->is_empty());
+
+    FIFO_underTest->dequeue();
+
+    EXPECT_EQ(0,FIFO_underTest->size());
+    EXPECT_TRUE(FIFO_underTest->is_empty());
 }
 
+TEST_F(Lab03Fixture, lifo_size_isEmpty_test) {
+    EXPECT_TRUE(LIFO_underTest->is_empty());
+    EXPECT_EQ(0,LIFO_underTest->size());
 
-TEST_F(Lab03Fixture, Top){
-    EXPECT_EQ("Test 1", testVec->top());
-    EXPECT_EQ(5, testVec->size());
-    testVec->dequeue();
-    EXPECT_EQ("Test 2", testVec->top());
-    EXPECT_EQ(4, testVec->size());
-    testVec->dequeue();
-    testVec->dequeue();
-    EXPECT_EQ("Test 4", testVec->top());
-    EXPECT_EQ(2, testVec->size());
+    LIFO_underTest->push("test string");
+    EXPECT_EQ(1,LIFO_underTest->size());
+    EXPECT_FALSE(LIFO_underTest->is_empty());
+
+    LIFO_underTest->push("test string1");
+    EXPECT_EQ(2,LIFO_underTest->size());
+    EXPECT_FALSE(LIFO_underTest->is_empty());
+
+    LIFO_underTest->push("test string2");
+    EXPECT_EQ(3,LIFO_underTest->size());
+    EXPECT_FALSE(LIFO_underTest->is_empty());
+
+    LIFO_underTest->push("test string3");
+    EXPECT_EQ(4,LIFO_underTest->size());
+    EXPECT_FALSE(LIFO_underTest->is_empty());
+
+    LIFO_underTest->pop();
+    EXPECT_EQ(3,LIFO_underTest->size());
+    EXPECT_FALSE(LIFO_underTest->is_empty());
+
+    LIFO_underTest->pop();
+    EXPECT_EQ(2,LIFO_underTest->size());
+    EXPECT_FALSE(LIFO_underTest->is_empty());
+
+    LIFO_underTest->pop();
+    EXPECT_EQ(1,LIFO_underTest->size());
+    EXPECT_FALSE(LIFO_underTest->is_empty());
+
+    LIFO_underTest->pop();
+
+    EXPECT_EQ(0,LIFO_underTest->size());
+    EXPECT_TRUE(LIFO_underTest->is_empty());
 }
 
+TEST_F(Lab03Fixture, fifo_opEq_test){
+    auto * FIFO_underTest_copy = new lab3::fifo;
+    FIFO_underTest->enqueue("test string");
+    FIFO_underTest->enqueue("test string1");
+    FIFO_underTest->enqueue("test string2");
+    FIFO_underTest->enqueue("test string3");
 
-//LIFO TESTS
+    FIFO_underTest_copy->operator=(*FIFO_underTest);
 
-TEST_F(Lab03Fixture, lifo_construtor){
-    lab3::lifo lc;
-    EXPECT_EQ(0, lc.size());
-    EXPECT_TRUE(lc.is_empty());
+    FIFO_underTest->dequeue();
+    EXPECT_EQ("test string1",FIFO_underTest->top());
+    EXPECT_EQ("test string", FIFO_underTest_copy->top());
+    FIFO_underTest_copy->dequeue();
 
+    FIFO_underTest->dequeue();
+    EXPECT_EQ("test string2",FIFO_underTest->top());
+    EXPECT_EQ("test string1", FIFO_underTest_copy->top());
+    FIFO_underTest_copy->dequeue();
+
+    FIFO_underTest->dequeue();
+    EXPECT_EQ("test string3",FIFO_underTest->top());
+    EXPECT_EQ("test string2", FIFO_underTest_copy->top());
+    FIFO_underTest_copy->dequeue();
+    EXPECT_EQ("test string3", FIFO_underTest_copy->top());
+
+    FIFO_underTest->dequeue();
+    FIFO_underTest_copy->dequeue();
 }
 
-TEST_F(Lab03Fixture, lifo_ExplicitConstructor){
-    lab3::lifo lec("Test 1");
-    EXPECT_EQ("Test 1", lec.top());
+TEST_F(Lab03Fixture, lifo_opEq_test) {
+    auto LIFO_underTest_copy = new lab3::lifo;
 
+    LIFO_underTest->push("test string");
+    LIFO_underTest->push("test string1");
+    LIFO_underTest->push("test string2");
+    LIFO_underTest->push("test string3");
+
+    LIFO_underTest_copy->operator=(*LIFO_underTest);
+
+    LIFO_underTest->pop();
+    EXPECT_EQ("test string2", LIFO_underTest->top());
+    EXPECT_EQ("test string3", LIFO_underTest_copy->top());
+    LIFO_underTest_copy->pop();
+
+    LIFO_underTest->pop();
+    EXPECT_EQ("test string1", LIFO_underTest->top());
+    EXPECT_EQ("test string2", LIFO_underTest_copy->top());
+    LIFO_underTest_copy->pop();
+
+    LIFO_underTest->pop();
+    EXPECT_EQ("test string", LIFO_underTest->top());
+    EXPECT_EQ("test string1", LIFO_underTest_copy->top());
+    LIFO_underTest_copy->pop();
+    EXPECT_EQ("test string", LIFO_underTest_copy->top());
+
+    LIFO_underTest->pop();
+    LIFO_underTest_copy->pop();
 }
 
-TEST_F(Lab03Fixture, lifo_CopyConstructor){
-    lab3::lifo* copy = lifotest;
-    EXPECT_EQ("Test 5", copy->top());
-}
+TEST_F(Lab03Fixture, Fifo_loopback_test) {
+    lab3::fifo fifo_UT;
+    fifo_UT.enqueue("test Input");
+    for (int i = 0; i < 150; ++i) {
+        ASSERT_NO_THROW(fifo_UT.enqueue("test Input")) << "failed on iteration: " << i << "\n";
+        ASSERT_EQ("test Input", fifo_UT.top()) << "failed on iteration: " << i << "\n";
+        ASSERT_NO_THROW(fifo_UT.enqueue("test Input")) << "failed on iteration: " << i << "\n";
+        ASSERT_EQ("test Input", fifo_UT.top()) << "failed on iteration: " << i << "\n";
+        ASSERT_NO_THROW(fifo_UT.enqueue("test Input")) << "failed on iteration: " << i << "\n";
+        ASSERT_EQ("test Input", fifo_UT.top()) << "failed on iteration: " << i << "\n";
 
-TEST_F(Lab03Fixture, lifo_Push){
-    lifotest->push("Test 6");
-    lifotest->push("Test 7");
-    EXPECT_EQ("Test 7", lifotest->top());
-    lifotest->pop();
-    EXPECT_EQ("Test 6", lifotest->top());
-    lifotest->pop();
-    EXPECT_EQ("Test 5", lifotest->top());
-    lifotest->push("New Test");
-    EXPECT_EQ("New Test", lifotest->top());
+        ASSERT_EQ(4, fifo_UT.size()) << "failed on iteration: " << i << "\n";
+        ASSERT_FALSE(fifo_UT.is_empty()) << "failed on iteration: " << i << "\n";
+
+        ASSERT_EQ("test Input", fifo_UT.top()) << "failed on iteration: " << i << "\n";
+        ASSERT_NO_THROW(fifo_UT.dequeue()) << "failed on iteration: " << i << "\n";
+        ASSERT_EQ("test Input", fifo_UT.top()) << "failed on iteration: " << i << "\n";
+        ASSERT_NO_THROW(fifo_UT.dequeue()) << "failed on iteration: " << i << "\n";
+        ASSERT_EQ("test Input", fifo_UT.top()) << "failed on iteration: " << i << "\n";
+        ASSERT_NO_THROW(fifo_UT.dequeue()) << "failed on iteration: " << i << "\n";
+
+        ASSERT_EQ(1, fifo_UT.size()) << "failed on iteration: " << i << "\n";
+        ASSERT_FALSE(fifo_UT.is_empty()) << "failed on iteration: " << i << "\n";
+    }
+    ASSERT_EQ("test Input", fifo_UT.top());
+    ASSERT_NO_THROW(fifo_UT.dequeue());
 }

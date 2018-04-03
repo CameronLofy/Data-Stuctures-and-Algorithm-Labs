@@ -1,4 +1,4 @@
-# Lab 5: Linked List #
+# Lab 6: Linked List #
 **10 points**
 
 **Due 13 March, 2018**

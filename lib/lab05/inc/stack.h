@@ -15,7 +15,7 @@ namespace lab5 {
         stack &operator=(const stack &RHS);
 
         bool isEmpty() const;
-        unsigned queueSize() const;
+        unsigned stackSize() const;
 
         std::string top() const;
 
