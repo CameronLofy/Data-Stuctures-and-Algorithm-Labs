@@ -448,6 +448,7 @@ TEST_F(Lab06Fixture, SplitSet){
     EXPECT_EQ(4, test1->get_data(4));
     EXPECT_EQ(5, test1->get_data(5));
     EXPECT_EQ(12, test1->size());
+    EXPECT_EQ(11, test1->get_data(6));
 }
 
 

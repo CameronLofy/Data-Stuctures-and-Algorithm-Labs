@@ -33,10 +33,6 @@ namespace lab4 {
 
         for(int i=0; i<size; i++){
 
-            /*if(temp[i] == " "){      //skips blank spaces
-                opCount--;
-            }*/
-
             if(i==size-1){     //if last number, otherwise crashes when checking for temp[i+1]
                 infix_expression.enqueue(temp[i]);
                 infix_size++;
@@ -202,22 +198,34 @@ namespace lab4 {
     }
 
     std::ostream &operator<<(std::ostream &stream, calculator &RHS) {
+        int count = 0;
         int infix_size = RHS.infix_expression.size();
         int postfix_size = RHS.postfix_expression.size();
-
-        stream << std::string("Infix Expression: ");
+        lab3::fifo infixCopy = RHS.infix_expression;
+        lab3::fifo postfixCopy = RHS.postfix_expression;
+        stream << std::string("Infix: ");
         for (int i = 0; i < infix_size; i++) {
-            stream << RHS.infix_expression.top();
-            RHS.infix_expression.dequeue();
+            stream << infixCopy.top();
+            infixCopy.dequeue();
+            if(count < infix_size-1) {
+                stream << ",";
+                count++;
+            }
         }
         stream << "\n";
 
-        stream << std::string("Postfix Expression: ");
+        int count2 = 0;
+        stream << std::string("Postfix: ");
         for (int i = 0; i < postfix_size; i++) {
-            stream << RHS.postfix_expression.top();
-            RHS.postfix_expression.dequeue();
+            stream << postfixCopy.top();
+            postfixCopy.dequeue();
+            if(count2 < postfix_size-1) {
+                stream << ",";
+                count2++;
+            }
         }
-        stream << "\n";
+
+
         return stream;
     }
 
@@ -263,10 +271,10 @@ namespace lab4 {
 
     int operator_priority(std::string operator_in){
         int priority;
-        if(operator_in == "+"||"-"){
+        if(operator_in == "+"||operator_in == "-"){
             priority = 1;
         }
-        if(operator_in == "*" || "/"){
+        if(operator_in == "*" || operator_in == "/"){
             priority = 2;
         }
         return priority;

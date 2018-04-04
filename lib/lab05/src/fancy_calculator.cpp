@@ -212,19 +212,19 @@ namespace lab5{
         int infix_size = RHS.infix_expression.queueSize();
         int postfix_size = RHS.postfix_expression.queueSize();
 
-        stream << std::string("Infix Expression: ");
+        stream << std::string("Infix: ");
         for (int i = 0; i < infix_size; i++) {
             stream << RHS.infix_expression.top();
             RHS.infix_expression.dequeue();
         }
         stream << "\n";
 
-        stream << std::string("Postfix Expression: ");
+        stream << std::string("Postfix: ");
         for (int i = 0; i < postfix_size; i++) {
             stream << RHS.postfix_expression.top();
             RHS.postfix_expression.dequeue();
         }
-        stream << "\n";
+
         return stream;
     }
 

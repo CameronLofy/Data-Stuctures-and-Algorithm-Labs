@@ -11,7 +11,7 @@ namespace lab5{
     stack::stack(const stack &original) {
         stack temp;
         temp = original;
-        for(int i=0; i<temp.queueSize(); i++){
+        for(int i=0; i<temp.stackSize(); i++){
             storage_structure.append(temp.top());
             temp.pop();
         }
@@ -25,7 +25,7 @@ namespace lab5{
     }
 
     stack &stack::operator=(const stack &RHS) {
-        for(int i=0; i<RHS.queueSize(); i++) {
+        for(int i=0; i<RHS.stackSize(); i++) {
             this->storage_structure.append(RHS.storage_structure.get_value_at(i));
         }
         return *this;
@@ -39,7 +39,7 @@ namespace lab5{
         return false;
     }
 
-    unsigned stack::queueSize() const {
+    unsigned stack::stackSize() const {
         return storage_structure.listSize();
     }
 
@@ -60,7 +60,7 @@ namespace lab5{
 
     std::ostream& operator<<(std::ostream &stream, stack &RHS) {
         stream << std::string("Stack: ");
-        for(int i=0; i<RHS.queueSize(); i++){
+        for(int i=0; i<RHS.stackSize(); i++){
             stream << RHS.storage_structure.get_value_at(i);
             stream << " ";
         }

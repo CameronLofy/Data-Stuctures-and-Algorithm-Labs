@@ -142,11 +142,11 @@ namespace lab5 {
     std::ostream& operator<<(std::ostream &stream, linked_list &RHS) {
         int size = RHS.listSize();
 
-        stream << std::string("Linked List: ");
         for (int i = 0; i < size; i++) {
             stream << RHS.get_value_at(i);
-            stream << " ";
+            stream << " -> ";
         }
+        stream << "NULL";
         return stream;
     }
 

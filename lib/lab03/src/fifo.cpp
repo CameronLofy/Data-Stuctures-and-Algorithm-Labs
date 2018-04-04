@@ -36,10 +36,10 @@ namespace lab3{
     fifo &fifo::operator=(const fifo &right) {
 
         fifo_storage.reserve(right.fifo_storage.capacity());
-        this-> front_index = right.front_index;//Assignment operators
+        this->front_index = right.front_index;  //Assignment operators
         this->back_index = right.back_index;
-        for(int i=0;i<right.fifo_storage.size();i++){
-            this->fifo_storage[i]=right.fifo_storage[i];
+        for(int i=0; i<right.fifo_storage.size(); i++){
+            this->fifo_storage[i] = right.fifo_storage[i];
         }
         return *this;
     }
@@ -61,7 +61,7 @@ namespace lab3{
     }
 
     void fifo::enqueue(std::string input) {
-        fifo_storage[back_index] = input;
+        fifo_storage.append(input);
         back_index++;
 
     }
