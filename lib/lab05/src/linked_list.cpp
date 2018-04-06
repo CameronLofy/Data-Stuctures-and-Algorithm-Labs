@@ -7,17 +7,20 @@ namespace lab5 {
     }
 
     linked_list::linked_list(std::string &data) {
-        head->data = data;
+        node *temp = new node(data);
+        head = temp;
         tail = head;
     }
 
     linked_list::linked_list(const linked_list &original) {     //copy constructor
-        node *OG_temp = original.head;
+        head = new node(original.head->data);
+        tail = new node(original.tail->data);
+        node *OG_temp = original.head;                      //TODO:: Fix this to make it actually work
         node *temp = head;
-        tail = original.tail;
-        for(int i=0; i< original.listSize(); i++) {
-            temp->data = OG_temp->data;
-            temp->next = OG_temp->next;
+        while(OG_temp->next != NULL){
+            OG_temp = OG_temp->next;
+            temp->next = new node(OG_temp->data);
+            temp = temp->next;
         }
     }
 
@@ -31,13 +34,19 @@ namespace lab5 {
     }
 
     linked_list &lab5::linked_list::operator=(const linked_list &RHS) {
-        node *copy = RHS.head;
-        node *current = new node(copy->data);
-        while(current->next!=NULL){
-            current = current->next;
-            copy = copy->next;
-            current->data = copy->data;
+        if(this == &RHS){
+            return *this;
         }
+        head = new node(RHS.head->data);
+        tail = new node(RHS.tail->data);
+        node *temp = RHS.head;
+        node *current = head;
+        while (temp->next!=NULL) {
+            temp = temp->next;
+            current->next = new node(temp->data);
+            current = current->next;
+        }
+        return *this;
     }
 
 
@@ -71,17 +80,27 @@ namespace lab5 {
             prev = current;
             current = current->next;
         }
-        if (prev) { // if a previous node exists
+        /*if(current == NULL && prev == NULL){
+            throw "ERROR: Location not found";
+        }*/
+        if(current == NULL && prev){   //inserting after tail, reassigns ne tail
+            prev->next = temp;
+            temp->next = NULL;
+            tail = temp;
+        }
+        else if(!current){              //inserting to an empty list
+            head = temp;
+            tail = temp;
+        }
+
+        else if (prev && current!=NULL) { // if a previous node exists
             prev->next = temp;
             temp->next = current;
         }
-
         else { // there is no previous node, temp is at at head
             head = temp;
             head->next = current;
         }
-
-
     }
 
     void linked_list::append(const std::string input) {
@@ -100,22 +119,6 @@ namespace lab5 {
             temp->next = NULL;
             tail = temp;
         }
-
-
-
-        /*if(tail ==NULL){
-            head->data = input;
-            tail->data = input;
-            tail->next = NULL;
-        }
-        node *temp = new node(input);
-        tail->next = temp;
-        tail = tail->next;
-        tail->next = NULL;
-
-        delete temp;*/
-
-
     }
 
     void linked_list::remove(unsigned location) {

@@ -204,7 +204,7 @@ namespace lab4 {
         lab3::fifo infixCopy = RHS.infix_expression;
         lab3::fifo postfixCopy = RHS.postfix_expression;
         stream << std::string("Infix: ");
-        for (int i = 0; i < infix_size; i++) {
+        while(!infixCopy.is_empty()) {
             stream << infixCopy.top();
             infixCopy.dequeue();
             if(count < infix_size-1) {
@@ -216,7 +216,7 @@ namespace lab4 {
 
         int count2 = 0;
         stream << std::string("Postfix: ");
-        for (int i = 0; i < postfix_size; i++) {
+        while(!postfixCopy.is_empty()) {
             stream << postfixCopy.top();
             postfixCopy.dequeue();
             if(count2 < postfix_size-1) {
