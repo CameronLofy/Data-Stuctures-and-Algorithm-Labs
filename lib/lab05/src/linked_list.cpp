@@ -15,7 +15,7 @@ namespace lab5 {
     linked_list::linked_list(const linked_list &original) {     //copy constructor
         head = new node(original.head->data);
         tail = new node(original.tail->data);
-        node *OG_temp = original.head;                      //TODO:: Fix this to make it actually work
+        node *OG_temp = original.head;
         node *temp = head;
         while(OG_temp->next != NULL){
             OG_temp = OG_temp->next;
@@ -80,9 +80,6 @@ namespace lab5 {
             prev = current;
             current = current->next;
         }
-        /*if(current == NULL && prev == NULL){
-            throw "ERROR: Location not found";
-        }*/
         if(current == NULL && prev){   //inserting after tail, reassigns ne tail
             prev->next = temp;
             temp->next = NULL;

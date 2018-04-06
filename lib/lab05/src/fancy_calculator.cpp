@@ -1,3 +1,4 @@
+#include <unordered_set>
 #include "fancy_calculator.h"
 #include "stack.h"
 #include "queue.h"
@@ -17,28 +18,22 @@ namespace lab5{
             size++;
         }
 
-
         for(int i=0; i<size; i++){
-
             if(temp[i] == " "){      //skips blank spaces
                 i++;
             }
-
-            else if(i==size-1){     //if last number, otherwise crashes when checking for temp[i+1]
+            if(i==size-1){     //if last number, otherwise crashes when checking for temp[i+1]
                 infix_expression.enqueue(temp[i]);
                 infix_size++;
             }
-
             if(i!=size-1 && !is_number(temp[i])){
                 infix_expression.enqueue(temp[i]);
                 infix_size++;
             }
-
             if(i!=size-1 && is_number(temp[i]) && !is_number(temp[i+1]) ){  //if only one digit, queues it right away
                 infix_expression.enqueue(temp[i]);
                 infix_size++;
             }
-
             if(i!=size-1 && is_number(temp[i]) && is_number(temp[i+1])){    //if multidigit number
                 op=i;
                 if(op != size) {
@@ -211,20 +206,26 @@ namespace lab5{
     std::ostream &operator<<(std::ostream &stream, calculator &RHS) {
         int infix_size = RHS.infix_expression.queueSize();
         int postfix_size = RHS.postfix_expression.queueSize();
+        lab5::queue infix_copy = RHS.infix_expression;
+        lab5::queue postfix_copy = RHS.postfix_expression;
 
-        stream << std::string("Infix: ");
-        for (int i = 0; i < infix_size; i++) {
-            stream << RHS.infix_expression.top();
-            RHS.infix_expression.dequeue();
+        for(int i=0; i<infix_size; i++){
+            stream << infix_copy.top();
+            infix_copy.dequeue();
+            if(i<infix_size-1){
+                stream <<",";
+            }
+
         }
-        stream << "\n";
+        stream <<"\n";
+        for(int i=0; i<postfix_size;i++) {
+            stream << postfix_copy.top();
+            postfix_copy.dequeue();
+            if(i=postfix_size-1){
+                stream << ",";
+            }
 
-        stream << std::string("Postfix: ");
-        for (int i = 0; i < postfix_size; i++) {
-            stream << RHS.postfix_expression.top();
-            RHS.postfix_expression.dequeue();
         }
-
         return stream;
     }
 
