@@ -16,26 +16,24 @@ namespace lab7 {
 
     // Insert
     void tree::insert(int value) {
-        if(root == nullptr){
-            node* temp = new node(value);
+        if (root == nullptr) {
+            node *temp = new node(value);
             root = temp;
         }
-        else{
-            node* temp = new node(value);
-            node* current = root;
-            while(true) {
+        else {
+            node *temp = new node(value);
+            node *current = root;
+            while (true) {
                 if (current->data == value) {
                     current->frequency++;
                     return;
-                }
-                else if (current->data > value) {
+                } else if (current->data > value) {
                     if (current->left == nullptr) {
                         current->left = temp;
                         return;
                     }
                     current = current->left;
-                }
-                else if (current->data < value) {
+                } else if (current->data < value) {
                     if (current->right == nullptr) {
                         current->right = temp;
                         return;
@@ -78,6 +76,20 @@ namespace lab7 {
 
     // Return the number of times that value is in the tree
     int tree::get_frequency(int key) {
+        node* current = root;
+        if(current == nullptr){
+            return 0;
+        }
+        while(current->data != key){
+            if(current->data > key){
+                current = current->left;
+            }
+            else if(current->data < key){
+                current = current->right;
+            }
+        }
+        return current->frequency;
+
 
     }
 
