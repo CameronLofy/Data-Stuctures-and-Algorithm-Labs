@@ -7,6 +7,7 @@ namespace lab7 {
     // Construct an empty tree
     tree::tree() {
         root = nullptr;
+        tree_size = 0;
     }
 
     // Deconstruct tree
@@ -19,6 +20,7 @@ namespace lab7 {
         if (root == nullptr) {
             node *temp = new node(value);
             root = temp;
+            tree_size = 1;
         }
         else {
             node *temp = new node(value);
@@ -26,22 +28,26 @@ namespace lab7 {
             while (true) {
                 if (current->data == value) {
                     current->frequency++;
+                    tree_size++;
                     return;
                 } else if (current->data > value) {
                     if (current->left == nullptr) {
                         current->left = temp;
+                        tree_size++;
                         return;
                     }
                     current = current->left;
                 } else if (current->data < value) {
                     if (current->right == nullptr) {
                         current->right = temp;
+                        tree_size++;
                         return;
                     }
                     current = current->right;
                 }
             }
         }
+
     }
 
     // Remove key
@@ -51,17 +57,37 @@ namespace lab7 {
 
     // What level is key on?
     int tree::level(int key) {
-
+        int level = 0;
+        node* current = root;
+        if(current == nullptr){
+            throw "Empty tree";
+        }
+        while(current->data != key){
+            if(current->data > key){
+                current = current->left;
+                level++;
+            }
+            else if(current->data < key){
+                current = current->right;
+                level++;
+            }
+        }
+        return level;
     }
 
     // Print the path to the key, starting with root
     void tree::path_to(int key) {
+        std::vector<int> path = values_above(key);
+        path.push_back(key);
+        for(int i=0; i<=level(key); i++) {
+            std::cout << path.at(i);
+        }
 
     }
 
     // Number of items in the tree
     unsigned tree::size() {
-
+        return tree_size;
     }
 
     // Calculate the depth of the tree, longest string of connections
@@ -71,6 +97,12 @@ namespace lab7 {
 
     // Determine whether the given key is in the tree
     bool tree::in_tree(int key) {
+        if(get_frequency(key) == 0){
+            return false;
+        }
+        else{
+            return true;
+        }
 
     }
 
@@ -95,6 +127,26 @@ namespace lab7 {
 
     // Return a vector with all of the nodes that are greater than the input key in the tree
     std::vector<int> tree::values_above(int key) {
+        node* current = root;
+        std::vector<int> list;
+        if(get_frequency(key)==0){
+            throw "key not found in tree";
+        }
+        if(current->data == key){
+            return list;
+        }
+        list.push_back(current->data);
+        while(current->data != key){
+            if(current->data > key){
+                current = current->left;
+                list.push_back(current->data);
+            }
+            else if(current->data < key){
+                current = current->right;
+                list.push_back(current->data);
+            }
+        }
+        return list;
 
     }
 
