@@ -209,7 +209,8 @@ namespace lab5{
         lab5::queue infix_copy = RHS.infix_expression;
         lab5::queue postfix_copy = RHS.postfix_expression;
 
-        for(int i=0; i<infix_size; i++){
+        stream << std::string("Infix: ");
+        for(int i=0; i<infix_size; i++){            //TODO:: add "infix: " and "Postfix: "
             stream << infix_copy.top();
             infix_copy.dequeue();
             if(i<infix_size-1){
@@ -218,12 +219,15 @@ namespace lab5{
 
         }
         stream <<"\n";
-        for(int i=0; i<postfix_size;i++) {
+        int count=0;
+        stream << std::string("Postfix: ");
+        while(!postfix_copy.isEmpty()) {            //TODO: fix whatever bullshit is going on here making this not work
             stream << postfix_copy.top();
             postfix_copy.dequeue();
-            if(i=postfix_size-1){
+            if(count < postfix_size-1){
                 stream << ",";
             }
+            count++;
 
         }
         return stream;
