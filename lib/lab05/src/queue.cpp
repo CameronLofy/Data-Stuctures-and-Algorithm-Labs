@@ -26,6 +26,12 @@ namespace lab5{
     }
 
     queue &queue::operator=(const queue &RHS) {
+        if(this == &RHS){
+            return *this;
+        }
+        while(!this->isEmpty()){
+            this->dequeue();
+        }
         for(int i=0; i<RHS.queueSize(); i++) {
             this->storage_structure.append(RHS.storage_structure.get_value_at(i));
         }

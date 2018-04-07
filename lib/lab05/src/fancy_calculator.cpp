@@ -122,8 +122,14 @@ namespace lab5{
 
     std::istream &operator>>(std::istream &stream, calculator &RHS) {
         std::string input;
+        while(!RHS.infix_expression.isEmpty()){
+            RHS.infix_expression.dequeue();
+        }
+        while(!RHS.postfix_expression.isEmpty()){
+            RHS.postfix_expression.dequeue();
+        }
         while(stream.peek() != EOF){
-            input = stream.get();
+            input += stream.get();
         }
         RHS.parse_to_infix(input);
         RHS.convert_to_postfix(RHS.infix_expression);
@@ -210,7 +216,7 @@ namespace lab5{
         lab5::queue postfix_copy = RHS.postfix_expression;
 
         stream << std::string("Infix: ");
-        for(int i=0; i<infix_size; i++){            //TODO:: add "infix: " and "Postfix: "
+        for(int i=0; i<infix_size; i++){
             stream << infix_copy.top();
             infix_copy.dequeue();
             if(i<infix_size-1){

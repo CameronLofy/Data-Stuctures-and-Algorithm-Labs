@@ -138,8 +138,14 @@ namespace lab4 {
 
     std::istream &operator>>(std::istream &stream, calculator &RHS) {
         std::string input;
+        while(!RHS.infix_expression.is_empty()){
+            RHS.infix_expression.dequeue();
+        }
+        while (!RHS.postfix_expression.is_empty()){
+            RHS.postfix_expression.dequeue();
+        }
         while(stream.peek() != EOF){
-            input = stream.get();
+            input += stream.get();
         }
         RHS.parse_to_infix(input);
         RHS.convert_to_postfix(RHS.infix_expression);

@@ -77,6 +77,7 @@ namespace lab6{
             current = current->next;
             set.push_back(value);
         }
+        
         return set;
     }
 
