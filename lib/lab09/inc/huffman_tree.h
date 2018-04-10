@@ -3,12 +3,13 @@
 
 #include "node.h"
 #include <string>
+
 namespace lab9{
     class huffman_tree{
     private:
         node* root;
-        node* head;
-        node* tail;
+        node* priority_head;
+        node* priority_tail;
         node* remove();
 
     public:

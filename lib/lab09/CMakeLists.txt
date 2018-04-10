@@ -1,6 +1,5 @@
 set(HEADER_FILES
         dict_entry.h
-        file_manipulation.h
         huffman.h
         huffman_dictionary.h
         huffman_tree.h
@@ -8,7 +7,6 @@ set(HEADER_FILES
         )
 
 set(SOURCE_FILES
-        file_manipulation.cpp
         huffman.cpp
         huffman_dictionary.cpp
         huffman_tree.cpp

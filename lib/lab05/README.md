@@ -26,7 +26,7 @@ You may need to create auxiliary functions to complete tasks, or to avoid copy a
 
 `linked_list::insert(input, location = 0)`: create a node from the input string and put it into the linked list at the given location
 
-`linked_list::append(input)`: create a new node and put it at the end/tail of the linked list
+`linked_list::append(input)`: create a new node and put it at the end/priority_tail of the linked list
 
 `linked_list::remove(location = 0)`: Remove the node at the given location 
 

@@ -29,6 +29,9 @@ namespace lab9{
         char get_character(){ return character; }
         int get_frequency(){ return frequency; }
         void increment_frequency(){ frequency++; }
+
+        // Only used in tree generation from string
+        void set(char input_char){ character = input_char; }
     };
 }
 

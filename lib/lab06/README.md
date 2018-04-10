@@ -25,7 +25,7 @@ Don't move **data** in the node from *private* to *public*. We placed this here 
  
 `void swap_set(unsigned location_1_start, unsigned location_1_end, unsigned location_2_start, unsigned location_2_end)`: Swap the subset of nodes starting at position_1_start and ending at position_1_end with the nodes starting at position_2_start to position_2_end. These locations are **inclusive.**
 
-`doubly_linked_list doubly_linked_list::split(unsigned position)`: Split the doubly linked list at position, with position being the head of the second linked list. Truncate the original linked list and return the split off linked list.
+`doubly_linked_list doubly_linked_list::split(unsigned position)`: Split the doubly linked list at position, with position being the priority_head of the second linked list. Truncate the original linked list and return the split off linked list.
 
 `void doubly_linked_list::insert(int input, unsigned int location = 0)`: This inserts a node *at* the location provided. Note that if you don't give it a location to insert the node, it will insert it at the beginning of the linked_list.
 
