@@ -8,6 +8,37 @@ You will be writing all of the code for the implementation of a tree. You can us
 
 Every function than can be implemented with recursion, needs to be implemented with it. Check out the example recursive function `print_gtl()` for an idea of how to accomplish this. Take note of the auxilary functions 
 
+The following functions need to be implemented recursively
+
+- `tree(const tree& copy)`
+
+- `~tree()`
+
+- `void insert(int value)`
+
+- `bool in_tree(int key)` 
+
+- `int get_frequency(int key)`
+
+- `int level(int key)`
+
+- `void path_to(int key)`
+
+- `unsigned depth()`
+
+- `std::string to_string()`
+
+- `void print()`
+
+- `tree& operator=(const tree &rhs)`
+
+- `friend std::ostream& operator<<(std::ostream& stream, tree& RHS)`
+
+- `tree operator+(const tree &rhs) const`
+
+- `std::vector<int> values_above(int key)`
+
+
 ### Hints ###
 - `left` children of a parent are **ALWAYS** less than the parent 
 - `right` children of a a parent are **ALWAYS** greater than the parent

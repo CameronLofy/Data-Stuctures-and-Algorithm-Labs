@@ -11,6 +11,11 @@ namespace lab7 {
         tree_size = 0;
     }
 
+    // Copy constructor
+    tree::tree(const tree &copy) {
+
+    }
+
     // Deconstruct tree
     tree::~tree() {
         clear(root);
@@ -51,7 +56,7 @@ namespace lab7 {
 
     }
 
-    // Remove key
+    // Remove key return true if the key is deleted, and false if it isn't in the tree
     bool tree::remove(int key) {
 
     }
@@ -151,6 +156,7 @@ namespace lab7 {
 
     }
 
+    //Use the to string function for the following two functions
     // Print the tree least to greatest, Include duplicates
     void tree::print() {
 
@@ -166,10 +172,14 @@ namespace lab7 {
 
     }
 
+    /**************************
+     * Extra credit functions *
+     **************************/
 
-    /*
-     * Extra credit functions
-     */
+    // Return a vector with all of the nodes that are greater than the input key in the tree
+    std::vector<int> tree::values_above(int key) {
+
+    }
 
     // Merge rhs into this. Demo to a TA for credit
     tree tree::operator+(const tree &rhs) const {
@@ -181,10 +191,10 @@ namespace lab7 {
 
     }
 
-    /*
-     * Recursion Example
-     * Print the linked list from greatest to least using recursion
-     */
+    /*********************************************************************
+     * Recursion Example                                                 *
+     * Print the linked list from greatest to least using recursion      *
+     *********************************************************************/
 
     // Auxiliary functions
     void node_print_gtl(node *top) {

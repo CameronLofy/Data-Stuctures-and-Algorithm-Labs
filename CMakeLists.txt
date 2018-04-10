@@ -32,4 +32,4 @@ add_subdirectory(lib/lab07 lab7_lib)
 
 add_subdirectory(test)
 
-target_link_libraries(labs_main lab1_lib lab2_lib lab3_lib lab4_lib lab5_lib lab6_lib lab6_lib)
+target_link_libraries(labs_main lab1_lib lab2_lib lab3_lib lab4_lib lab5_lib lab6_lib lab7_lib)

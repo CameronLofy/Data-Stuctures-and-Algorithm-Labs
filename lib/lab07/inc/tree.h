@@ -7,29 +7,30 @@
 namespace lab7 {
     class tree {
         node *root;
-        unsigned tree_size;
+        int tree_size;
     public:
         tree();
-        tree(const tree& copy);
-        ~tree();
+        tree(const tree& copy);     //Recursively
+        ~tree();                    //Recursively
 
-        void insert(int value);
+        void insert(int value);     //Recursively
         bool remove(int key);
-        bool in_tree(int key);
-        int get_frequency(int key);
+        bool in_tree(int key);      //Recursively
+        int get_frequency(int key); //Recursively
 
-        int level(int key);
-        void path_to(int key);
-        std::vector<int> values_above(int key);
+        std::string to_string();    //Recursively
+        int level(int key);         //Recursively
+        void path_to(int key);      //Recursively
         unsigned size();
-        unsigned depth();
-        void print();
+        unsigned depth();           //Recursively
+        void print();               //Recursively
 
-        tree& operator=(const tree &rhs);
-        friend std::ostream& operator<<(std::ostream& stream, tree& RHS);
+        tree& operator=(const tree &rhs);   //Recursively
+        friend std::ostream& operator<<(std::ostream& stream, tree& RHS); //Recursively
 
         // Extra credit
-        tree operator+(const tree &rhs) const;
+        std::vector<int> values_above(int key); //Recursively
+        tree operator+(const tree &rhs) const;  //Recursively
         void balance();
 
         // Example recursion

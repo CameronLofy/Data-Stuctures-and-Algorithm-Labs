@@ -1,7 +1,17 @@
 set(HEADER_FILES
+        dict_entry.h
+        file_manipulation.h
+        huffman.h
+        huffman_dictionary.h
+        huffman_tree.h
+        node.h
         )
 
 set(SOURCE_FILES
+        file_manipulation.cpp
+        huffman.cpp
+        huffman_dictionary.cpp
+        huffman_tree.cpp
         )
 include_directories(inc)
 add_library(lab9_lib STATIC ${SOURCE_FILES} ${HEADER_FILES})

@@ -189,6 +189,7 @@ TEST_F(Lab07Fixture, values_above){
     std::vector<int> compare = std::vector<int>({13,14,15,16,17,18,19,20,22});
     EXPECT_EQ(built_tree->values_above(12), compare);
 
+    built_tree->values_above(13);
     built_tree->insert(10);
     built_tree->insert(13);
     built_tree->insert(13);
@@ -198,22 +199,22 @@ TEST_F(Lab07Fixture, values_above){
     compare = std::vector<int>({17,18,19,19,20,22});
     EXPECT_EQ(built_tree->values_above(16), compare);
 
-    compare = std::vector<int>({11,12,13,13,14,15,15,16,17,18,19,20,22});
+    compare = std::vector<int>({11,12,13,13,13,14,15,15,16,17,18,19,19,20,22});
     EXPECT_EQ(built_tree->values_above(10), compare);
 
     compare = std::vector<int>({22});
     EXPECT_EQ(built_tree->values_above(20), compare);
 
-    compare = std::vector<int>({7,8,9,10,10,11,12,13,13,14,15,15,16,17,18,19,20,22});
+    compare = std::vector<int>({7,8,9,10,10,11,12,13,13,13,14,15,15,16,17,18,19,19,20,22});
     EXPECT_EQ(built_tree->values_above(6), compare);
 }
 
 TEST_F(Lab07Fixture, equals_operator){
-    EXPECT_NO_FATAL_FAILURE(tree = built_tree);
+    EXPECT_NO_FATAL_FAILURE(*tree = *built_tree);
     EXPECT_TRUE(built_tree->in_tree(15));
     EXPECT_TRUE(tree->in_tree(15));
 
-    built_tree->remove(10);
+    built_tree->remove(15);
 
     EXPECT_FALSE(built_tree->in_tree(15));
     EXPECT_TRUE(tree->in_tree(15));
