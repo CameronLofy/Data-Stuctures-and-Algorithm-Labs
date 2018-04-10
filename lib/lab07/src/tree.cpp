@@ -4,6 +4,7 @@
 namespace lab7 {
     void clear(node *to_clear);
     unsigned maxDepth(node *top);
+    struct node* newInsert(node* top, int key);
 
     // Construct an empty tree
     tree::tree() {
@@ -23,37 +24,15 @@ namespace lab7 {
 
     // Insert
     void tree::insert(int value) {
-        if (root == nullptr) {
-            node *temp = new node(value);
-            root = temp;
-            tree_size = 1;
+        node* tempRoot = root;
+        if(tempRoot == NULL){
+            node* tmp = new node(value);
+            tmp->right = nullptr;
+            tmp->left = nullptr;
+            root = tmp;
         }
-        else {
-            node *temp = new node(value);
-            node *current = root;
-            while (true) {
-                if (current->data == value) {
-                    current->frequency++;
-                    tree_size++;
-                    return;
-                } else if (current->data > value) {
-                    if (current->left == nullptr) {
-                        current->left = temp;
-                        tree_size++;
-                        return;
-                    }
-                    current = current->left;
-                } else if (current->data < value) {
-                    if (current->right == nullptr) {
-                        current->right = temp;
-                        tree_size++;
-                        return;
-                    }
-                    current = current->right;
-                }
-            }
-        }
-
+        newInsert(tempRoot, value);
+        tree_size++;
     }
 
     // Remove key return true if the key is deleted, and false if it isn't in the tree
@@ -98,7 +77,11 @@ namespace lab7 {
     // Calculate the depth of the tree, longest string of connections
     unsigned tree::depth() {
         node* tmpRoot = root;
-        return maxDepth(tmpRoot);
+        int depth = maxDepth(tmpRoot)-1;
+        if(depth < 0){
+            return 0;
+        }
+        return depth;
     }
 
     // Determine whether the given key is in the tree
@@ -176,10 +159,6 @@ namespace lab7 {
      * Extra credit functions *
      **************************/
 
-    // Return a vector with all of the nodes that are greater than the input key in the tree
-    std::vector<int> tree::values_above(int key) {
-
-    }
 
     // Merge rhs into this. Demo to a TA for credit
     tree tree::operator+(const tree &rhs) const {
@@ -216,8 +195,8 @@ namespace lab7 {
             return 0;
         }
         else{
-            int leftDepth = depth(top->left);   //checks depth of left node
-            int rightDepth = depth(top->right); //checks depth of right node
+            int leftDepth = maxDepth(top->left);   //checks depth of left node
+            int rightDepth = maxDepth(top->right); //checks depth of right node
 
             if(leftDepth > rightDepth){         //compares left and right depth of node
                 return(leftDepth+1);            //returns left depth size if longer
@@ -225,6 +204,28 @@ namespace lab7 {
             else{                               //if right depth is longer or both are equal, return right depth length
                 return(rightDepth+1);
             }
+        }
+    }
+
+    struct node* newInsert(node* top, int key){
+        if(top == nullptr){
+            node* tmp = new node(key);
+            tmp->right = nullptr;
+            tmp->left = nullptr;
+            return tmp;
+        }
+        else{
+            if(key < top->data){
+                top->left = newInsert(top->left, key);
+            }
+            else if(key > top->data){
+                top->right = newInsert(top->right, key);
+            }
+            else{
+                top->frequency++;
+                return top;
+            }
+            return top;
         }
     }
 
