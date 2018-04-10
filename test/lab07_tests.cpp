@@ -226,7 +226,3 @@ TEST_F(Lab07Fixture, equals_operator){
     EXPECT_FALSE(built_tree->in_tree(21));
     EXPECT_TRUE(tree->in_tree(21));
 }
-
-TEST(Lab07Fixture, insert){
-    lab7::tree
-}

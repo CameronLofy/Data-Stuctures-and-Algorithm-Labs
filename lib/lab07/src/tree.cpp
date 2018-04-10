@@ -3,6 +3,7 @@
 
 namespace lab7 {
     void clear(node *to_clear);
+    unsigned maxDepth(node *top);
 
     // Construct an empty tree
     tree::tree() {
@@ -82,7 +83,6 @@ namespace lab7 {
         for(int i=0; i<=level(key); i++) {
             std::cout << path.at(i);
         }
-
     }
 
     // Number of items in the tree
@@ -92,7 +92,8 @@ namespace lab7 {
 
     // Calculate the depth of the tree, longest string of connections
     unsigned tree::depth() {
-
+        node* tmpRoot = root;
+        return maxDepth(tmpRoot);
     }
 
     // Determine whether the given key is in the tree
@@ -198,6 +199,23 @@ namespace lab7 {
         if (to_clear->left != nullptr) clear(to_clear->left);
         if (to_clear->right != nullptr) clear(to_clear->right);
         delete to_clear;
+    }
+
+    unsigned maxDepth(node* top){
+        if(top == nullptr){
+            return 0;
+        }
+        else{
+            int leftDepth = depth(top->left);   //checks depth of left node
+            int rightDepth = depth(top->right); //checks depth of right node
+
+            if(leftDepth > rightDepth){         //compares left and right depth of node
+                return(leftDepth+1);            //returns left depth size if longer
+            }
+            else{                               //if right depth is longer or both are equal, return right depth length
+                return(rightDepth+1);
+            }
+        }
     }
 
     // Class function
