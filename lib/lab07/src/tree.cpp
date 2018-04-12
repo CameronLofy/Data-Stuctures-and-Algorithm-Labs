@@ -4,9 +4,14 @@
 namespace lab7 {
     void clear(node *to_clear);
     unsigned maxDepth(node *top);
+    bool in_tree_recur(node* top, int key);
+    unsigned recurLevel(node *top, int key);
     struct node* newInsert(node* top, int key);
+    int recur_get_freq(node* top, int key);
 
-    // Construct an empty tree
+
+
+        // Construct an empty tree
     tree::tree() {
         root = nullptr;
         tree_size = 0;
@@ -27,8 +32,6 @@ namespace lab7 {
         node* tempRoot = root;
         if(tempRoot == NULL){
             node* tmp = new node(value);
-            tmp->right = nullptr;
-            tmp->left = nullptr;
             root = tmp;
         }
         newInsert(tempRoot, value);
@@ -38,30 +41,20 @@ namespace lab7 {
     // Remove key return true if the key is deleted, and false if it isn't in the tree
     bool tree::remove(int key) {
 
+
+        tree_size--;
     }
 
     // What level is key on?
     int tree::level(int key) {
-        int level = 0;
-        node* current = root;
-        if(current == nullptr){
-            throw "Empty tree";
+        if(in_tree(key)){
+            return recurLevel(root, key);
         }
-        while(current->data != key){
-            if(current->data > key){
-                current = current->left;
-                level++;
-            }
-            else if(current->data < key){
-                current = current->right;
-                level++;
-            }
-        }
-        return level;
+        return -1;
     }
 
     // Print the path to the key, starting with root
-    void tree::path_to(int key) {
+    void tree::path_to(int key) {                       //TODO:: rewrite for recursion
         std::vector<int> path = values_above(key);
         path.push_back(key);
         for(int i=0; i<=level(key); i++) {
@@ -86,32 +79,13 @@ namespace lab7 {
 
     // Determine whether the given key is in the tree
     bool tree::in_tree(int key) {
-        if(get_frequency(key) == 0){
-            return false;
-        }
-        else{
-            return true;
-        }
+        return in_tree_recur(root, key);
 
     }
 
     // Return the number of times that value is in the tree
     int tree::get_frequency(int key) {
-        node* current = root;
-        if(current == nullptr){
-            return 0;
-        }
-        while(current->data != key){
-            if(current->data > key){
-                current = current->left;
-            }
-            else if(current->data < key){
-                current = current->right;
-            }
-        }
-        return current->frequency;
-
-
+        return recur_get_freq(root, key);
     }
 
     // Return a vector with all of the nodes that are greater than the input key in the tree
@@ -207,6 +181,40 @@ namespace lab7 {
         }
     }
 
+    bool in_tree_recur(node* top, int key)
+    {
+        if(top == nullptr){
+            return false;
+        }
+        else if(top->data == key) {
+            return true;
+        }
+        else if(key < top->data){
+            return in_tree_recur(top->left, key);
+        }
+        else if(key > top->data) {
+            return in_tree_recur(top->right, key);
+        }
+    }
+
+    unsigned recurLevel(node* top, int key){
+        if(top->data == key){
+            return 0;
+        }
+        else{
+            unsigned level;
+            if(top->data < key){
+                level = recurLevel(top->right, key);
+                return (level+1);
+            }
+            else{
+                level = recurLevel(top->left, key);
+                return (level+1);
+            }
+        }
+
+    }
+
     struct node* newInsert(node* top, int key){
         if(top == nullptr){
             node* tmp = new node(key);
@@ -226,6 +234,21 @@ namespace lab7 {
                 return top;
             }
             return top;
+        }
+    }
+
+    int recur_get_freq(node* top, int key){
+        if(top == nullptr) {
+            return 0;
+        }
+        else if(top->data == key){
+            return top->frequency;
+        }
+        else if(key > top->data){
+            return recur_get_freq(top->right, key);
+        }
+        else if(key< top->data){
+            return recur_get_freq(top->left, key);
         }
     }
 

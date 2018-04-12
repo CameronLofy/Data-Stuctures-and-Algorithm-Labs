@@ -184,12 +184,21 @@ namespace lab6{
     }
 
     doubly_linked_list doubly_linked_list::split_set(unsigned position_1, unsigned position_2) {
-        doubly_linked_list splitSet(get_set(position_1, position_2));
-        for(int i=position_2; i >= position_1; i--){
+        doubly_linked_list split;
+        node* A = head;
+        for(int i=0; i<position_1; i++){
+            A = A->next;
+        }
+        node* B = A;
+        for(int i=position_1; i<position_2; i++){
+            split.append(B->get_data());
+            B = B->next;
+        }
+        split.append(B->get_data());
+        for(int i = position_2; i>=position_1; i--){
             remove(i);
         }
-        return splitSet;
-
+        return split;
     }
 
     void doubly_linked_list::swap(unsigned position_1, unsigned position_2) {

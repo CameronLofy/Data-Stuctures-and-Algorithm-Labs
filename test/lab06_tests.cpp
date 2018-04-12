@@ -440,7 +440,8 @@ TEST_F(Lab06Fixture, Split){
 }
 
 TEST_F(Lab06Fixture, SplitSet){
-    test1->split_set(6,10);
+    lab6::doubly_linked_list testsplit;
+    testsplit = test1->split_set(6,10);
     EXPECT_EQ(0, test1->get_data(0));
     EXPECT_EQ(1, test1->get_data(1));
     EXPECT_EQ(2, test1->get_data(2));
@@ -448,27 +449,17 @@ TEST_F(Lab06Fixture, SplitSet){
     EXPECT_EQ(4, test1->get_data(4));
     EXPECT_EQ(5, test1->get_data(5));
     EXPECT_EQ(12, test1->size());
-    //EXPECT_EQ(11, test1->get_data(6));
-
-    /*lab6::doubly_linked_list testsplit(0);
-    testsplit.append(1);
-    testsplit.append(2);
-    testsplit.append(3);
-    testsplit.append(4);
-    testsplit.append(5);
-    testsplit.append(6);
-    testsplit.append(7);
-    testsplit.append(8);
-    testsplit.append(9);
-    testsplit.append(10);
-    testsplit.split_set(3,6);
-    EXPECT_EQ(0, testsplit.get_data(0));
-    EXPECT_EQ(1, testsplit.get_data(1));
-    EXPECT_EQ(2, testsplit.get_data(2));
-    /*EXPECT_EQ(7, testsplit.get_data(3));
-    EXPECT_EQ(8, testsplit.get_data(4));
-    EXPECT_EQ(9, testsplit.get_data(5));
-    EXPECT_EQ(10, testsplit.get_data(6));*/
+    EXPECT_EQ(11, test1->get_data(6));
+    EXPECT_EQ(12, test1->get_data(7));
+    EXPECT_EQ(13, test1->get_data(8));
+    EXPECT_EQ(14, test1->get_data(9));
+    EXPECT_EQ(15, test1->get_data(10));
+    EXPECT_EQ(16, test1->get_data(11));
+    EXPECT_EQ(6, testsplit.get_data(0));
+    EXPECT_EQ(7, testsplit.get_data(1));
+    EXPECT_EQ(8, testsplit.get_data(2));
+    EXPECT_EQ(9, testsplit.get_data(3));
+    EXPECT_EQ(10, testsplit.get_data(4));
 
 }
 
