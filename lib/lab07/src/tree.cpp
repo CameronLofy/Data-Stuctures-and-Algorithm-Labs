@@ -40,9 +40,26 @@ namespace lab7 {
 
     // Remove key return true if the key is deleted, and false if it isn't in the tree
     bool tree::remove(int key) {
+        //TODO:: create a get_node auxiliary
+        //check if item to remove has children nodes
+        //if it has both nodes
 
 
         tree_size--;
+    }
+
+    struct node* get_node(node* top, int key){
+        if(top->data == key){
+            return top;
+        }
+        else if(top->data > key){
+            get_node(top->left, key);
+        }
+        else if(top->data < key){
+            get_node(top->right, key);
+        }
+        else
+            throw "Value not found in tree";
     }
 
     // What level is key on?
