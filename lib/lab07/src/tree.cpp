@@ -8,6 +8,10 @@ namespace lab7 {
     unsigned recurLevel(node *top, int key);
     struct node* newInsert(node* top, int key);
     int recur_get_freq(node* top, int key);
+    struct node* get_node(node* top, int key);
+    struct node* get_parent(node* top, node* key);
+    bool has_children(node* key);
+    struct node* to_swap(node* top);
 
 
 
@@ -40,12 +44,50 @@ namespace lab7 {
 
     // Remove key return true if the key is deleted, and false if it isn't in the tree
     bool tree::remove(int key) {
-        //TODO:: create a get_node auxiliary
-        //check if item to remove has children nodes
-        //if it has both nodes
+        node* remove = get_node(root, key);
+        node* remove_parent = get_parent(root, remove);
 
-
-        tree_size--;
+        if(remove->frequency > 1){
+            remove->frequency--;
+            tree_size--;
+            return true;
+        }
+        if(!has_children(remove)){
+            if(remove == root){
+                clear(root);
+            }
+            delete remove;tree_size--;
+            return true;
+        }
+        node* toSwap = to_swap(remove);
+        node* swap_parent = get_parent(root, toSwap);
+        if(has_children(remove)) {
+            if (has_children(toSwap)) {
+                swap_parent->right = toSwap->left;  //brings swap children up tree
+            }
+            if(remove->right == toSwap){    //If toSwap is one below remove
+                toSwap->right = nullptr;    //don't want to have to_swap point to itself
+                toSwap->left = remove->left;
+            }
+            else if(remove->left == toSwap){
+                toSwap->left = nullptr;
+                toSwap->right = remove->right;
+            }
+            else {
+                toSwap->right = remove->right;
+                toSwap->left = remove->left;
+            }
+            if(remove_parent->data > remove->data){
+                remove_parent->right = toSwap;
+            }
+            else if(remove_parent->data < remove->data){
+                remove_parent->left = toSwap;
+            }
+            delete remove;
+            tree_size--;
+            return true;
+        }
+        return false;
     }
 
     struct node* get_node(node* top, int key){
@@ -60,6 +102,42 @@ namespace lab7 {
         }
         else
             throw "Value not found in tree";
+    }
+
+    struct node* get_parent(node* top, node* key){
+        if(top == key){
+            return nullptr;
+        }
+        else if(top->right == key || top->left == key){
+            return top;
+        }
+        else if(top->data < key->data){
+            return get_parent(top->right, key);
+        }
+        else if(top->data > key->data){
+            return get_parent(top->left, key);
+        }
+        throw "invalid node";
+    }
+
+    bool has_children(node* key){
+        if(key->left != nullptr || key->right != nullptr){
+            return true;
+        }
+        return false;
+    }
+    struct node* to_swap(node* top){
+        if(top->left){
+            top = top->left;    //gets highest node less than top
+            while(top->right){  //node will never have a right node after loop
+                top = top->right;
+            }
+            return top;
+        }
+        else {          //no left node, can just move everything under right node up
+            top = top->right;
+            return top;
+        }
     }
 
     // What level is key on?
