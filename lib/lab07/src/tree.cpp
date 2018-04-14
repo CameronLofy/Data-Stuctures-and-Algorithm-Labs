@@ -52,7 +52,7 @@ namespace lab7 {
             tree_size--;
             return true;
         }
-        if(!has_children(remove)){
+        if(!has_children(remove)){      //TODO:: make sure this passes other tests
             if(remove == root){
                 clear(root);
             }
