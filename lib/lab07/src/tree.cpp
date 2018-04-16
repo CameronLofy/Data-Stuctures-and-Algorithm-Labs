@@ -44,6 +44,9 @@ namespace lab7 {
 
     // Remove key return true if the key is deleted, and false if it isn't in the tree
     bool tree::remove(int key) {
+        if(!in_tree(key)){
+            return false;
+        }
         node* remove = get_node(root, key);
         node* remove_parent = get_parent(root, remove);
 
@@ -52,16 +55,19 @@ namespace lab7 {
             tree_size--;
             return true;
         }
-        if(!has_children(remove)){      //TODO:: make sure this passes other tests
+        if(!has_children(remove)){
             if(remove == root){
                 clear(root);
             }
-            delete remove;tree_size--;
+            delete remove;
+            remove->frequency--;
+            tree_size--;
             return true;
         }
-        node* toSwap = to_swap(remove);
-        node* swap_parent = get_parent(root, toSwap);
+
         if(has_children(remove)) {
+            node* toSwap = to_swap(remove);
+            node* swap_parent = get_parent(root, toSwap);
             if (has_children(toSwap)) {
                 swap_parent->right = toSwap->left;  //brings swap children up tree
             }
@@ -77,12 +83,16 @@ namespace lab7 {
                 toSwap->right = remove->right;
                 toSwap->left = remove->left;
             }
-            if(remove_parent->data > remove->data){
+            if(remove_parent == nullptr){
+                root = toSwap;
+            }
+            else if(remove_parent->data > remove->data){
                 remove_parent->right = toSwap;
             }
             else if(remove_parent->data < remove->data){
                 remove_parent->left = toSwap;
             }
+            remove->frequency--;
             delete remove;
             tree_size--;
             return true;
