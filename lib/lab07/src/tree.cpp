@@ -1,21 +1,10 @@
-#include "../inc/tree.h"
 #include <iostream>
-
+#include "../inc/tree.h"
+#include <sstream>
 namespace lab7 {
     void clear(node *to_clear);
-    unsigned maxDepth(node *top);
-    bool in_tree_recur(node* top, int key);
-    unsigned recurLevel(node *top, int key);
-    struct node* newInsert(node* top, int key);
-    int recur_get_freq(node* top, int key);
-    struct node* get_node(node* top, int key);
-    struct node* get_parent(node* top, node* key);
-    bool has_children(node* key);
-    struct node* to_swap(node* top);
 
-
-
-        // Construct an empty tree
+    // Construct an empty tree
     tree::tree() {
         root = nullptr;
         tree_size = 0;
@@ -232,6 +221,31 @@ namespace lab7 {
     // Operator= Overload. Allowing for copying of trees
     tree &tree::operator=(const tree &rhs) {
 
+
+    }
+
+    // Print the tree least to greatest, Include duplicates
+    std::ostream &operator<<(std::ostream &stream, tree &RHS) {
+
+    }
+
+    // Operator= Overload. Allowing for copying of trees
+    tree &tree::operator=(const tree &rhs) {
+
+    }
+
+    /**************************
+     * Extra credit functions *
+     **************************/
+
+    // Return a vector with all of the nodes that are greater than the input key in the tree
+    std::vector<int> tree::values_above(int key) {
+
+    }
+
+    // Merge rhs into this. Demo to a TA for credit
+    tree tree::operator+(const tree &rhs) const {
+
     }
 
     /**************************
@@ -256,9 +270,9 @@ namespace lab7 {
 
     // Auxiliary functions
     void node_print_gtl(node *top) {
-        if (top == nullptr) return;
+        if(top == nullptr) return;
         node_print_gtl(top->right);
-        for (int i = 0; i < top->frequency; i++) std::cout << top->data << " ";
+        for(int i = 0; i < top->frequency; i++) std::cout << top->data << " ";
         node_print_gtl(top->left);
     }
 

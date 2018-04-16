@@ -16,7 +16,7 @@ if(UNIX)
     add_definitions(-std=gnu++0x)
 endif(UNIX)
 
-set(SOURCE_FILES main.cpp lib/lab08/inc/hash_table.h)
+set(SOURCE_FILES main.cpp)
 
 add_executable(labs_main ${SOURCE_FILES})
 
