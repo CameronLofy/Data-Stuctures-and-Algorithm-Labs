@@ -3,6 +3,16 @@
 #include <sstream>
 namespace lab7 {
     void clear(node *to_clear);
+    int recur_get_freq(node* top, int key);
+    unsigned maxDepth(node* top);
+    struct node* newInsert(node* top, int key);
+    struct node* get_node(node* top, int key);
+    struct node* get_parent(node* top, node* key);
+    bool has_children(node* key);
+    unsigned recurLevel(node* top, int key);
+    struct node* to_swap(node* top);
+    bool in_tree_recur(node* top, int key);
+    void recur_print(node* top);
 
     // Construct an empty tree
     tree::tree() {
@@ -210,7 +220,20 @@ namespace lab7 {
     //Use the to string function for the following two functions
     // Print the tree least to greatest, Include duplicates
     void tree::print() {
+        recur_print(root);
+        std::cout << std::endl;
 
+    }
+
+    void recur_print(node* top){
+        if(top == nullptr){
+            return;
+        }
+        recur_print(top->left);
+        for(int i =0; i<top->frequency; i++) {
+            std::cout << top->data << " ";
+        }
+        recur_print(top->right);
     }
 
     // Print the tree least to greatest, Include duplicates
@@ -224,29 +247,11 @@ namespace lab7 {
 
     }
 
-    // Print the tree least to greatest, Include duplicates
-    std::ostream &operator<<(std::ostream &stream, tree &RHS) {
 
-    }
-
-    // Operator= Overload. Allowing for copying of trees
-    tree &tree::operator=(const tree &rhs) {
-
-    }
 
     /**************************
      * Extra credit functions *
      **************************/
-
-    // Return a vector with all of the nodes that are greater than the input key in the tree
-    std::vector<int> tree::values_above(int key) {
-
-    }
-
-    // Merge rhs into this. Demo to a TA for credit
-    tree tree::operator+(const tree &rhs) const {
-
-    }
 
     /**************************
      * Extra credit functions *
@@ -300,8 +305,7 @@ namespace lab7 {
         }
     }
 
-    bool in_tree_recur(node* top, int key)
-    {
+    bool in_tree_recur(node* top, int key) {
         if(top == nullptr){
             return false;
         }
