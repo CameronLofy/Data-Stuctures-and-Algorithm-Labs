@@ -15,6 +15,8 @@ namespace lab7 {
     void recur_print(node* top);
     void recur_path_to(node* top, int key);
     std::vector<int> recur_values_above(node* top, int key, std::vector<int> &values);
+    void node_print_gtl(node *top);
+    node* recur_equal(node* top);
 
     // Construct an empty tree
     tree::tree() {
@@ -93,7 +95,7 @@ namespace lab7 {
             else if(remove_parent->data < remove->data){
                 remove_parent->left = toSwap;
             }
-            remove->frequency--;
+
             delete remove;
             tree_size--;
             return true;
@@ -190,13 +192,16 @@ namespace lab7 {
 
     // Return the number of times that value is in the tree
     int tree::get_frequency(int key) {
+        if(!in_tree(key)){
+            return 0;
+        }
         return recur_get_freq(root, key);
     }
 
     // Return a vector with all of the nodes that are greater than the input key in the tree
     std::vector<int> tree::values_above(int key) {
         std::vector<int> values_above = std::vector<int>();
-        recur_values_above(root, key, values_above);
+        return(recur_values_above(root, key, values_above));
     }
 
     //Use the to string function for the following two functions
@@ -218,6 +223,11 @@ namespace lab7 {
         recur_print(top->right);
     }
 
+    void tree::print_gtl() {
+        node_print_gtl(root);
+        std::cout << std::endl;
+    }
+
     // Print the tree least to greatest, Include duplicates
     std::ostream &operator<<(std::ostream &stream, tree &RHS) {
 
@@ -225,8 +235,23 @@ namespace lab7 {
 
     // Operator= Overload. Allowing for copying of trees
     tree &tree::operator=(const tree &rhs) {
+        this->root = recur_equal(rhs.root);
+        this->tree_size = rhs.tree_size;
 
+    }
 
+    node* recur_equal(node* top){
+        if(top == nullptr){
+            return top;
+        }
+        node* temp = new node(top);
+        if(top->left){
+            temp->left = recur_equal(top->left);
+        }
+        if(top->right){
+            temp->right = recur_equal(top->right);
+        }
+        return temp;
     }
 
 
@@ -388,10 +413,3 @@ namespace lab7 {
         return values;
         }
     }
-
-    // Class function
-    void tree::print_gtl() {
-        node_print_gtl(root);
-        std::cout << std::endl;
-    }
-};
