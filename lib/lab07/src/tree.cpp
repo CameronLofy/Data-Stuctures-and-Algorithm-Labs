@@ -13,6 +13,7 @@ namespace lab7 {
     struct node* to_swap(node* top);
     bool in_tree_recur(node* top, int key);
     void recur_print(node* top);
+    void recur_path_to(node* top, int key);
 
     // Construct an empty tree
     tree::tree() {
@@ -159,10 +160,9 @@ namespace lab7 {
 
     // Print the path to the key, starting with root
     void tree::path_to(int key) {                       //TODO:: rewrite for recursion
-        std::vector<int> path = values_above(key);
-        path.push_back(key);
-        for(int i=0; i<=level(key); i++) {
-            std::cout << path.at(i);
+        if(in_tree(key)){
+            recur_path_to(root, key);
+            std::cout << std::endl;
         }
     }
 
@@ -372,6 +372,22 @@ namespace lab7 {
         }
         else if(key< top->data){
             return recur_get_freq(top->left, key);
+        }
+    }
+
+    void recur_path_to(node* top, int key){
+        std::cout << top->data;
+        if(top->data == key){
+            return;
+        }
+        else{
+            std::cout << " -> ";
+            if(top->data < key){
+                recur_path_to(top->right, key);
+            }
+            else{
+                recur_path_to(top->left, key);
+            }
         }
     }
 
