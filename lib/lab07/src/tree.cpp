@@ -14,6 +14,7 @@ namespace lab7 {
     bool in_tree_recur(node* top, int key);
     void recur_print(node* top);
     void recur_path_to(node* top, int key);
+    std::vector<int> recur_values_above(node* top, int key, std::vector<int> &values);
 
     // Construct an empty tree
     tree::tree() {
@@ -159,7 +160,7 @@ namespace lab7 {
     }
 
     // Print the path to the key, starting with root
-    void tree::path_to(int key) {                       //TODO:: rewrite for recursion
+    void tree::path_to(int key) {
         if(in_tree(key)){
             recur_path_to(root, key);
             std::cout << std::endl;
@@ -194,27 +195,8 @@ namespace lab7 {
 
     // Return a vector with all of the nodes that are greater than the input key in the tree
     std::vector<int> tree::values_above(int key) {
-        node* current = root;
-        std::vector<int> list;
-        if(get_frequency(key)==0){
-            throw "key not found in tree";
-        }
-        if(current->data == key){
-            return list;
-        }
-        list.push_back(current->data);
-        while(current->data != key){
-            if(current->data > key){
-                current = current->left;
-                list.push_back(current->data);
-            }
-            else if(current->data < key){
-                current = current->right;
-                list.push_back(current->data);
-            }
-        }
-        return list;
-
+        std::vector<int> values_above = std::vector<int>();
+        recur_values_above(root, key, values_above);
     }
 
     //Use the to string function for the following two functions
@@ -391,11 +373,25 @@ namespace lab7 {
         }
     }
 
+    std::vector<int> recur_values_above(node* top, int key, std::vector<int> &values){
+        if(top == nullptr){
+            return std::vector<int>();
+        }
+        //wil check every node value starting from the least value
+        recur_values_above(top->left, key, values);
+        int i = 0;
+        while (i < top->frequency && top->data > key) {
+            values.push_back(top->data);
+            i++;
+        }
+        recur_values_above(top->right, key, values);
+        return values;
+        }
+    }
+
     // Class function
     void tree::print_gtl() {
         node_print_gtl(root);
         std::cout << std::endl;
     }
-
-
-}
+};
