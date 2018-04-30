@@ -10,7 +10,7 @@ namespace lab7 {
     struct node* get_parent(node* top, node* key);
     bool has_children(node* key);
     unsigned recurLevel(node* top, int key);
-    struct node* to_swap(node* top);
+    struct node* to_Swap(node* top);
     bool in_tree_recur(node* top, int key);
     void recur_print(node* top);
     void recur_path_to(node* top, int key);
@@ -69,36 +69,49 @@ namespace lab7 {
         }
 
         if(has_children(remove)) {
-            node* toSwap = to_swap(remove);
+            node* toSwap = to_Swap(remove);
             node* swap_parent = get_parent(root, toSwap);
             if (has_children(toSwap)) {
                 swap_parent->right = toSwap->left;  //brings swap children up tree
             }
-            if(remove->right == toSwap){    //If toSwap is one below remove
-                toSwap->right = nullptr;    //don't want to have to_swap point to itself
-                toSwap->left = remove->left;
+            else{
+                swap_parent->right = nullptr;
             }
-            else if(remove->left == toSwap){
-                toSwap->left = nullptr;
-                toSwap->right = remove->right;
+            if(remove->right == toSwap){        //If toSwap is to the right
+                if(remove_parent->right == remove) {
+                    remove_parent->right = toSwap;  //can move that up directly
+                }
+                else{
+                    remove_parent->left = toSwap;
+                }
+            }
+            else if(remove->left == toSwap){    //toSwap can replace remove because it has no children
+                if(remove_parent->left == remove){
+                    remove_parent->left = toSwap;
+                }
+                else{
+                    remove_parent->right = toSwap;
+                }
             }
             else {
-                toSwap->right = remove->right;
-                toSwap->left = remove->left;
-            }
-            if(remove_parent == nullptr){
-                root = toSwap;
-            }
-            else if(remove_parent->data > remove->data){
-                remove_parent->right = toSwap;
-            }
-            else if(remove_parent->data < remove->data){
-                remove_parent->left = toSwap;
-            }
+                swap_parent->right = toSwap->left;
 
-            delete remove;
-            tree_size--;
-            return true;
+                //done fixing toSwap nodes
+                if (remove_parent == nullptr) {
+                    root = toSwap;
+                } else if (remove_parent->data > remove->data) {
+                    remove_parent->left = toSwap;
+                    toSwap->left = remove->left;
+                    toSwap->right = remove->right;
+                } else if (remove_parent->data < remove->data) {
+                    remove_parent->right = toSwap;
+                    toSwap->left = remove->left;
+                    toSwap->right = remove->right;
+                }
+                delete remove;
+                tree_size--;
+                return true;
+            }
         }
         return false;
     }
@@ -139,7 +152,7 @@ namespace lab7 {
         }
         return false;
     }
-    struct node* to_swap(node* top){
+    struct node* to_Swap(node* top){
         if(top->left){
             top = top->left;    //gets highest node less than top
             while(top->right){  //node will never have a right node after loop
