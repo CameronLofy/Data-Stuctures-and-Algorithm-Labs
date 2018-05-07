@@ -1,470 +1,294 @@
 #include "gtest/gtest.h"
 #include "doubly_linked_list.h"
+#include <algorithm>
 
 class Lab06Fixture : public ::testing::Test {
 
 protected:
     virtual void SetUp() {
-        test1 = new lab6::doubly_linked_list(0);
-        test1->append(1);
-        test1->append(2);
-        test1->append(3);
-        test1->append(4);
-        test1->append(5);
-        test1->append(6);
-        test1->append(7);
-        test1->append(8);
-        test1->append(9);
-        test1->append(10);
-        test1->append(11);
-        test1->append(12);
-        test1->append(13);
-        test1->append(14);
-        test1->append(15);
-        test1->append(16);
-
-        test2 = new lab6::doubly_linked_list(5);
-        test2->append(8);
-        test2->append(2);
-        test2->append(4);
-        test2->append(1);
-        test2->append(3);
-        test2->append(7);
-        test2->append(6);
-        test2->append(0);
-
-        test3 = new lab6::doubly_linked_list(10);
-        test3->append(9);
-        test3->append(8);
-        test3->append(7);
-        test3->append(6);
-        test3->append(5);
-        test3->append(4);
-        test3->append(3);
-        test3->append(2);
-        test3->append(1);
-        test3->append(0);
-
-        test4 = new lab6::doubly_linked_list(5);
-        test4->append(3);
-        test4->append(11);
-        test4->append(7);
-        test4->append(1);
-        test4->append(4);
-        test4->append(3);
-        test4->append(11);
-        test4->append(8);
-        test4->append(5);
-        test4->append(2);
-        test4->append(3);
-        test4->append(6);
-
-
-
+        dll_UT = new lab6::doubly_linked_list();
     }
 
     virtual void TearDown() {
-        delete test1;
-        delete test2;
-        delete test3;
-        delete test4;
+        delete dll_UT;
     }
 
 public:
-    lab6::doubly_linked_list *test1;
-    lab6::doubly_linked_list *test2;
-    lab6::doubly_linked_list *test3;
-    lab6::doubly_linked_list *test4;
+    lab6::doubly_linked_list * dll_UT;
 };
 
-TEST_F(Lab06Fixture, Constructor){
-    EXPECT_EQ(0, test1->get_data(0));
-    EXPECT_EQ(1, test1->get_data(1));
-    EXPECT_EQ(17, test1->size());
-}
 
-TEST_F(Lab06Fixture, swap){
-    test1->swap(3,4);
-    EXPECT_EQ(4, test1->get_data(3));
-    EXPECT_EQ(3, test1->get_data(4));
-    test1->swap(6,9);
-    EXPECT_EQ(9, test1->get_data(6));
-    EXPECT_EQ(6, test1->get_data(9));
-    test1->swap(8,7);
-    EXPECT_EQ(8, test1->get_data(7));
-    EXPECT_EQ(7, test1->get_data(8));
-    test1->swap(12,5);
-    EXPECT_EQ(12, test1->get_data(5));
-    EXPECT_EQ(5, test1->get_data(12));
-}
+TEST(Lab06crsh, crash_test_dll) {
+    std::vector <int> number_list;
+    lab6::doubly_linked_list *list;
 
-TEST_F(Lab06Fixture, swap_head){
-    test1->swap(0,6);
-    EXPECT_EQ(6, test1->get_data(0));
-    EXPECT_EQ(0, test1->get_data(6));
-    test1->swap(0,1);
-    EXPECT_EQ(1, test1->get_data(0));
-    EXPECT_EQ(6, test1->get_data(1));
-}
+    for(int i=0; i < 20; i++){
+        number_list.push_back(i);
+    }
 
-TEST_F(Lab06Fixture, swap_tail){
-
-    test1->swap(5,16);
-    EXPECT_EQ(16, test1->get_data(5));
-    EXPECT_EQ(5, test1->get_data(16));
-}
-
-TEST_F(Lab06Fixture, swap_tailnext){
-
-    test1->swap(15,16);
-    EXPECT_EQ(16, test1->get_data(15));
-    EXPECT_EQ(15, test1->get_data(16));
-}
-
-TEST_F(Lab06Fixture, swap_head_and_tail){
-
-    test1->swap(0,16);
-    EXPECT_EQ(16, test1->get_data(0));
-    EXPECT_EQ(0, test1->get_data(16));
-}
-
-TEST_F(Lab06Fixture, swap_head_and_tail_2_elements){
-    lab6::doubly_linked_list test(0);
-    test.append(1);
-    EXPECT_EQ(0, test.get_data(0));
-    EXPECT_EQ(1, test.get_data(1));
-    test.swap(0,1);
-    EXPECT_EQ(1, test.get_data(0));
-    EXPECT_EQ(0, test.get_data(1));
-}
-
-TEST_F(Lab06Fixture, SwapSet){
-    lab6::doubly_linked_list test2(0);
-    EXPECT_EQ(0, test2.get_data(0));
-    test2.append(1);
-    EXPECT_EQ(1, test2.get_data(1));
-    test2.append(2);
-    test2.append(3);
-    test2.append(4);
-    test2.append(5);
-    test2.append(6);
-    test2.append(7);
-    test2.append(8);
-    test2.append(9);
-    test2.swap_set(2,3,5,7);
-    EXPECT_EQ(5, test2.get_data(2));
-    EXPECT_EQ(6, test2.get_data(3));
-    EXPECT_EQ(7, test2.get_data(4));
-    EXPECT_EQ(2, test2.get_data(6));
-    EXPECT_EQ(3, test2.get_data(7));
-}
-
-TEST_F(Lab06Fixture, Swap_Set_Backwards){
-    test1->swap_set(7,9,3,5);
-    EXPECT_EQ(7, test1->get_data(3));
-    EXPECT_EQ(8, test1->get_data(4));
-    EXPECT_EQ(9, test1->get_data(5));
-    EXPECT_EQ(3, test1->get_data(7));
-    EXPECT_EQ(4, test1->get_data(8));
-    EXPECT_EQ(5, test1->get_data(9));
-}
-
-TEST_F(Lab06Fixture, SwapSet_Throw){
-    EXPECT_ANY_THROW(test1->swap_set(3,6,5,8));
-}
-
-TEST_F(Lab06Fixture, SwapSet_Head){
-    test1->swap_set(0,2,7,11);
-    EXPECT_EQ(7, test1->get_data(0));
-    EXPECT_EQ(8, test1->get_data(1));
-    EXPECT_EQ(9, test1->get_data(2));
-    EXPECT_EQ(10, test1->get_data(3));
-    EXPECT_EQ(11, test1->get_data(4));
-    EXPECT_EQ(0, test1->get_data(9));
-    EXPECT_EQ(1, test1->get_data(10));
-    EXPECT_EQ(2, test1->get_data(11));
-}
-
-TEST_F(Lab06Fixture, SwapSet_Head_Next){
-    test1->swap_set(0,2,3,7);
-    EXPECT_EQ(3, test1->get_data(0));
-    EXPECT_EQ(4, test1->get_data(1));
-    EXPECT_EQ(5, test1->get_data(2));
-    EXPECT_EQ(6, test1->get_data(3));
-    EXPECT_EQ(7, test1->get_data(4));
-    EXPECT_EQ(0, test1->get_data(5));
-    EXPECT_EQ(1, test1->get_data(6));
-    EXPECT_EQ(2, test1->get_data(7));
-}
-
-TEST_F(Lab06Fixture, SwapSet_Tail){
-    test1->swap_set(5,8,13,16);
-    EXPECT_EQ(13, test1->get_data(5));
-    EXPECT_EQ(14, test1->get_data(6));
-    EXPECT_EQ(15, test1->get_data(7));
-    EXPECT_EQ(16, test1->get_data(8));
-    EXPECT_EQ(5, test1->get_data(13));
-    EXPECT_EQ(6, test1->get_data(14));
-    EXPECT_EQ(7, test1->get_data(15));
-    EXPECT_EQ(8, test1->get_data(16));
-}
-
-TEST_F(Lab06Fixture, SwapSet_Tail_Next){
-    test1->swap_set(9,12,13,16);
-    EXPECT_EQ(13, test1->get_data(9));
-    EXPECT_EQ(14, test1->get_data(10));
-    EXPECT_EQ(15, test1->get_data(11));
-    EXPECT_EQ(16, test1->get_data(12));
-    EXPECT_EQ(9, test1->get_data(13));
-    EXPECT_EQ(10, test1->get_data(14));
-    EXPECT_EQ(11, test1->get_data(15));
-    EXPECT_EQ(12, test1->get_data(16));
-}
-
-TEST_F(Lab06Fixture, SwapSet_Head_and_Tail){
-    test1->swap_set(0,2,12,16);
-    EXPECT_EQ(12, test1->get_data(0));
-    EXPECT_EQ(13, test1->get_data(1));
-    EXPECT_EQ(14, test1->get_data(2));
-    EXPECT_EQ(15, test1->get_data(3));
-    EXPECT_EQ(16, test1->get_data(4));
-    EXPECT_EQ(0, test1->get_data(14));
-    EXPECT_EQ(1, test1->get_data(15));
-    EXPECT_EQ(2, test1->get_data(16));
-}
-
-TEST_F(Lab06Fixture, SwapSet_Head_and_Tail_Next){
-    lab6::doubly_linked_list test(0);
-    test.append(1);
-    test.append(2);
-    test.append(3);
-    test.append(4);
-    test.append(5);
-    test.append(6);
-    test.swap_set(0,3,4,6);
-    EXPECT_EQ(4, test.get_data(0));
-    EXPECT_EQ(5, test.get_data(1));
-    EXPECT_EQ(6, test.get_data(2));
-    EXPECT_EQ(0, test.get_data(3));
-    EXPECT_EQ(1, test.get_data(4));
-    EXPECT_EQ(2, test.get_data(5));
-    EXPECT_EQ(3, test.get_data(6));
-}
-
-TEST_F(Lab06Fixture, Sort){
-    test2->sort();
-    EXPECT_EQ(0, test2->get_data(0));
-    EXPECT_EQ(1, test2->get_data(1));
-    EXPECT_EQ(2, test2->get_data(2));
-    EXPECT_EQ(3, test2->get_data(3));
-    EXPECT_EQ(4, test2->get_data(4));
-    EXPECT_EQ(5, test2->get_data(5));
-    EXPECT_EQ(6, test2->get_data(6));
-    EXPECT_EQ(7, test2->get_data(7));
-    EXPECT_EQ(8, test2->get_data(8));
-}
-
-TEST_F(Lab06Fixture, Sort_2){
-    lab6::doubly_linked_list test(5);
-    EXPECT_EQ(5, test.get_data(0));
-    test.sort();
-    EXPECT_EQ(5, test.get_data(0));
-}
-
-TEST_F(Lab06Fixture, Sort_3){
-    lab6::doubly_linked_list test;
-    EXPECT_ANY_THROW(test.sort());
-}
-
-TEST_F(Lab06Fixture, Sort_4){
-    test3->sort();
-    EXPECT_EQ(0, test3->get_data(0));
-    EXPECT_EQ(1, test3->get_data(1));
-    EXPECT_EQ(2, test3->get_data(2));
-    EXPECT_EQ(3, test3->get_data(3));
-    EXPECT_EQ(4, test3->get_data(4));
-    EXPECT_EQ(5, test3->get_data(5));
-    EXPECT_EQ(6, test3->get_data(6));
-    EXPECT_EQ(7, test3->get_data(7));
-    EXPECT_EQ(8, test3->get_data(8));
-    EXPECT_EQ(9, test3->get_data(9));
-    EXPECT_EQ(10, test3->get_data(10));
-}
-
-TEST_F(Lab06Fixture, Sort_5){
-    test4->sort();
-    EXPECT_EQ(1, test4->get_data(0));
-    EXPECT_EQ(2, test4->get_data(1));
-    EXPECT_EQ(3, test4->get_data(2));
-    EXPECT_EQ(3, test4->get_data(3));
-    EXPECT_EQ(3, test4->get_data(4));
-    EXPECT_EQ(4, test4->get_data(5));
-    EXPECT_EQ(5, test4->get_data(6));
-    EXPECT_EQ(5, test4->get_data(7));
-    EXPECT_EQ(6, test4->get_data(8));
-    EXPECT_EQ(7, test4->get_data(9));
-    EXPECT_EQ(8, test4->get_data(10));
-    EXPECT_EQ(11, test4->get_data(11));
-    EXPECT_EQ(11, test4->get_data(12));
-
-}
-
-TEST_F(Lab06Fixture, OpPlus){
-    lab6::doubly_linked_list test(5);
-    test.append(8);
-    test.append(2);
-    test.append(4);
-    lab6::doubly_linked_list test_2(1);
-    test_2.append(2);
-    test_2.append(5);
-    test_2.append(3);
-    lab6::doubly_linked_list copy;
-    copy = test + test_2;
-    EXPECT_EQ(5, copy.get_data(0));
-    EXPECT_EQ(8, copy.get_data(1));
-    EXPECT_EQ(2, copy.get_data(2));
-    EXPECT_EQ(4, copy.get_data(3));
-    EXPECT_EQ(1, copy.get_data(4));
-    EXPECT_EQ(2, copy.get_data(5));
-    EXPECT_EQ(5, copy.get_data(6));
-    EXPECT_EQ(3, copy.get_data(7));
-}
-
-TEST_F(Lab06Fixture, OpPlusEqual){
-    lab6::doubly_linked_list test(5);
-    test.append(8);
-    test.append(2);
-    test.append(4);
-    lab6::doubly_linked_list test_2(1);
-    test_2.append(2);
-    test_2.append(5);
-    test_2.append(3);
-
-    test += test_2;
-    EXPECT_EQ(5, test.get_data(0));
-    EXPECT_EQ(8, test.get_data(1));
-    EXPECT_EQ(2, test.get_data(2));
-    EXPECT_EQ(4, test.get_data(3));
-    EXPECT_EQ(1, test.get_data(4));
-    EXPECT_EQ(2, test.get_data(5));
-    EXPECT_EQ(5, test.get_data(6));
-    EXPECT_EQ(3, test.get_data(7));
-}
-
-TEST_F(Lab06Fixture, boolean) {
-    lab6::doubly_linked_list test(5);
-    test.append(8);
-    test.append(2);
-    test.append(4);
-    test.append(1);
-    test.append(3);
-    test.append(7);
-    test.append(6);
-    test.append(0);
-    lab6::doubly_linked_list test_2(5);
-    test_2.append(8);
-    test_2.append(2);
-    test_2.append(4);
-    test_2.append(1);
-    test_2.append(3);
-    test_2.append(7);
-    test_2.append(6);
-    test_2.append(0);
-    EXPECT_TRUE(test==test_2);
-    EXPECT_FALSE(test2 == test4);
-}
-
-TEST(doubly_linked_list, BoolEqual){
-    lab6::doubly_linked_list testLL1(32);
-    testLL1.append(14);
-    testLL1.append(6);
-    testLL1.append(73);
-    lab6::doubly_linked_list testLL2(32);
-    testLL2.append(14);
-    testLL2.append(6);
-    testLL2.append(73);
-    EXPECT_TRUE(testLL1 == testLL2);
-}
-
-TEST(doubly_linked_list,addTest) {
-    lab6::doubly_linked_list testLL1(32);
-    testLL1.append(14);
-    testLL1.append(6);
-    testLL1.append(73);
-
-    lab6::doubly_linked_list testLL2(9);
-    testLL2.append(57);
-    testLL2.append(12);
-    testLL2.append(88);
-    testLL2.append(29);
-
-    lab6::doubly_linked_list temp;
-
-
-    //basic add
-    temp = testLL1 + testLL2;
-    EXPECT_EQ(32, temp.get_data(0));
-    EXPECT_EQ(14, temp.get_data(1));
-    EXPECT_EQ(6, temp.get_data(2));
-    EXPECT_EQ(73, temp.get_data(3));
-    EXPECT_EQ(9, temp.get_data(4));
-    EXPECT_EQ(57, temp.get_data(5));
-    EXPECT_EQ(12, temp.get_data(6));
-    EXPECT_EQ(88, temp.get_data(7));
-    EXPECT_EQ(29, temp.get_data(8));
-
-}
-
-TEST_F(Lab06Fixture, copyConstructor)
-{
-    lab6::doubly_linked_list test(1);
-    test.append(2);
-    lab6::doubly_linked_list copy(test);
-
-    copy.append(5);
-    EXPECT_EQ(5, copy.get_data(2));
-    EXPECT_EQ(3, copy.size());
-    EXPECT_EQ(2, test.get_data(1));
-    EXPECT_EQ(2, test.size());
-}
-
-TEST_F(Lab06Fixture, Split){
-    test1->split(6);
-    EXPECT_EQ(0, test1->get_data(0));
-    EXPECT_EQ(1, test1->get_data(1));
-    EXPECT_EQ(2, test1->get_data(2));
-    EXPECT_EQ(3, test1->get_data(3));
-    EXPECT_EQ(4, test1->get_data(4));
-    EXPECT_EQ(5, test1->get_data(5));
-    EXPECT_EQ(6, test1->size());
-}
-
-TEST_F(Lab06Fixture, SplitSet){
-    lab6::doubly_linked_list testsplit;
-    testsplit = test1->split_set(6,10);
-    EXPECT_EQ(0, test1->get_data(0));
-    EXPECT_EQ(1, test1->get_data(1));
-    EXPECT_EQ(2, test1->get_data(2));
-    EXPECT_EQ(3, test1->get_data(3));
-    EXPECT_EQ(4, test1->get_data(4));
-    EXPECT_EQ(5, test1->get_data(5));
-    EXPECT_EQ(12, test1->size());
-    EXPECT_EQ(11, test1->get_data(6));
-    EXPECT_EQ(12, test1->get_data(7));
-    EXPECT_EQ(13, test1->get_data(8));
-    EXPECT_EQ(14, test1->get_data(9));
-    EXPECT_EQ(15, test1->get_data(10));
-    EXPECT_EQ(16, test1->get_data(11));
-    EXPECT_EQ(6, testsplit.get_data(0));
-    EXPECT_EQ(7, testsplit.get_data(1));
-    EXPECT_EQ(8, testsplit.get_data(2));
-    EXPECT_EQ(9, testsplit.get_data(3));
-    EXPECT_EQ(10, testsplit.get_data(4));
-
+    list = new lab6::doubly_linked_list();
+    delete list;
+    list = new lab6::doubly_linked_list(73);
+    delete list;
+    list = new lab6::doubly_linked_list(number_list);
 }
 
 
+TEST_F(Lab06Fixture, append_get_data_get_set_test) {
+    std::vector <int> expected_set;
+    EXPECT_TRUE(dll_UT->is_empty());
+    for (int i = 1; i < 200; ++i) {
+        dll_UT->append(i);
+        ASSERT_EQ(i,dll_UT->size());
+        expected_set.push_back(i);
+        for (int j = 0; j < i; ++j) {
+            ASSERT_EQ(expected_set[j],dll_UT->get_data(j)) << "Iteration: i= " << i << " j= " << j;
+        }
+    }
+
+    ASSERT_EQ(expected_set, dll_UT->get_set(0,dll_UT->size()-1));
+    ASSERT_EQ(std::vector<int>(expected_set.begin(),expected_set.begin()+expected_set.size()/2),dll_UT->get_set(0,dll_UT->size()/2-1));//first half of data
+    ASSERT_EQ(std::vector<int> (expected_set.begin()+expected_set.size()/2+1,expected_set.end()),dll_UT->get_set(dll_UT->size()/2+1,dll_UT->size()-1));//second half of data
+}
 
 
+TEST_F(Lab06Fixture, insert_remove_test) {
+    EXPECT_NO_THROW(dll_UT->insert(3,0));
+    EXPECT_NO_THROW(dll_UT->insert(6,0));
+    EXPECT_NO_THROW(dll_UT->insert(4,1));
+
+    EXPECT_EQ(6,dll_UT->get_data(0));
+    EXPECT_EQ(4,dll_UT->get_data(1));
+    EXPECT_EQ(3,dll_UT->get_data(2));
+
+    dll_UT->remove(0);
+    dll_UT->remove(0);
+    dll_UT->remove(0); // make sure both head and tail are set to nullptr when the last node is removed
+
+    dll_UT->append(16);
+    EXPECT_EQ(16, dll_UT->get_data(0));
+
+}
+
+TEST_F(Lab06Fixture, opEq_insert_append_value_test) {
+    auto dll_UT_copy = new lab6::doubly_linked_list;
+
+    for(int i=0; i<200; ++i) {
+        EXPECT_NO_THROW(dll_UT->insert(i)) << "failed on iteration: " << i << "\n";
+        EXPECT_EQ(i, dll_UT->get_data(0)) << "failed on iteration: " << i << "\n";
+    }
+    dll_UT_copy->operator=(*dll_UT);
+    EXPECT_EQ(dll_UT_copy->size(),dll_UT->size());
+
+    for (int i = 0; i < 200; ++i) {//ensure full copy
+        EXPECT_EQ(199-i, dll_UT_copy->get_data(i)) << "failed on iteration: " << i << "\n";
+    }
+
+    for(int i=0; i<300; i+=2) {//alter copy
+        EXPECT_NO_THROW(dll_UT_copy->insert(i*2, i)) << "failed on iteration: " << i << "\n";
+    }
+
+    for (int i = 0; i < 200; ++i) {//check values of original after altering copy to ensure mutual exclusive nodes
+        EXPECT_EQ(199-i, dll_UT->get_data(i)) << "failed on iteration: " << i << "\n";
+    }
+}
 
 
+TEST_F(Lab06Fixture, split_split_set_test) {
+    for (int i = 0; i < 100; ++i) {
+        dll_UT->append(i);
+    }
+
+    lab6::doubly_linked_list * split_list = new lab6::doubly_linked_list;
+    *split_list = dll_UT->split(50); //50 should be the head value of the returned list
+    EXPECT_EQ(49, dll_UT->get_data(dll_UT->size()-1));//49 should be the tail value of  the original list
+
+    for (int i = 0; i < split_list->size(); ++i) {
+        ASSERT_EQ(i+50, split_list->get_data(i)) << "failed on iteration: " << i << "\n";;
+    }
+
+    for (int i = 0; i < dll_UT->size(); ++i) {
+        ASSERT_EQ(i, dll_UT->get_data(i)) << "failed on iteration: " << i << "\n";;
+    }
+
+    EXPECT_EQ(0,dll_UT->split(0).get_data(0)); //edge case, be careful
+    EXPECT_TRUE(dll_UT->is_empty());
+
+    delete dll_UT;
+    delete split_list;
+    dll_UT = new lab6::doubly_linked_list;
+    split_list = new lab6::doubly_linked_list;
+
+    for (int i = 0; i < 100; ++i) {
+        dll_UT->append(i);
+    }
+
+    *split_list = dll_UT->split_set(25,74);
+    EXPECT_EQ(50, dll_UT->size());
+    EXPECT_EQ(50, split_list->size());
+
+    for (int i = 0; i < 50; ++i) {
+        ASSERT_EQ(i+25, split_list->get_data(i)) << "failed on iteration: " << i << "\n";
+    }
+    for (int i = 0; i < 50; ++i) {
+        if(i < 25)
+            ASSERT_EQ(i, dll_UT->get_data(i)) << "failed on iteration: " << i << "\n";
+        else
+            ASSERT_EQ(i+50, dll_UT->get_data(i)) << "failed on iteration: " << i << "\n";
+    }
+}
+
+
+TEST_F(Lab06Fixture, swap_swap_set_test) {
+    for (int i = 0; i < 100; ++i) {
+        dll_UT->append(i);
+    }
+    for (unsigned i = 0; i < 50; ++i) {
+        dll_UT->swap(i,99-i);
+        for (int j = 0; j < 100; ++j) {
+            if(j <= i || j >= 99-i){
+                ASSERT_EQ(99-j,dll_UT->get_data(j))<< "failed on iteration: i = " << i << " j = " << j << "\n";
+            } else{
+                ASSERT_EQ(j,dll_UT->get_data(j))<< "failed on iteration: i = " << i << " j = " << "\n";
+            }
+        }
+    }
+
+    for (unsigned i = 0; i < 50; ++i) {
+        dll_UT->swap_set(i,i,99-i,99-i);//should perform single swap
+        for (int j = 0; j < 100; ++j) {
+            if(j <= i || j >= 99-i){
+                ASSERT_EQ(j,dll_UT->get_data(j))<< "failed on iteration: i = " << i << " j = " << "\n";
+            } else{
+                ASSERT_EQ(99-j,dll_UT->get_data(j))<< "failed on iteration: i = " << i << " j = " << j << "\n";
+            }
+        }
+    }
+
+    dll_UT->swap_set(0,49,50,99);
+
+    for (unsigned i = 0; i < 100; ++i) {
+        if(i < 50)
+            ASSERT_EQ(i+50,dll_UT->get_data(i))<< "failed on iteration: " << i << "\n";
+        else
+            ASSERT_EQ(i-50,dll_UT->get_data(i))<< "failed on iteration: " << i << "\n";
+    }
+}
+
+
+TEST_F(Lab06Fixture, op_plus_op_plus_eq_test) {
+    lab6::doubly_linked_list * dll_UT_2 = new lab6::doubly_linked_list;
+    lab6::doubly_linked_list * merged_list = new lab6::doubly_linked_list;
+
+    for (unsigned i = 0; i < 50; ++i) {
+        dll_UT->append(i);
+        dll_UT_2->append(i+50);
+    }
+
+    *merged_list = *dll_UT + *dll_UT_2;
+
+    *dll_UT += *dll_UT_2;
+    delete dll_UT_2; // make sure a copy is appended in +=
+
+    for (int i = 0; i < 100; ++i) {
+        ASSERT_EQ(i,dll_UT->get_data(i))<< "failed on iteration: " << i << "\n";
+    }
+
+    delete dll_UT; // make sure a copy is returned in +
+    dll_UT = nullptr;//avoid deleting a bad address is tear down
+
+    for (int i = 0; i < 100; ++i) {
+        ASSERT_EQ(i,merged_list->get_data(i))<< "failed on iteration: " << i << "\n";
+    }
+}
+
+
+TEST_F(Lab06Fixture, compare_op_test) {
+    for (int i = 0; i < 100; ++i) {
+        dll_UT->append(i);
+    }
+    EXPECT_TRUE(*dll_UT==*dll_UT);
+
+    lab6::doubly_linked_list * comp_list = new lab6::doubly_linked_list;
+
+    for (int i = 0; i < 100; ++i) {
+        comp_list->append(dll_UT->get_data(i));
+    }
+    EXPECT_TRUE(*dll_UT == *comp_list);
+    delete comp_list;
+    comp_list = new lab6::doubly_linked_list;
+
+
+    for (int i = 0; i < 100; ++i) {
+        comp_list->append(dll_UT->get_data(99-i));
+    }
+    EXPECT_FALSE(*dll_UT == *comp_list);
+
+    delete comp_list;
+    comp_list = new lab6::doubly_linked_list;
+
+
+    for (int i = 0; i < 50; ++i) {
+        comp_list->append(dll_UT->get_data(i));
+    }
+    EXPECT_FALSE(*dll_UT == *comp_list);
+
+    delete comp_list;
+    comp_list = new lab6::doubly_linked_list;
+
+
+    for (int i = 0; i < 100; ++i) {
+        comp_list->append(dll_UT->get_data(99-i));
+    }
+    for (int i = 100; i < 150; ++i) {
+        comp_list->append(i);
+    }
+    EXPECT_FALSE(*dll_UT == *comp_list);
+}
+
+
+TEST_F(Lab06Fixture, insertion_extraction_op_test) {
+    std::string expected_output;
+    std::string input("50");
+    std::stringstream stream(input);
+
+    stream >> *dll_UT;
+    EXPECT_EQ(stoi(input),dll_UT->get_data(0));
+    expected_output = input + " -> ";
+
+    for(int i =1; i < 49; ++i) {
+        input = std::to_string(i);
+        expected_output = input + " <-> " + expected_output;
+        EXPECT_NO_THROW(dll_UT->insert(i)) << "failed on iteration: " << i << "\n";
+    }
+    expected_output = "NULL <- " + expected_output;
+    expected_output += "NULL";
+
+    testing::internal::CaptureStdout();
+    std::cout << *dll_UT;
+    std::string output = testing::internal::GetCapturedStdout();
+
+    EXPECT_EQ(expected_output,output);
+}
+
+TEST_F(Lab06Fixture, sort_test) {
+    unsigned const list_length_count = 100;
+    auto container1 = new std::vector<int>;
+    container1->reserve(30);
+    //srand((unsigned )time(NULL)); //Used to randomize test, seed with constant to make test repeatable
+    srand(0);
+
+    for (int i = 0; i < list_length_count; ++i) {
+        int input = rand()%200;
+        container1->emplace_back(input);
+        dll_UT->append(input);
+    }
+
+    std::sort(container1->begin(),container1->end());
+    dll_UT->sort();
+
+    for (int i = 0; i < list_length_count; ++i) {
+        ASSERT_EQ((*container1)[i],dll_UT->get_data(i));
+    }
+
+}

@@ -80,7 +80,7 @@ namespace lab9{
     }
 
     huffman_tree::~huffman_tree() {
-        // TODO: Write the desctructor. Make sure to clear out both the priority queue and the tree
+        // TODO: Write the destructor. Make sure to clear out both the priority queue and the tree
     }
 
     void huffman_tree::add(char character) {
