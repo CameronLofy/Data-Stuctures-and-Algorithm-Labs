@@ -8,14 +8,17 @@ namespace lab6{
 
     doubly_linked_list::doubly_linked_list(int input) {
         head = new node(input);
-        tail = new node(input);
+        tail = head;
     }
 
     doubly_linked_list::doubly_linked_list(std::vector<int> vector_input) {
         if(vector_input.empty()){
             doubly_linked_list();
+            return;
         }
-        for(int i=0; i<vector_input.size(); i++){
+        head = new node(vector_input.at(0));
+        tail = head;
+        for(int i=1; i<vector_input.size(); i++){
             append(vector_input.at(i));
         }
 
@@ -68,7 +71,6 @@ namespace lab6{
         if(position_from >=size() || position_to>=size() || position_from > position_to || position_from < 0 || position_to < 0){
             throw "ERROR: invalid positions";
         }
-
         for(int i=0; i<position_from; i++){
             current= current->next;
         }
@@ -77,7 +79,6 @@ namespace lab6{
             current = current->next;
             set.push_back(value);
         }
-        
         return set;
     }
 
@@ -125,7 +126,12 @@ namespace lab6{
         node *current;
         node *temp = new node(input);
         current = head;
-        //make for loop to find location,
+        //make for loop to find location
+        if(head == NULL){
+            head = temp;
+            tail = temp;
+            return;
+        }
         for(int i = 0; i < location; i++) { // iterate to the two nodes you want to insert between
             prev = current;
             current = current->next;
@@ -150,37 +156,45 @@ namespace lab6{
         node *prev=NULL;
         node *current;
         current = head;
-
+        if(location>size()){
+            throw "ERROR: INPUT INTEGER TOO BIG FOR LIST";
+        }
         for(int i = 0; i < location; i++) { // iterate to the location of the node you want to delete
             prev = current;
             current = current->next;
         }
-        if(location == size()-1){
-            prev->next = NULL;
-            tail = prev;
-        }
-        else if (prev) { // if a previous node exists
+        if (prev) { // if a previous node exists
+            if(!current->next){
+                prev->next = NULL;
+                tail = prev;
+                delete(current);
+                return;
+            }
             prev->next = current->next;
             current->next->prev = current->prev;
         }
-        else if(location>size()){
-            throw "ERROR: INPUT INTEGER TOO BIG FOR LIST";
-        }
         else if(!prev){
             head = current->next;
-            current->next->prev = NULL;
         }
         delete(current);
 
     }
 
     doubly_linked_list doubly_linked_list::split(unsigned position) {
-        doubly_linked_list split(get_set(position, size()-1));
+//        if (position == 0) {
+//            doubly_linked_list temp(*this);
+//            for (int i = 0; i < size(); i++) {
+//                remove(i);
+//            }
+//            return temp;
+//        }
+        doubly_linked_list split(get_set(position, size() - 1));
 
-        for(int i=size()-1; i >= position; i--){
+        for (int i = size() - 1; i >= position && i>=0; i--) {
             remove(i);
         }
         return split;
+
     }
 
     doubly_linked_list doubly_linked_list::split_set(unsigned position_1, unsigned position_2) {
@@ -535,12 +549,14 @@ namespace lab6{
 
     std::ostream &operator<<(std::ostream &stream, doubly_linked_list &RHS) {
         node* curr = RHS.head;
-        stream << std::string("Doubly Linked List: ");
-        while(curr){
+        stream << std::string("NULL <- ");
+        while(curr->next){
             stream << curr->get_data();
-            stream << " ";
+            stream << " <-> ";
             curr = curr->next;
         }
+        stream << curr->get_data();
+        stream << " -> NULL";
         return stream;
 
     }
