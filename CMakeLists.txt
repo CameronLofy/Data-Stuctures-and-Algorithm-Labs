@@ -27,7 +27,7 @@ include_directories(lib/lab01/inc
         lib/lab05/inc
         lib/lab06/inc
         lib/lab07/inc
-        lib/lab8/inc
+        lib/lab08/inc
         )
 
 add_subdirectory(lib/lab01 lab1_lib)

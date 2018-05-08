@@ -177,24 +177,14 @@ namespace lab6{
             head = current->next;
         }
         delete(current);
-
     }
 
     doubly_linked_list doubly_linked_list::split(unsigned position) {
-//        if (position == 0) {
-//            doubly_linked_list temp(*this);
-//            for (int i = 0; i < size(); i++) {
-//                remove(i);
-//            }
-//            return temp;
-//        }
         doubly_linked_list split(get_set(position, size() - 1));
-
         for (int i = size() - 1; i >= position && i>=0; i--) {
             remove(i);
         }
         return split;
-
     }
 
     doubly_linked_list doubly_linked_list::split_set(unsigned position_1, unsigned position_2) {
