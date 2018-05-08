@@ -17,7 +17,6 @@ namespace lab6{
 
     void mergesort(doubly_linked_list& to_sort){
         recursive_merge_sort(to_sort);
-
     }
 
     doubly_linked_list recursive_merge_sort(doubly_linked_list to_sort){
