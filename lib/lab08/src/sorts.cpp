@@ -33,22 +33,35 @@ namespace lab6{
     //Used for the merging the two lists
     doubly_linked_list merge(doubly_linked_list left, doubly_linked_list right){
         doubly_linked_list merged;
-        int i, k =0;
-        while(i<left.size() && k<right.size()){
-            if(left.get_data(i) < right.get_data(k)){
+        unsigned i=0;
+        unsigned k=0;
+        while(i!=left.size() && k!=right.size()) {
+            if (left.get_data(i) < right.get_data(k)) {
                 merged.append(left.get_data(i));
                 i++;
+            } else if (left.get_data(i) > right.get_data(k)) {
+                merged.append(right.get_data(k));
+                k++;
+            } else if (left.get_data(i) == right.get_data(k)) {
+                merged.append(left.get_data(i));
+                merged.append(right.get_data(k));
+                i++;
+                k++;
             }
-            if(left.get_data(i) > right.get_data(k)){
+        }
+        if (i == left.size()) {
+            while(k != right.size()) {
                 merged.append(right.get_data(k));
                 k++;
             }
-            if(left.get_data(i) == right.get_data(k)){
+            return merged;
+        }
+        if (k == right.size()) {
+            while(i != left.size()) {
                 merged.append(left.get_data(i));
-                merged.append(right.get_data(k));
                 i++;
-                k++;
             }
+            return merged;
         }
         return merged;
 
