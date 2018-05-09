@@ -97,3 +97,13 @@ TEST_F(Lab08SortsFixture, mergeBig){
         EXPECT_EQ(final.at(i), merged.get_data(i));
     }
 }
+
+TEST_F(Lab08SortsFixture, MergeSort){
+    std::vector<int> sorted;
+    sorted = std::vector<int>({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22});
+    lab6::doubly_linked_list to_sort(test_numbers);
+    lab6::mergesort(to_sort);
+    for(int i=0; i<21; i++) {
+        EXPECT_EQ(sorted.at(i), to_sort.get_data(i));
+    }
+}
