@@ -6,13 +6,15 @@
 class Lab08SortsFixture : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        test_numbers=std::vector<unsigned>({12,8,14,15,18,16,17,19,22,20,4,10,9,13,11,5,7,6,2,1,3});
+        test_numbers=std::vector<int>({12,8,14,15,18,16,17,19,22,20,4,10,9,13,11,5,7,6,2,1,3});
+        lab6::doubly_linked_list test1(test_numbers);
 
     }
 
 public:
     lab6::doubly_linked_list *to_sort_short, *to_sort_long;
-    std::vector <unsigned> test_numbers;
+    lab6::doubly_linked_list *test1;
+    std::vector <int> test_numbers;
 
 };
 
@@ -26,10 +28,24 @@ public:
     lab6::doubly_linked_list *list_16, *list_32, *list_64, *list_128, *list_256, *list_512, *list_1024, *list_2048, *list_4096, *list_8192, *list_16384, *list_32768;
 };
 
-TEST_F(Lab08SortsFixture, mergeSort){
+TEST_F(Lab08SortsFixture, merge){
+    std::vector<int> leftSmall;
+    std::vector<int> rightSmall;
     std::vector<int> leftVec;
     std::vector<int> rightVec;
     std::vector<int> merged;
+    std::vector<int> leftVec2;
+    std::vector<int> rightVec2;
+    std::vector<int> merged2;
+
+    leftSmall = std::vector<int>({5});
+    rightSmall = std::vector<int>({3});
+
+    lab6::doubly_linked_list leftS(leftSmall);
+    lab6::doubly_linked_list rightS(rightSmall);
+    lab6::doubly_linked_list finalS;
+
+    finalS = lab6::merge(leftS, rightS);
 
     leftVec=std::vector<int>({1,3,5,7});
     rightVec=std::vector<int>({2,4,6,8});
@@ -43,6 +59,35 @@ TEST_F(Lab08SortsFixture, mergeSort){
     EXPECT_EQ(4, right.size());
     final = lab6::merge(left, right);
 
+    leftVec2=std::vector<int>({1,1,2,2,3,3,8,8,9,9});
+    rightVec2=std::vector<int>({4,4,5,5,6,6,7,7,8,9,10,10,11,11});
+
+    merged2=std::vector<int>({1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,8,9,9,9,10,10,11,11});
+
+    lab6::doubly_linked_list left2(leftVec2);
+    lab6::doubly_linked_list right2(rightVec2);
+    lab6::doubly_linked_list final2;
+    EXPECT_EQ(4, left.size());
+    EXPECT_EQ(4, right.size());
+    final2 = lab6::merge(left2, right2);
 
 
+}
+
+TEST_F(Lab08SortsFixture, mergeSort){
+    std::vector test1;
+    std::vector test2;
+    for(int i=1; i<200; i++) {
+        test1.push_back(i);
+        i++;
+    }
+    for(int i=2; i<200; i++) {
+        test2.push_back(i);
+        i++;
+    }
+    lab6::doubly_linked_list left(test1);
+    lab6::doubly_linked_list right(test2);
+    lab6::doubly_linked_list merged;
+    merged = lab6::merge(left, right);
+    
 }
