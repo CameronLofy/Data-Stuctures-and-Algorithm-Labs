@@ -74,9 +74,10 @@ TEST_F(Lab08SortsFixture, merge){
 
 }
 
-TEST_F(Lab08SortsFixture, mergeSort){
-    std::vector test1;
-    std::vector test2;
+TEST_F(Lab08SortsFixture, mergeBig){
+    std::vector <int>test1;
+    std::vector <int>test2;
+    std::vector <int>final;
     for(int i=1; i<200; i++) {
         test1.push_back(i);
         i++;
@@ -85,9 +86,14 @@ TEST_F(Lab08SortsFixture, mergeSort){
         test2.push_back(i);
         i++;
     }
+    for(int i=1; i<200; i++){
+        final.push_back(i);
+    }
     lab6::doubly_linked_list left(test1);
     lab6::doubly_linked_list right(test2);
     lab6::doubly_linked_list merged;
     merged = lab6::merge(left, right);
-    
+    for(int i=0; i<199; i++) {
+        EXPECT_EQ(final.at(i), merged.get_data(i));
+    }
 }
