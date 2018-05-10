@@ -497,14 +497,15 @@ namespace lab6{
     }
 
     doubly_linked_list& doubly_linked_list::operator=(const doubly_linked_list &rhs) {
+        while(!this->is_empty()){
+            this->remove(0);
+        }
         node* copy = rhs.head;
         while(copy!=NULL){
             this->append(copy->get_data());
             copy = copy->next;
         }
         return *this;
-        // Remove all elements and append all rhs elements?
-
     }
 
     doubly_linked_list& doubly_linked_list::operator+=(const doubly_linked_list &rhs) {

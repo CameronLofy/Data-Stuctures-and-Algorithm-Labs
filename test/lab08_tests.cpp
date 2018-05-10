@@ -100,10 +100,22 @@ TEST_F(Lab08SortsFixture, mergeBig){
 
 TEST_F(Lab08SortsFixture, MergeSort){
     std::vector<int> sorted;
+    std::vector<int> sorted_simple;
+    std::vector<int> to_sort_simple;
     sorted = std::vector<int>({1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,22});
+    sorted_simple = std::vector<int>({1,2,3,4,5});
+    to_sort_simple = std::vector<int>({5,3,4,1,2});
+
+
     lab6::doubly_linked_list to_sort(test_numbers);
     lab6::mergesort(to_sort);
     for(int i=0; i<21; i++) {
         EXPECT_EQ(sorted.at(i), to_sort.get_data(i));
+    }
+
+    lab6::doubly_linked_list simple(to_sort_simple);
+    lab6::mergesort(simple);
+    for(int i=0; i<5; i++) {
+        EXPECT_EQ(sorted_simple.at(i), simple.get_data(i));
     }
 }

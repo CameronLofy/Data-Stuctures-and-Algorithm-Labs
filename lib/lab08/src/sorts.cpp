@@ -16,7 +16,7 @@ namespace lab6{
     }
 
     void mergesort(doubly_linked_list& to_sort){
-        recursive_merge_sort(to_sort);
+        to_sort = recursive_merge_sort(to_sort);
     }
 
     doubly_linked_list recursive_merge_sort(doubly_linked_list to_sort){
@@ -25,9 +25,10 @@ namespace lab6{
         }
         unsigned mid = to_sort.size()/2;
         doubly_linked_list half2 = to_sort.split(mid);
-        recursive_merge_sort(to_sort);
-        recursive_merge_sort(half2);
-        return merge(to_sort, half2);
+        to_sort = recursive_merge_sort(to_sort);
+        half2 = recursive_merge_sort(half2);
+        to_sort = merge(to_sort, half2);
+        return to_sort;
     }
 
     //Used for the merging the two lists
