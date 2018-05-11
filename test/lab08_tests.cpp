@@ -119,3 +119,13 @@ TEST_F(Lab08SortsFixture, MergeSort){
         EXPECT_EQ(sorted_simple.at(i), simple.get_data(i));
     }
 }
+
+TEST_F(Lab08SortsFixture, Quicksort){
+    int to_sort[] = {5,2,8,6,3,1,7};
+    int sorted[] = {1,2,3,5,6,7,8};
+
+    lab6::quicksort(to_sort,0,6);
+    for(int i=0; i<7; i++){
+        EXPECT_EQ(sorted[i], to_sort[i]);
+    }
+}

@@ -3,16 +3,40 @@
 namespace lab6{
     // Auxiliary Functions
     unsigned partition(int* to_sort, int low, int high);
+    void swap(int to_sort[], int a, int b);
 
     doubly_linked_list recursive_merge_sort(doubly_linked_list to_sort);
     doubly_linked_list merge(doubly_linked_list left, doubly_linked_list right);
 
     void quicksort(int* to_sort, int low, int high){
+        unsigned part;
+        if(high - low <2){
+            return;
+        }
+        part = partition(to_sort, low, high);
+        quicksort(to_sort, low, part-1);
+        quicksort(to_sort, part+1, high);
 
     }
 
-    unsigned partititon(int* to_sort, int low, int high){
+    unsigned partition(int* to_sort, int low, int high){
+        int pivot = to_sort[high];
+        int i = low-1;
+        for(int j = low; j<=high-1; j++){
+            if(to_sort[j] < pivot){
+                i++;
+                swap(to_sort,i,j);
+            }
+        }
+        i++;
+        swap(to_sort,i,high);
+        return i;
+    }
 
+    void swap(int *to_sort, int a, int b){
+        int temp = to_sort[a];
+        to_sort[a] = to_sort[b];
+        to_sort[b] = temp;
     }
 
     void mergesort(doubly_linked_list& to_sort){
