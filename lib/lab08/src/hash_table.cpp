@@ -44,9 +44,6 @@ namespace lab8{
             }
         }
         delete[] temp;
-
-        // Expand the hash table by a factor of 2 every time this function is called
-
     }
 
     hash_table::hash_table(char type) {
@@ -66,18 +63,6 @@ namespace lab8{
             hash_table_array[i].key = "\0";
             hash_table_array[i].value = 0;
         }
-
-        /*
-         * Define the probing technique
-         * 'l': Linear probing
-         *          hash_1() + attempt
-         * 'q': Quadratic probing
-         *          hash_1() + attempt^2
-         * 'd': Double Probing
-         *          hash_1() + attempt * hash_2()
-         *
-         * Create a hash table with an initial size of 100
-         */
     }
 
     hash_table::~hash_table() {
@@ -86,6 +71,42 @@ namespace lab8{
     }
 
     bool hash_table::insert(std::string key, int value) {
+        if(in_table(key) && get(key)==value){
+            return true;
+        }
+        if(current_size >= 0.7*max_size){
+            expand();
+        }
+        int n = hash_1(key);
+        if(hash_table_array[n%max_size].key == "\0"){
+            hash_table_array[n%max_size].key = key;
+            hash_table_array[n%max_size].value = value;
+        }
+        else{
+            if(probing == 'l'){
+                while(hash_table_array[n%max_size].key != "\0"){
+                    n++;
+                }
+                hash_table_array[n%max_size].key = key;
+                hash_table_array[n%max_size].value = value;
+            }
+            else if(probing == 'q'){
+                int attempt = 1;
+                while(hash_table_array[(n + attempt^2)%max_size].key != "\0"){
+                    n++;
+                }
+                hash_table_array[(n + attempt^2)%max_size].key = key;
+                hash_table_array[(n + attempt^2)%max_size].value = value;
+            }
+            else if(probing == 'd'){
+                int m = hash_2(key);
+                while(hash_table_array[n%max_size].key != "\0"){
+                    n++;
+                }
+                hash_table_array[n%max_size].key = key;
+                hash_table_array[n%max_size].value = value;
+            }
+        }
         // Insert a key according to the defined probing technique
         // If you run into an issue where you get an infinite collision loop,
         //   figure out a way to get out of the loop.
@@ -185,16 +206,63 @@ namespace lab8{
         // Use the specified probing technique
     }
 
-    void hash_table::update(std::string key, int value){
-        // Update a key in the hash table.
-        // Keep collisions in mind
-        // Use the specified probing technique
+    void hash_table::update(std::string key, int value){    //Change the value associated with a key. If the value is not in the hash table, insert it.
+        if(!in_table(key)){
+            insert(key, value);
+        }
+        else{
+            remove(key);
+            insert(key, value);
+        }
     }
 
     void hash_table::remove(std::string key){
-        // Remove an item from the hash table. Keep collisions in mind
-        // Use the specified probing technique
-        // If the item isn't in the table, do nothing.
+        int n = hash_1(key);
+        if(hash_table_array[n%max_size].key == key){
+            hash_table_array[n%max_size].key = "\0";
+            hash_table_array[n%max_size].value = 0;
+        }
+        else {
+            if (probing == 'l') {
+                int count = 0;
+                while (hash_table_array[n % max_size].key != key && count < max_size) {
+                    n++;
+                    count++;
+                }
+                if (hash_table_array[n % max_size].key == key) {
+                    hash_table_array[n % max_size].key = "\0";
+                    hash_table_array[n % max_size].value = 0;
+                } else {
+                    throw "Not in table";
+                }
+            } else if (probing == 'q') {
+
+                int attempt = 1;
+                while (hash_table_array[(n + (attempt ^ 2)) % max_size].key != key && attempt < max_size) {
+                    attempt++;
+                }
+                if (hash_table_array[(n + (attempt ^ 2)) % max_size].key == key) {
+                    hash_table_array[(n + (attempt ^ 2)) % max_size].key = "\0";
+                    hash_table_array[(n + (attempt ^ 2)) % max_size].value = 0;
+                } else {
+                    throw "Not in table";
+                }
+            } else {
+                int m = hash_2(key);
+
+
+                int attempt = 1;
+                while (hash_table_array[(n + attempt * m) % max_size].key == key && attempt < max_size) {
+                    attempt++;
+                }
+                if (hash_table_array[(n + attempt * m) % max_size].key == key) {
+                    hash_table_array[(n + attempt * m) % max_size].key = "\0";
+                    hash_table_array[(n + attempt * m) % max_size].value = 0;
+                } else {
+                    throw "Not in table";
+                }
+            }
+        }
     }
 
     std::string hash_table::to_string(){
