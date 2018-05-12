@@ -35,11 +35,11 @@ namespace lab8{
         delete[] hash_table_array;
         hash_table_array = new key_value[new_size];
         for(int k=0; k<new_size; k++){
-            hash_table_array[k].key = '\0';
+            hash_table_array[k].key = "\0";
             hash_table_array[k].value = 0;
         }
         for(int i=0; i<max_size; i++){
-            if(temp[i].key != '\0'){
+            if(temp[i].key != "\0"){
                 insert(temp[i].key, temp[i].value);
             }
         }
@@ -63,7 +63,7 @@ namespace lab8{
         max_size = PRIMES[0];
         hash_table_array = new key_value[max_size];
         for(int i=0; i<max_size; i++){
-            hash_table_array[i].key = '\0';
+            hash_table_array[i].key = "\0";
             hash_table_array[i].value = 0;
         }
 
