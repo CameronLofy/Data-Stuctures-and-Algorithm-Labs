@@ -128,11 +128,16 @@ namespace lab9{
         add->next = priority_head;
         priority_head->prev = add;
         priority_head = add;
-
-        // TODO: Add the character to the priority queue, increasing the frequency if needed
     }
 
-    void huffman_tree::generate_tree() {
+    void huffman_tree::generate_tree() {    //Not sure wat to do with this yet
+        huffman_tree priority_queue;
+        while(priority_head->get_frequency() == priority_head->next->get_frequency()) {
+            node *left = priority_head;
+            node *right = priority_head->next;
+            node final = node(left, right);
+        }
+
         // TODO: Generate the tree from the priority queue
     }
 
