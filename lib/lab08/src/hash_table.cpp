@@ -266,8 +266,17 @@ namespace lab8{
     }
 
     std::string hash_table::to_string(){
+        std::string output;
+        std::string index;
+        std::string v_int;
+
+        for(int i=0; i<max_size; i++){
+            index = std::to_string(i);
+            v_int = std::to_string(hash_table_array[i].value);
+            output += "[" + index +"]" + hash_table_array[i].key + ":" + v_int + " ";
+        }
         // Run through the entire array and create a string following this format. The {} brackets aren't part of the return
         // [{array location}]{key_value.key}:{key_value.int}
-    return std::string();
+    return output;
     }
 }
