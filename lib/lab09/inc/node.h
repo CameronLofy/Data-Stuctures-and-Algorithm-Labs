@@ -22,6 +22,9 @@ namespace lab9{
         }
 
         node(node* input_left, node* input_right){
+            frequency = left->frequency + right->frequency;
+            left = input_left;
+            right = input_right;
             //TODO: Implement this node constructor
         }
 

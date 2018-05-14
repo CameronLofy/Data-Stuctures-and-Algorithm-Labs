@@ -2,8 +2,18 @@
 
 namespace lab9{
     node *huffman_tree::remove() {
-        // TODO: Write function that removes the first node form the priority queue and returns it
-        return nullptr;
+        node* temp = priority_head;
+        if(temp == nullptr){
+            throw "Priority queue empty";
+        }
+        if(temp->next == nullptr){
+            priority_head = nullptr;
+            priority_tail = nullptr;
+            return temp;
+        }
+        priority_head = priority_head->next;
+        priority_head->prev = nullptr;
+        return temp;
     }
 
     huffman_tree::huffman_tree() {
@@ -84,6 +94,41 @@ namespace lab9{
     }
 
     void huffman_tree::add(char character) {
+        node* add = new node(character);
+        node* temp = priority_head;
+        while(temp != nullptr){
+            if(temp->get_character() == character){
+                temp->increment_frequency();
+                if(temp == priority_tail) {
+                    return;
+                }
+                node* priority_temp = temp;
+                while(priority_temp->get_frequency() < temp->get_frequency()){
+                    if(priority_temp == priority_tail){
+                        priority_tail->next = priority_temp;
+                        priority_temp->prev = priority_tail;
+                        priority_tail = priority_temp;
+                        priority_temp->next = nullptr;
+                        delete[] priority_temp;
+                        return;
+                    }
+                    priority_temp = priority_temp->next;
+                }
+                temp->prev->next = temp->next;
+                temp->next->prev = temp->prev;
+                temp->prev = priority_temp->prev;
+                temp->next = priority_temp;
+                priority_temp->prev->next = temp;
+                priority_temp->prev = temp;
+                delete[] temp;
+                return;
+            }
+            temp = temp->next;
+        }
+        add->next = priority_head;
+        priority_head->prev = add;
+        priority_head = add;
+
         // TODO: Add the character to the priority queue, increasing the frequency if needed
     }
 
