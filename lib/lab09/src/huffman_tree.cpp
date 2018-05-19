@@ -130,14 +130,13 @@ namespace lab9{
         priority_head = add;
     }
 
-    void huffman_tree::generate_tree() {    //Not sure wat to do with this yet
+    void huffman_tree::generate_tree() {    //Not sure what to do with this yet
         huffman_tree priority_queue;
         while(priority_head->get_frequency() == priority_head->next->get_frequency()) {
             node *left = priority_head;
             node *right = priority_head->next;
             node final = node(left, right);
         }
-
         // TODO: Generate the tree from the priority queue
     }
 

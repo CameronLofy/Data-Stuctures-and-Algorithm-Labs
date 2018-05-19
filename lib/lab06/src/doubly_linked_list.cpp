@@ -34,7 +34,6 @@ namespace lab6{
             curr->prev = prev;
             prev->next = curr;
             prev = curr;
-            curr = curr->next;
         }
         prev->next = NULL;
         this->tail = prev;
@@ -214,7 +213,7 @@ namespace lab6{
         }
 
         if(position_1 == position_2){
-            throw "ERROR: Cannot swap same position";
+            return;
         }
 
         node* A = head;
@@ -222,8 +221,8 @@ namespace lab6{
             A = A->next;
         }
 
-        node* B = head;
-        for(int i=0; i<position_2; i++){
+        node* B = A;
+        for(int i=position_1; i<position_2; i++){
             B = B->next;
         }
 
